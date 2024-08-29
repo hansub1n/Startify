@@ -13,7 +13,7 @@ export const ProfileHeader = () => {
                     </ProfileImgBox>
                     <ProfileTxtBox>
                         <span>
-                            닉네임 <Link to="#" />
+                            닉네임 <button>프로필 편집</button>
                         </span>
                         <span>ID1234</span>
                     </ProfileTxtBox>
@@ -50,6 +50,7 @@ const UserInfoContainer = styled.div`
     align-items: center;
     width: 100%;
     padding: 20px;
+    gap: 1rem;
 `;
 
 const ProfileImgBox = styled.div`
