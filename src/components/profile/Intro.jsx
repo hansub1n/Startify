@@ -11,11 +11,11 @@ const Intro = () => {
 
 export default Intro;
 
-const ProfileContentContainer = styled.section`
+export const ProfileContentContainer = styled.section`
     display: flex;
     width: 1280px;
     margin: 0 auto;
 `;
-const ProfileContent = styled.div`
+export const ProfileContent = styled.div`
     padding: 24px 0;
 `;
