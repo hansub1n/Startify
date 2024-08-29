@@ -1,18 +1,23 @@
 import React from "react";
 import styled from "styled-components";
+import { getYoutubeKey } from "../../utils";
 
-const PostItem = () => {
+const PostItem = ({ music }) => {
+    const { postTitle, name, title, url, likes } = music;
+    const thumbnailKey = getYoutubeKey(url);
     return (
         <ItemLi>
-            <h3>아이유 노래 같이들어요</h3>
+            <h3>{postTitle}</h3>
             <ThumbnailWrap>
-                <ThumbnailImg src="https://img.youtube.com/vi/d9IxdwEFk1c/0.jpg" />
+                <ThumbnailImg src={`https://img.youtube.com/vi/${thumbnailKey}/0.jpg`} />
                 <ThumbnailTextWrap>
-                    <LikesText>1234</LikesText>
+                    <LikesText>{likes}</LikesText>
                     <LikesButton>♡</LikesButton>
                 </ThumbnailTextWrap>
             </ThumbnailWrap>
-            <p>아이유 - love wins all</p>
+            <p>
+                {name} - {title}
+            </p>
         </ItemLi>
     );
 };
