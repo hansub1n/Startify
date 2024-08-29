@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
-import LayoutHeader from "../components/Layout/LayoutHeader";
+import LayoutHeader from "../components/layout/LayoutHeader";
 
 const Layout = () => {
     return (
