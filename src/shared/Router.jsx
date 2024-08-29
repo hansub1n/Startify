@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "../pages/Home";
 import Detail from "../pages/Detail";
-import MyPage from "../pages/Mypage";
+import Profile from "../pages/Profile";
 import Search from "../pages/Search";
 import Form from "../pages/Form";
 import Login from "../pages/Login";
@@ -18,7 +18,8 @@ const Router = () => {
                 <Route path="" element={<Layout />}>
                     <Route path="/" element={<Home />} />
                     <Route path="/detail" element={<Detail />} />
-                    <Route path="/mypage" element={<MyPage />} />
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/profile/*" element={<Profile />} />
                     <Route path="/search" element={<Search />} />
                     <Route path="/form" element={<Form />} />
                     <Route path="/modify-profile" element={<ModifyProfile />} />
