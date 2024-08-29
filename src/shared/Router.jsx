@@ -8,22 +8,27 @@ import Form from "../pages/Form";
 import Login from "../pages/Login";
 import SignUp from "../pages/Signup";
 import ModifyProfile from "../pages/ModifyProfile";
+import Layout from "./Layout";
+import NotFound from "../pages/NotFound";
 
 const Router = () => {
-	return (
-		<BrowserRouter>
-			<Routes>
-				<Route path="/" element={<Home />} />
-				<Route path="/detail" element={<Detail />} />
-				<Route path="/mypage" element={<MyPage />} />
-				<Route path="/search" element={<Search />} />
-				<Route path="/form" element={<Form />} />
-				<Route path="/login" element={<Login />} />
-				<Route path="/signup" element={<SignUp />} />
-				<Route path="/modify-profile" element={<ModifyProfile />} />
-			</Routes>
-		</BrowserRouter>
-	);
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path="" element={<Layout />}>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/detail" element={<Detail />} />
+                    <Route path="/mypage" element={<MyPage />} />
+                    <Route path="/search" element={<Search />} />
+                    <Route path="/form" element={<Form />} />
+                    <Route path="/modify-profile" element={<ModifyProfile />} />
+                </Route>
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="*" element={<NotFound />} />
+            </Routes>
+        </BrowserRouter>
+    );
 };
 
 export default Router;
