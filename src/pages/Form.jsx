@@ -20,7 +20,9 @@ const Form = () => {
     const [selectedSeason, setSelectedSeason] = useState("");
 
     const options = [
-        { value: "", label: "노래에 어울리는 계절을 선택해주세요." },
+        { value: "", label: "노래에 어울리는 계절을 선택해주세요.", disabled: true },
+        //disabled를 통해 선택이 안되도록 한다.
+        { value: "모든 계절", label: "모든 계절" },
         { value: "봄", label: "봄" },
         { value: "여름", label: "여름" },
         { value: "가을", label: "가을" },
@@ -75,7 +77,7 @@ const Form = () => {
             </YoutubeLink>
             <Desc>
                 <label>내용:</label>
-                <input placeholder="내용을 입력해주세요." value={desc} onChange={handleDescChange} />
+                <textarea placeholder="내용을 입력해주세요." value={desc} onChange={handleDescChange} />
             </Desc>
             <Name>
                 <label>가수이름:</label>
@@ -85,7 +87,7 @@ const Form = () => {
                 <label>계절:</label>
                 <select value={selectedSeason} onChange={handleSeasonChange}>
                     {options.map((option) => (
-                        <option key={option.value} value={option.value}>
+                        <option key={option.value} value={option.value} disabled={option.disabled}>
                             {option.label}
                         </option>
                     ))}
