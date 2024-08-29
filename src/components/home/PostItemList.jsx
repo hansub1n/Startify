@@ -2,27 +2,18 @@ import React from "react";
 import PostItem from "./PostItem";
 import styled from "styled-components";
 
-const PostItemList = ({ title }) => {
+const PostItemList = ({ title, musics }) => {
     return (
         <PostItemWrapper>
             <PostWrapTitle>{title}</PostWrapTitle>
             <PostItemsDiv>
-                {/* {musics.map((music) => {
-            const youtube_key = getYoutubeKey(music.url);
-            const thumbnail = `https://img.youtube.com/vi/${youtube_key}/0.jpg`;
-            return (
-                <div key={music.id}>
-                    <p>{music.postTitle}</p>
-                    <img src={thumbnail} alt={music.title} />
-                </div>
-            );
-        })} */}
-                <PostItem />
-                <PostItem />
-                <PostItem />
-                <PostItem />
-                <PostItem />
-                <PostItem />
+                {musics.length ? (
+                    musics.map((music) => {
+                        return <PostItem key={music.id} music={music} />;
+                    })
+                ) : (
+                    <p>어울리는 음악이 없습니다! 해당 계절에 어울리는 음악을 추가해주세요!</p>
+                )}
             </PostItemsDiv>
         </PostItemWrapper>
     );
