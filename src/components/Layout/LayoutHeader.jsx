@@ -51,8 +51,8 @@ const HeaderNav = styled.nav`
 `;
 
 const LogoImg = styled.img`
-    width: 30px;
-    height: 30px;
+    width: 200px;
+    height: 120px;
 `;
 
 const HeaderTitle = styled.h1`
