@@ -1,32 +1,20 @@
-import React, { useEffect, useState } from "react";
-import supabase from "../supabaseClient";
-import { getYoutubeKey } from "../utils";
 import styled from "styled-components";
-import PostItem from "../components/home/PostItem";
 import PostItemList from "../components/home/PostItemList";
+import { MusicProvider } from "../context/MusicContext";
+import SearchInput from "../components/home/SearchInput";
 
 const Home = () => {
-    // const [musics, setMusics] = useState([]);
-    // const getAllData = async () => {
-    //     const { data, error } = await supabase.from("STARTIFY_DATA").select("*");
-    //     if (error) {
-    //         console.log("getAllData error :>> ", error);
-    //         return;
-    //     } else {
-    //         setMusics(data);
-    //     }
-    // };
-    // useEffect(() => {
-    //     getAllData();
-    // }, []);
     return (
-        <ListWrapper>
-            <PostItemList title="언제나 듣기 좋은 노래" />
-            <PostItemList title="봄에 듣기 좋은 노래" />
-            <PostItemList title="여름에 듣기 좋은 노래" />
-            <PostItemList title="가을에 듣기 좋은 노래" />
-            <PostItemList title="겨울에 듣기 좋은 노래" />
-        </ListWrapper>
+        <MusicProvider>
+            <ListWrapper>
+                <SearchInput />
+                <PostItemList title="언제나 듣기 좋은 노래" type="전체" />
+                <PostItemList title="봄에 듣기 좋은 노래" type="봄" />
+                <PostItemList title="여름에 듣기 좋은 노래" type="여름" />
+                <PostItemList title="가을에 듣기 좋은 노래" type="가을" />
+                <PostItemList title="겨울에 듣기 좋은 노래" type="겨울" />
+            </ListWrapper>
+        </MusicProvider>
     );
 };
 
