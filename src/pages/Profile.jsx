@@ -7,38 +7,25 @@ import supabase from "../supabaseClient";
 import { useParams } from "react-router-dom";
 
 const Profile = () => {
-    // TODO 초기값 null vs ""
-    const [user, setUser] = useState("");
-    const [posts, setPosts] = useState([]);
-    const accountParam = useParams();
+    // const [posts, setPosts] = useState([]);
 
-    useEffect(() => {
-        const userData = async () => {
-            const { data, error } = await supabase.from("STARTIFY_USER").select("*").eq("userId", "test1").single();
-            if (error) {
-                console.log(error);
-            } else {
-                console.log(data);
-                setUser(data);
-            }
-            const { data: postData, error: postError } = await supabase
-                .from("STARTIFY_DATA")
-                .select("*")
-                .eq("userId", "test1");
-            if (postError) {
-                console.log(postError);
-            } else {
-                console.log(postData);
-                setPosts(postData);
-            }
-        };
-        userData();
-    }, []);
+    const { userId } = useParams();
+
+    // const { data: postData, error: postError } = await supabase
+    //     .from("STARTIFY_DATA")
+    //     .select("*")
+    //     .eq("userId", "test1");
+    // if (postError) {
+    //     console.log(postError);
+    // } else {
+    //     console.log(postData);
+    //     setPosts(postData);
+    // }
 
     return (
         <Wrapper>
-            <ProfileHeader user={user} />
-            <ProfileContents user={user} posts={posts} />
+            <ProfileHeader />
+            <ProfileContents />
         </Wrapper>
     );
 };
