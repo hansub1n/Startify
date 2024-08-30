@@ -38,7 +38,11 @@ export const ItemCounter = styled.div`
 `;
 
 export const ItemsContainer = styled.div``;
-export const Items = styled.ul``;
+export const Items = styled.ul`
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+`;
 export const Item = styled.li``;
 export const ItemImgBox = styled.div`
     & img {
@@ -47,4 +51,6 @@ export const ItemImgBox = styled.div`
         object-fit: cover;
     }
 `;
-export const ItemTxtBox = styled.div``;
+export const ItemTxtBox = styled.div`
+    text-align: center;
+`;
