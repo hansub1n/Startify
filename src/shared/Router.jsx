@@ -10,17 +10,33 @@ import SignUp from "../pages/Signup";
 import ModifyProfile from "../pages/ModifyProfile";
 import Layout from "./Layout";
 import NotFound from "../pages/NotFound";
+import { MusicProvider } from "../context/MusicContext";
+import SearchedMusicProvider from "../context/SearchedMusicContext";
 
 const Router = () => {
     return (
         <BrowserRouter>
             <Routes>
                 <Route path="" element={<Layout />}>
-                    <Route path="/" element={<Home />} />
+                    <Route
+                        path="/"
+                        element={
+                            <MusicProvider>
+                                <Home />
+                            </MusicProvider>
+                        }
+                    />
+                    <Route
+                        path="/search"
+                        element={
+                            <SearchedMusicProvider>
+                                <Search />
+                            </SearchedMusicProvider>
+                        }
+                    />
                     <Route path="/detail" element={<Detail />} />
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/profile/*" element={<Profile />} />
-                    <Route path="/search" element={<Search />} />
                     <Route path="/form" element={<Form />} />
                     <Route path="/modify-profile" element={<ModifyProfile />} />
                 </Route>
