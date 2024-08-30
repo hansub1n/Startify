@@ -109,6 +109,8 @@ const SignUp = () => {
             </form>
         </div>
     );
+
+    return <div>SignUp</div>;
 };
 
 export default SignUp;
