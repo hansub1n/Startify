@@ -8,6 +8,7 @@ import supabase from "../supabaseClient";
 const Profile = () => {
     // TODO 초기값 null vs ""
     const [user, setUser] = useState("");
+    const [posts, setPosts] = useState([]);
 
     useEffect(() => {
         const userData = async () => {
@@ -18,6 +19,16 @@ const Profile = () => {
                 console.log(data);
                 setUser(data);
             }
+            const { data: postData, error: postError } = await supabase
+                .from("STARTIFY_DATA")
+                .select("*")
+                .eq("userId", 4);
+            if (postError) {
+                console.log(error);
+            } else {
+                console.log(postData);
+                setPosts(postData);
+            }
         };
         userData();
     }, []);
@@ -25,7 +36,7 @@ const Profile = () => {
     return (
         <Wrapper>
             <ProfileHeader user={user} />
-            <ProfileContents user={user} />
+            <ProfileContents user={user} posts={posts} />
         </Wrapper>
     );
 };

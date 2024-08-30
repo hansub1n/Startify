@@ -3,7 +3,7 @@ import { ProfileContent, ProfileContentContainer } from "./Intro";
 import styled from "styled-components";
 import testImg from "../../assets/temporalLogo.png";
 
-const Created = () => {
+const Created = ({ user, posts }) => {
     return (
         <ProfileContentContainer>
             <ProfileContent>
@@ -12,15 +12,17 @@ const Created = () => {
                 </ItemCounter>
                 <ItemsContainer>
                     <Items>
-                        <Item>
-                            <ItemImgBox>
-                                <img src={testImg} alt="" />
-                            </ItemImgBox>
-                            <ItemTxtBox>
-                                <span>작성자</span>
-                                <h1>노래 제목</h1>
-                            </ItemTxtBox>
-                        </Item>
+                        {posts.map((post) => (
+                            <Item key={post.id}>
+                                <ItemImgBox>
+                                    <img src={testImg} alt="" />
+                                </ItemImgBox>
+                                <ItemTxtBox>
+                                    <span>{post.userName}</span>
+                                    <h1>{post.postTitle}</h1>
+                                </ItemTxtBox>
+                            </Item>
+                        ))}
                     </Items>
                 </ItemsContainer>
             </ProfileContent>

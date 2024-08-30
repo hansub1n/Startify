@@ -4,7 +4,7 @@ import styled from "styled-components";
 import exampImg from "../../assets/temporalLogo.png";
 
 export const ProfileHeader = ({ user }) => {
-    console.table("user", user);
+    // console.table("user", user);
     // console.log("userName", user.userName);
     return (
         <ProfileHeaderWrap>
