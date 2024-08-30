@@ -72,5 +72,5 @@ const ProfileNavigation = styled.ul`
     gap: 1rem;
     width: 100%;
     margin: 0 auto;
-    padding: 20px 0;
+    padding: 20px;
 `;

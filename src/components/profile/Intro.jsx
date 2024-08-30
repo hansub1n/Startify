@@ -17,5 +17,5 @@ export const ProfileContentContainer = styled.section`
     margin: 0 auto;
 `;
 export const ProfileContent = styled.div`
-    padding: 24px 0;
+    padding: 24px 20px;
 `;
