@@ -1,8 +1,11 @@
 import React from "react";
 import PostItem from "./PostItem";
 import styled from "styled-components";
+import useMusicContext from "../../hooks/useMusicContext";
 
-const PostItemList = ({ title, musics }) => {
+const PostItemList = ({ title, type }) => {
+    const { songs } = useMusicContext();
+    let musics = songs[type];
     return (
         <PostItemWrapper>
             <PostWrapTitle>{title}</PostWrapTitle>
