@@ -22,9 +22,9 @@ const Profile = () => {
             const { data: postData, error: postError } = await supabase
                 .from("STARTIFY_DATA")
                 .select("*")
-                .eq("userId", 4);
+                .eq("account_id", 4);
             if (postError) {
-                console.log(error);
+                console.log(postError);
             } else {
                 console.log(postData);
                 setPosts(postData);
