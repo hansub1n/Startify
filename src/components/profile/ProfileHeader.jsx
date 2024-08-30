@@ -3,7 +3,9 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import exampImg from "../../assets/temporalLogo.png";
 
-export const ProfileHeader = () => {
+export const ProfileHeader = ({ user }) => {
+    console.table("user", user);
+    // console.log("userName", user.userName);
     return (
         <ProfileHeaderWrap>
             <ProfileHeaderContainer>
@@ -13,9 +15,9 @@ export const ProfileHeader = () => {
                     </ProfileImgBox>
                     <ProfileTxtBox>
                         <span>
-                            닉네임 <button>프로필 편집</button>
+                            {user.userName} <button>프로필 편집</button>
                         </span>
-                        <span>ID1234</span>
+                        <span>{user.userId}</span>
                     </ProfileTxtBox>
                 </UserInfoContainer>
                 <ProfileNavigation>

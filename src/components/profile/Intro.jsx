@@ -1,10 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 
-const Intro = () => {
+const Intro = ({ user }) => {
+    // TODO useParam으로 ..?
+
     return (
         <ProfileContentContainer>
-            <ProfileContent>작성된 소개글이 없습니다.</ProfileContent>
+            <ProfileContent>{!user.userIntro ? `작성된 소개글이 없습니다.` : user.userIntro}</ProfileContent>
         </ProfileContentContainer>
     );
 };
