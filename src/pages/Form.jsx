@@ -50,16 +50,16 @@ const Form = () => {
     ];
 
     // 유튜브 영상으로 틀때 필요한 값
-    //const getEmbedLink = (link) => {
-    //     const videoId = getYoutubeKey(link);
-    //     return `https://www.youtube.com/embed/${videoId}?loop=1&autoplay=1&mute=1&playlist=${videoId}`;
-    // };
-
-    //유튜브 썸네일만 뜨게할 때 필요한 값
-    const getThumbnailLink = (link) => {
+    const getEmbedLink = (link) => {
         const videoId = getYoutubeKey(link);
-        return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+        return `https://www.youtube.com/embed/${videoId}?loop=1&autoplay=1&mute=1&playlist=${videoId}`;
     };
+
+    // //유튜브 썸네일만 뜨게할 때 필요한 값
+    // const getThumbnailLink = (link) => {
+    //     const videoId = getYoutubeKey(link);
+    //     return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+    // };
 
     const handlePostTitleChange = (event) => {
         setPostTitle(event.target.value);
@@ -96,7 +96,7 @@ const Form = () => {
                 <input placeholder="제목을 입력해주세요." value={postTitle} onChange={handlePostTitleChange} />
             </PostTitle>
             {/* //유튜브영상 */}
-            {/* <div>
+            <div>
                 {youtubeLink ? (
                     <Preview>
                         <iframe
@@ -111,7 +111,7 @@ const Form = () => {
                     <PlaceholderMessage>유튜브 링크를 넣어주세요.</PlaceholderMessage>
                 )}
             </div>
-			//유튜브썸네일 사진만  */}
+            {/* //유튜브썸네일 사진만
             <div>
                 {youtubeLink ? (
                     <Preview>
@@ -120,7 +120,7 @@ const Form = () => {
                 ) : (
                     <PlaceholderMessage>유튜브 링크를 넣어주세요.</PlaceholderMessage>
                 )}
-            </div>
+            </div> */}
             <SongTitle>
                 <label>노래제목:</label>
                 <input placeholder="노래 제목을 입력해주세요." value={title} onChange={handleTitleChange} />
