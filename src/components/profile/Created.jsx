@@ -8,7 +8,7 @@ const Created = ({ user, posts }) => {
         <ProfileContentContainer>
             <ProfileContent>
                 <ItemCounter>
-                    <span>0개의 게시물이 있습니다.</span>
+                    <span>{posts.length}개의 게시물이 있습니다.</span>
                 </ItemCounter>
                 <ItemsContainer>
                     <Items>

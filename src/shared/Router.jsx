@@ -20,6 +20,7 @@ const Router = () => {
                     <Route path="/detail" element={<Detail />} />
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/profile/*" element={<Profile />} />
+                    {/* <Route path="/profile/:id/*" element={<Profile />} /> */}
                     <Route path="/search" element={<Search />} />
                     <Route path="/form" element={<Form />} />
                     <Route path="/modify-profile" element={<ModifyProfile />} />

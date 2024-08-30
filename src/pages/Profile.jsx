@@ -4,11 +4,13 @@ import styled from "styled-components";
 import Intro from "../components/profile/Intro";
 import { ProfileContents } from "../components/profile/ProfileContents";
 import supabase from "../supabaseClient";
+import { useParams } from "react-router-dom";
 
 const Profile = () => {
     // TODO 초기값 null vs ""
     const [user, setUser] = useState("");
     const [posts, setPosts] = useState([]);
+    const accountParam = useParams();
 
     useEffect(() => {
         const userData = async () => {
@@ -22,7 +24,7 @@ const Profile = () => {
             const { data: postData, error: postError } = await supabase
                 .from("STARTIFY_DATA")
                 .select("*")
-                .eq("account_id", 4);
+                .eq("userId", "test1");
             if (postError) {
                 console.log(postError);
             } else {
