@@ -1,16 +1,62 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import DetailOwner from "../components/detail/DetailOwner";
 import DetailMusic from "../components/detail/DetailMusic";
 import DetailComment from "../components/detail/DetailComment";
 import styled from "styled-components";
+import supabase from "../supabaseClient";
+import { useSearchParams } from "react-router-dom";
 
 const Detail = () => {
+    const [post, setPost] = useState(null);
+    const [searchParams] = useSearchParams();
+    const postId = searchParams.get("id");
+
+    useEffect(() => {
+        const fetchPostData = async () => {
+            console.log(parseInt(postId));
+            const { data, error } = await supabase
+                .from("STARTIFY_DATA")
+                .select(
+                    `*, STARTIFY_COMMENTS(id, text, STARTIFY_USER(id, user_id, userName, profileImgUrl)), STARTIFY_USER(id, user_id, userName, profileImgUrl)`
+                )
+                .eq("id", postId);
+
+            if (error) {
+                console.log("error => ", error);
+            } else {
+                console.log("data => ", data);
+                const targetData = data[0];
+                setPost(targetData);
+            }
+        };
+
+        fetchPostData();
+    }, [postId]);
+
+    if (!post) {
+        return <div>Loading...</div>;
+    }
+
     return (
         <DetailDiv>
             <div>
-                <DetailOwner id={1} comment={"아오 힘들다"} />
-                <DetailMusic />
-                <DetailComment />
+                <DetailOwner
+                    userId={post.STARTIFY_USER.id}
+                    userName={post.STARTIFY_USER.userName}
+                    postTitle={post.postTitle}
+                    desc={post.desc}
+                    profileImgUrl={post.STARTIFY_USER.profileImgUrl}
+                />
+                <DetailMusic
+                    id={post.id}
+                    postTitle={post.postTitle}
+                    name={post.name}
+                    title={post.title}
+                    url={post.url}
+                    likes={post.likes}
+                    hashtags={post.hashtags}
+                />
+                <DetailComment id={post.id} comments={post.STARTIFY_COMMENTS} />
             </div>
         </DetailDiv>
     );
@@ -27,16 +73,3 @@ const DetailDiv = styled.div`
     align-items: center;
     padding: 50px 30px;
 `;
-
-{
-    /* <iframe
-						width="443"
-						height="249"
-						src="https://www.youtube.com/embed/x0T9FTGa4U4"
-						title="[Playlist] 슬슬 여행이나 갈까?✈️⎮바닷가에서 듣고 싶은 플리🏖⎮여돌 케이팝 노래 모음⎮청량 플리🌴⎮이어폰 필수🎧"
-						style={{ border: "none" }}
-						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-						referrerPolicy="strict-origin-when-cross-origin"
-						allowFullScreen
-					></iframe> */
-}

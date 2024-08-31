@@ -2,20 +2,23 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-const DetailOwner = ({ id, comment }) => {
+const DetailOwner = ({ userId, userName, postTitle, desc, profileImgUrl }) => {
     const navigate = useNavigate();
 
     return (
         <div>
             <StOwnerProfileBoxDiv>
-                <Link to={`/mypage?id=${id}`}>
-                    <StOwnerProfileImg src="https://cdn.ibos.kr/template/DESIGN_shared/program/theme/01/THUMBNAIL_60_60_icon_rep_box.gif" />
+                <Link to={`/profile?id=${userId}`}>
+                    <StOwnerProfileImg src={profileImgUrl} />
                 </Link>
                 <StOwnerProfileTextDiv>
-                    <StOwnerProfileNameSpan onClick={() => navigate(`/mypage?id=${id}`)}>
-                        닉네임{id}
+                    <StOwnerProfileNameSpan onClick={() => navigate(`/profile?id=${userId}`)}>
+                        {userName}
                     </StOwnerProfileNameSpan>
-                    <StOwnerProfilesCommentSpan>작성글: {comment}</StOwnerProfilesCommentSpan>
+                    <StCommentDiv>
+                        <StOwnerProfilesCommentTitleSpan>{postTitle}</StOwnerProfilesCommentTitleSpan>
+                        <StOwnerProfilesCommentSpan>{desc}</StOwnerProfilesCommentSpan>
+                    </StCommentDiv>
                 </StOwnerProfileTextDiv>
             </StOwnerProfileBoxDiv>
         </div>
@@ -49,6 +52,15 @@ const StOwnerProfileNameSpan = styled.span`
     font-size: 14px;
     font-weight: 700;
     cursor: pointer;
+`;
+const StCommentDiv = styled.div`
+    display: flex;
+    gap: 10px;
+`;
+const StOwnerProfilesCommentTitleSpan = styled.span`
+    display: flex;
+    font-size: 15px;
+    font-weight: 700;
 `;
 const StOwnerProfilesCommentSpan = styled.span`
     display: flex;

@@ -1,22 +1,47 @@
-import React from "react";
 import styled from "styled-components";
 import DetailVisitor from "./DetailVisitor";
+import { useContext, useEffect, useState } from "react";
+import supabase from "../../supabaseClient";
+import { UserContext } from "../../context/UserContext";
 
-const DetailComment = () => {
+const DetailComment = ({ id, comments }) => {
+    // const { user } = useContext(UserContext);
+    // console.log(user);
+    // mock data
+    const user = {
+        id: 28,
+        user_id: "eeb6009e-5417-4da3-998e-9e611a82e4f4",
+        userName: "신장구",
+        profileImgUrl:
+            "https://i.namu.wiki/i/Hb-VM7F-Ki4dWs3GcAz2KkMCg22qSbp_i2gguEhEmmpmlBoxCpXpd9eWW2AdTXB3z12CvgVj_Ra_2e0o7yL5FQ.web"
+    };
+
+    const [inputText, setInputText] = useState("");
+    const addComment = async () => {
+        await supabase.from("STARTIFY_COMMENTS").insert({
+            text: inputText,
+            user_id: user.user_id,
+            post_id: id
+        });
+    };
+
     return (
         <div>
             <StCommentFieldDiv>
-                <StCommentFieldTextarea />
-                <StCommentFieldBtn>등록</StCommentFieldBtn>
+                {/* 댓글 작성시, 로그인 된 정보 유저아이디, 닉네임, 이미지, 댓글 넘어감*/}
+                <StCommentFieldTextarea
+                    value={inputText}
+                    onChange={(e) => {
+                        setInputText(e.target.value);
+                    }}
+                />
+                <StCommentFieldBtn onClick={addComment}>등록</StCommentFieldBtn>
             </StCommentFieldDiv>
             <StDetailCommentsDiv>
-                <DetailVisitor id={2} comment={"ㅎㅇ1"} />
-                <DetailVisitor id={3} comment={"ㅎㅇ2"} />
-                <DetailVisitor id={4} comment={"ㅎㅇ3"} />
-                <DetailVisitor id={5} comment={"ㅎㅇ4"} />
-                <DetailVisitor id={6} comment={"ㅎㅇ5"} />
-                <DetailVisitor id={7} comment={"ㅎㅇ6"} />
-                <DetailVisitor id={8} comment={"ㅎㅇ7"} />
+                {comments.map((comment) => {
+                    const { id, text, STARTIFY_USER } = comment;
+                    return <DetailVisitor key={id} commentId={id} STARTIFY_USER={STARTIFY_USER} text={text} />;
+                })}
             </StDetailCommentsDiv>
         </div>
     );
