@@ -29,6 +29,14 @@ const PlaceholderMessage = styled.div`
     color: gray;
     font-size: 16px;
 `;
+const Tag = styled.div`
+    display: inline-block;
+    background-color: #e0e0e0;
+    padding: 5px 10px;
+    border-radius: 4px;
+    margin: 2px;
+    cursor: pointer;
+`;
 
 const Form = () => {
     const [postTitle, setPostTitle] = useState("");
@@ -96,17 +104,20 @@ const Form = () => {
 
     const onKeyUp = useCallback(
         (e) => {
-            if (typeof window !== "undefined") {
-                if (e.keyCode === 13 && e.currentTarget.value.trim() !== "") {
-                    setHashArr((prev) => [...prev, e.currentTarget.value.trim()]);
+            // 이벤트 객체가 올바르게 전달되는지 확인
+            if (e && e.currentTarget) {
+                const value = e.currentTarget.value.trim();
+                if (e.keyCode === 13 && value !== "") {
+                    setHashArr((prev) => [...prev, value]);
                     setHashtag("");
                 }
             }
         },
         [hashtag, hashArr]
     );
-    const handleRemoveTag = (tag) => {
-        setHashArr(hashArr.filter((t) => t !== tag));
+
+    const handleTagClick = (tagToRemove) => {
+        setHashArr((prev) => prev.filter((tag) => tag !== tagToRemove));
     };
 
     return (
@@ -178,11 +189,11 @@ const Form = () => {
                     value={hashtag}
                     onChange={onChangeHashtag}
                     onKeyUp={onKeyUp}
-                    placeholder="해시태그 입력 후 Enter"
+                    placeholder="해시태그 입력"
                 />
                 <div className="HashWrapOuter">
                     {hashArr.map((tag, index) => (
-                        <Tag key={index} onClick={() => console.log(`Tag clicked: ${tag}`)}>
+                        <Tag key={index} onClick={() => handleTagClick(tag)}>
                             #{tag}
                         </Tag>
                     ))}
