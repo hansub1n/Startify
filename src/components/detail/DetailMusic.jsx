@@ -1,21 +1,44 @@
 import React from "react";
+import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
+import { getYoutubeKey } from "../../utils";
 
-const DetailMusic = () => {
+const DetailMusic = ({ name, title, url, likes, hashtags }) => {
+    // const [searchParams, setSearchParams] = useSearchParams(url);
+    // const musicId = () => searchParams.get("v");
+    const getEmbedLink = (url) => {
+        const videoId = getYoutubeKey(url);
+        return `https://www.youtube.com/embed/${videoId}?loop=1&autoplay=0&mute=1&playlist=${videoId}`;
+    };
     return (
         <div>
             <StMusicDiv>
-                <StMusicLinkDiv>
-                    <a href="https://youtu.be/x0T9FTGa4U4" target="_blank" rel="noopener noreferrer">
-                        <StMusicImg src="https://img.youtube.com/vi/x0T9FTGa4U4/0.jpg" alt="노래 썸네일" />
-                    </a>
-                    <StMusicBtn>동영상 이동</StMusicBtn>
-                </StMusicLinkDiv>
+                <div>
+                    {
+                        <Preview>
+                            <iframe
+                                width="560"
+                                height="315"
+                                src={getEmbedLink(url)}
+                                frameBorder="0"
+                                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                                title="YouTube Video Preview"
+                            ></iframe>
+                        </Preview>
+                    }
+                </div>
                 <StMusicInfoDiv>
-                    <StMusicInfoTitleSpan>아이즈원 - 하늘위로</StMusicInfoTitleSpan>
-                    <StMusicInfoHashSpan>#아이즈원 #하늘위로 #여자아이돌 #kpop</StMusicInfoHashSpan>
+                    <StMusicInfoTitleSpan>
+                        {name} - {title}
+                    </StMusicInfoTitleSpan>
+                    <StMusicInfoHashDiv>
+                        {hashtags.map((hashtag) => {
+                            return <div key={hashtag}>#{hashtag}</div>;
+                        })}
+                    </StMusicInfoHashDiv>
                     <StMusicLikeBtnDiv>
-                        <button>좋아요 372</button>
+                        <button>{likes}</button>
                     </StMusicLikeBtnDiv>
                 </StMusicInfoDiv>
             </StMusicDiv>
@@ -32,6 +55,9 @@ const StMusicDiv = styled.div`
     justify-content: center;
     margin: 15px 0 80px 0;
 `;
+
+const Preview = styled.div``;
+
 const StMusicLinkDiv = styled.div`
     display: flex;
     justify-content: center;
@@ -70,6 +96,7 @@ const StMusicInfoTitleSpan = styled.span`
     margin: 20px 0;
 `;
 
-const StMusicInfoHashSpan = styled.span`
+const StMusicInfoHashDiv = styled.div`
+    display: flex;
     color: #a9a9a9;
 `;

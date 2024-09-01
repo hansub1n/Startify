@@ -1,4 +1,3 @@
-import React from "react";
 import PostItem from "./PostItem";
 import styled from "styled-components";
 import useMusicContext from "../../hooks/useMusicContext";
