@@ -5,22 +5,24 @@ import supabase from "../../supabaseClient";
 import { UserContext } from "../../context/UserContext";
 
 const DetailComment = ({ id, comments }) => {
-    // const { user } = useContext(UserContext);
+    const { user } = useContext(UserContext);
+    const userId = user.id;
+    console.log(user.id);
     // console.log(user);
     // mock data
-    const user = {
-        id: 28,
-        user_id: "eeb6009e-5417-4da3-998e-9e611a82e4f4",
-        userName: "신장구",
-        profileImgUrl:
-            "https://i.namu.wiki/i/Hb-VM7F-Ki4dWs3GcAz2KkMCg22qSbp_i2gguEhEmmpmlBoxCpXpd9eWW2AdTXB3z12CvgVj_Ra_2e0o7yL5FQ.web"
-    };
+    // const user = {
+    //     id: 28,
+    //     user_id: "eeb6009e-5417-4da3-998e-9e611a82e4f4",
+    //     userName: "신장구",
+    //     profileImgUrl:
+    //         "https://i.namu.wiki/i/Hb-VM7F-Ki4dWs3GcAz2KkMCg22qSbp_i2gguEhEmmpmlBoxCpXpd9eWW2AdTXB3z12CvgVj_Ra_2e0o7yL5FQ.web"
+    // };
 
     const [inputText, setInputText] = useState("");
     const addComment = async () => {
         await supabase.from("STARTIFY_COMMENTS").insert({
             text: inputText,
-            user_id: user.user_id,
+            user_id: userId,
             post_id: id
         });
     };
