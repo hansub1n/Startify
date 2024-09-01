@@ -1,24 +1,79 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { UserContext } from "../../context/UserContext";
+import { DetailEditModal } from "./DetailEditModal";
+import { DetailDeleteModal } from "./DetailDeleteModal";
 
-const DetailVisitor = ({ id, comment }) => {
+const defaultProfileImgUrl = "/defaultProfile.jpg";
+
+const DetailVisitor = ({ commentId, text, STARTIFY_USER, fetchPostData }) => {
+    const { user } = useContext(UserContext);
+    const userId = user.id;
+
+    const { user_id, userName, profileImgUrl, id } = STARTIFY_USER;
+
     const navigate = useNavigate();
+
+    const [editInputText, setEditInputText] = useState(text);
+
+    const [confirmEdit, setConfirmEdit] = useState(false);
+    const openEditModal = () => {
+        setConfirmEdit(true);
+        setConfirmDelete(false);
+        setEditInputText(text);
+    };
+    const closeEditModal = () => {
+        setConfirmEdit(false);
+    };
+
+    const [confirmDelete, setConfirmDelete] = useState(false);
+    const openDeleteModal = () => {
+        setConfirmDelete(true);
+        setConfirmEdit(false);
+    };
+    const closeDeleteModal = () => setConfirmDelete(false);
+
     return (
         <div>
             <StVisitorCommentBox>
-                <Link to={`/mypage?id=${id}`}>
-                    <StVisitorProfileImg src="https://cdn.ibos.kr/template/DESIGN_shared/program/theme/01/THUMBNAIL_60_60_icon_rep_box.gif" />
+                <Link to={`/profile?id=${id}`}>
+                    <StVisitorProfileImg src={profileImgUrl ?? defaultProfileImgUrl} />
                 </Link>
                 <StVisitorProfileTextDiv>
-                    <StVisitorProfileNameSpan onClick={() => navigate(`/mypage?id=${id}`)}>
-                        닉네임{id}
+                    <StVisitorProfileNameSpan onClick={() => navigate(`/profile?id=${id}`)}>
+                        {userName}
                     </StVisitorProfileNameSpan>
-                    <StVisitorCommentSpan>작성글: {comment}</StVisitorCommentSpan>
+                    <StVisitorCommentSpan>{text}</StVisitorCommentSpan>
                 </StVisitorProfileTextDiv>
                 <StVisitorCommentBtns>
-                    <button>수정</button>
-                    <button>삭제</button>
+                    {userId !== user_id ? null : (
+                        <div>
+                            <div>
+                                <div>
+                                    <button onClick={openEditModal}>수정</button>
+                                    <DetailEditModal
+                                        editInputText={editInputText}
+                                        setEditInputText={setEditInputText}
+                                        openEditModal={confirmEdit}
+                                        closeEditModal={closeEditModal}
+                                        text={text}
+                                        commentId={commentId}
+                                        fetchPostData={fetchPostData}
+                                    />
+                                </div>
+                                <div>
+                                    <button onClick={openDeleteModal}>삭제</button>
+                                    <DetailDeleteModal
+                                        openDeleteModal={confirmDelete}
+                                        closeDeleteModal={closeDeleteModal}
+                                        commentId={commentId}
+                                        fetchPostData={fetchPostData}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </StVisitorCommentBtns>
             </StVisitorCommentBox>
         </div>
@@ -37,6 +92,7 @@ const StVisitorProfileImg = styled.img`
     display: flex;
     width: 50px;
     height: 50px;
+    object-fit: cover;
 
     border-radius: 50%;
 `;
