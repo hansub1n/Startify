@@ -19,7 +19,7 @@ const Detail = () => {
         const { data, error } = await supabase
             .from("STARTIFY_DATA")
             .select(
-                `*, STARTIFY_COMMENTS(id, text, STARTIFY_USER(id, user_id, userName, profileImgUrl)), STARTIFY_USER(id, user_id, userName, profileImgUrl)`
+                `*,likes:STARTIFY_LIKES(user_id), STARTIFY_COMMENTS(id, text, STARTIFY_USER(id, user_id, userName, profileImgUrl)), STARTIFY_USER(id, user_id, userName, profileImgUrl)`
             )
             .eq("id", postId);
 
@@ -32,6 +32,30 @@ const Detail = () => {
             setPost(data[0]);
         }
     };
+
+    //좋아요 관련 작업
+    const [likes, setLikes] = useState();
+    const fetchLikeData = async () => {
+        const { data, error } = await supabase.from("STARTIFY_LIKES").select("user_id").eq("post_id", postId);
+        if (error) {
+            console.log("error :>> ", error);
+        }
+        setLikes(data);
+        console.log("data :>> ", data);
+    };
+    const toggleLikeData = async (isUserLiked, userId) => {
+        const { error } = isUserLiked
+            ? await supabase.from("STARTIFY_LIKES").delete().match({ "user_id": userId, "post_id": postId })
+            : await supabase.from("STARTIFY_LIKES").insert({ "user_id": userId, "post_id": postId });
+        if (error) {
+            console.log("error :>> ", error);
+            return;
+        }
+        fetchLikeData();
+    };
+    useEffect(() => {
+        fetchLikeData();
+    }, []);
 
     if (!post) {
         return <div>Loading...</div>;
@@ -53,8 +77,9 @@ const Detail = () => {
                     name={post.name}
                     title={post.title}
                     url={post.url}
-                    likes={post.likes}
                     hashtags={post.hashtags}
+                    likes={likes}
+                    toggleLikeData={toggleLikeData}
                 />
                 <DetailComment id={post.id} comments={post.STARTIFY_COMMENTS} fetchPostData={fetchPostData} />
             </div>
