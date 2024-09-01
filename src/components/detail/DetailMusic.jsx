@@ -32,11 +32,18 @@ const DetailMusic = ({ name, title, url, likes, hashtags }) => {
                     <StMusicInfoTitleSpan>
                         {name} - {title}
                     </StMusicInfoTitleSpan>
-                    <StMusicInfoHashDiv>
-                        {hashtags.map((hashtag) => {
-                            return <div key={hashtag}>#{hashtag}</div>;
-                        })}
-                    </StMusicInfoHashDiv>
+                    {!hashtags ? (
+                        <StMusicInfoHashDiv>
+                            #{name}#{title}
+                        </StMusicInfoHashDiv>
+                    ) : (
+                        <StMusicInfoHashDiv>
+                            {hashtags.map((hashtag) => {
+                                return <div key={hashtag}>#{hashtag}</div>;
+                            })}
+                        </StMusicInfoHashDiv>
+                    )}
+
                     <StMusicLikeBtnDiv>
                         <button>{likes}</button>
                     </StMusicLikeBtnDiv>
