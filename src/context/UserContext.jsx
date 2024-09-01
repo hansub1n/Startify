@@ -3,30 +3,26 @@ import supabase from "../supabaseClient";
 
 export const UserContext = createContext();
 
-function UserProvider({ children }) {
-    const [user, setUser] = useState(null);
+export function UserProvider({ children }) {
+    const [user, setUser] = useState();
 
-    const userId = "eeb6009e-5417-4da3-998e-9e611a82e4f4";
     useEffect(() => {
+        // 유저 정보 가져와서 전역상태로 사용
         const getSession = async () => {
-            const userDb = await supabase.auth.getSession();
-            console.log("userdb", userDb);
+            const response = await supabase.auth.getSession();
+            setUser(response.data.session.user);
         };
         getSession();
+
+        const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+            console.log("session?.user => ", session?.user);
+            setUser(session?.user ? session?.user : null);
+        });
+
+        return () => {
+            authListener.subscription.unsubscribe();
+        };
     }, []);
-    // useEffect(() => {
-    //     const userData = async () => {
-    //         const { data, error } = await supabase.from("STARTIFY_USER").select("*").eq("user_id", userId).single();
-    //         if (error) {
-    //             console.log(error);
-    //         } else {
-    //             console.log(data);
-    //             setUser(data);
-    //         }
-    //     };
-    //     userData();
-    // }, [userId]);
+
     return <UserContext.Provider value={{ user, setUser }}>{children}</UserContext.Provider>;
 }
-
-export default UserProvider;
