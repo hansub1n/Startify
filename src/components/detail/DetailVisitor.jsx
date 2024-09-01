@@ -5,7 +5,7 @@ import { UserContext } from "../../context/UserContext";
 import { DetailEditModal } from "./DetailEditModal";
 import { DetailDeleteModal } from "./DetailDeleteModal";
 
-const defaultProfileImgUrl = "/defaultProfile.gif";
+const defaultProfileImgUrl = "/defaultProfile.jpg";
 
 const DetailVisitor = ({ commentId, text, STARTIFY_USER, fetchPostData }) => {
     const { user } = useContext(UserContext);

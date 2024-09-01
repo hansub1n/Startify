@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-const defaultProfileImgUrl = "/defaultProfile.gif";
+const defaultProfileImgUrl = "/defaultProfile.jpg";
 
 const DetailOwner = ({ userId, userName, postTitle, desc, profileImgUrl }) => {
     const navigate = useNavigate();
