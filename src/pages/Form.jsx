@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { styled } from "styled-components";
 import { getYoutubeKey } from "../utils";
+import supabase from "../supabaseClient";
 
 const PostTitle = styled.div``;
 const SongTitle = styled.div``;
@@ -29,6 +30,14 @@ const PlaceholderMessage = styled.div`
     color: gray;
     font-size: 16px;
 `;
+const Tag = styled.div`
+    display: inline-block;
+    background-color: #e0e0e0;
+    padding: 5px 10px;
+    border-radius: 4px;
+    margin: 2px;
+    cursor: pointer;
+`;
 
 const Form = () => {
     const [postTitle, setPostTitle] = useState("");
@@ -36,7 +45,12 @@ const Form = () => {
     const [youtubeLink, setYoutubeLink] = useState("");
     const [desc, setDesc] = useState("");
     const [name, setName] = useState("");
-    const [hashtags, setHashtags] = useState("");
+    // onChange로 관리할 문자열
+    const [hashtag, setHashtag] = useState("");
+
+    // 해시태그를 담을 배열
+    const [hashArr, setHashArr] = useState([]);
+
     const [selectedSeason, setSelectedSeason] = useState("");
 
     const options = [
@@ -50,16 +64,16 @@ const Form = () => {
     ];
 
     // 유튜브 영상으로 틀때 필요한 값
-    //const getEmbedLink = (link) => {
-    //     const videoId = getYoutubeKey(link);
-    //     return `https://www.youtube.com/embed/${videoId}?loop=1&autoplay=1&mute=1&playlist=${videoId}`;
-    // };
-
-    //유튜브 썸네일만 뜨게할 때 필요한 값
-    const getThumbnailLink = (link) => {
+    const getEmbedLink = (link) => {
         const videoId = getYoutubeKey(link);
-        return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+        return `https://www.youtube.com/embed/${videoId}?loop=1&autoplay=1&mute=1&playlist=${videoId}`;
     };
+
+    // //유튜브 썸네일만 뜨게할 때 필요한 값
+    // const getThumbnailLink = (link) => {
+    //     const videoId = getYoutubeKey(link);
+    //     return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+    // };
 
     const handlePostTitleChange = (event) => {
         setPostTitle(event.target.value);
@@ -81,12 +95,71 @@ const Form = () => {
         setName(event.target.value);
     };
 
-    const handleHashtagsChange = (event) => {
-        setHashtags(event.target.value);
-    };
-
     const handleSeasonChange = (event) => {
         setSelectedSeason(event.target.value);
+    };
+
+    const onChangeHashtag = (e) => {
+        setHashtag(e.target.value);
+    };
+
+    const onKeyUp = useCallback(
+        (e) => {
+            // 이벤트 객체가 올바르게 전달되는지 확인
+            if (e && e.currentTarget) {
+                const value = e.currentTarget.value.trim();
+                if (e.keyCode === 13 && value !== "") {
+                    setHashArr((prev) => [...prev, value]);
+                    setHashtag("");
+                }
+            }
+        },
+        [hashtag, hashArr]
+    );
+
+    const handleTagClick = (tagToRemove) => {
+        setHashArr((prev) => prev.filter((tag) => tag !== tagToRemove));
+    };
+
+    const handleSubmit = async () => {
+        // 사용자 정보를 가져옴
+        const {
+            data: { session }
+        } = await supabase.auth.getSession();
+
+        if (!session?.user) {
+            alert("로그인을 먼저 해주세요.");
+            return;
+        }
+
+        const userId = session.user.id; // 사용자 ID 가져오기
+
+        const { data, error } = await supabase.from("STARTIFY_DATA").insert([
+            {
+                user_id: userId,
+                postTitle: postTitle,
+                title: title,
+                url: youtubeLink,
+                desc: desc,
+                name: name,
+                genre: selectedSeason,
+                hashtags: hashArr
+            }
+        ]);
+
+        if (error) {
+            alert("입력이 되지 않았습니다");
+        } else {
+            setPostTitle("");
+            setTitle("");
+            setYoutubeLink("");
+            setDesc("");
+            setName("");
+            setHashtag("");
+            setHashArr([]);
+            setSelectedSeason("");
+            alert("게시글이 입력되었습니다.");
+        }
     };
 
     return (
@@ -96,7 +169,7 @@ const Form = () => {
                 <input placeholder="제목을 입력해주세요." value={postTitle} onChange={handlePostTitleChange} />
             </PostTitle>
             {/* //유튜브영상 */}
-            {/* <div>
+            <div>
                 {youtubeLink ? (
                     <Preview>
                         <iframe
@@ -111,7 +184,7 @@ const Form = () => {
                     <PlaceholderMessage>유튜브 링크를 넣어주세요.</PlaceholderMessage>
                 )}
             </div>
-			//유튜브썸네일 사진만  */}
+            {/* //유튜브썸네일 사진만
             <div>
                 {youtubeLink ? (
                     <Preview>
@@ -120,7 +193,7 @@ const Form = () => {
                 ) : (
                     <PlaceholderMessage>유튜브 링크를 넣어주세요.</PlaceholderMessage>
                 )}
-            </div>
+            </div> */}
             <SongTitle>
                 <label>노래제목:</label>
                 <input placeholder="노래 제목을 입력해주세요." value={title} onChange={handleTitleChange} />
@@ -153,9 +226,22 @@ const Form = () => {
             </Genre>
             <Hashtags>
                 <label>해시태그:</label>
-                <input placeholder="해시태그를 입력해주세요." value={hashtags} onChange={handleHashtagsChange} />
+                <input
+                    type="text"
+                    value={hashtag}
+                    onChange={onChangeHashtag}
+                    onKeyUp={onKeyUp}
+                    placeholder="해시태그 입력"
+                />
+                <div className="HashWrapOuter">
+                    {hashArr.map((tag, index) => (
+                        <Tag key={index} onClick={() => handleTagClick(tag)}>
+                            #{tag}
+                        </Tag>
+                    ))}
+                </div>
             </Hashtags>
-            <Button>게시글 작성</Button>
+            <Button onClick={handleSubmit}>게시글 작성</Button>
         </>
     );
 };
