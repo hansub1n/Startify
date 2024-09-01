@@ -36,7 +36,12 @@ const Form = () => {
     const [youtubeLink, setYoutubeLink] = useState("");
     const [desc, setDesc] = useState("");
     const [name, setName] = useState("");
-    const [hashtags, setHashtags] = useState("");
+    // onChange로 관리할 문자열
+    const [hashtag, setHashtag] = useState("");
+
+    // 해시태그를 담을 배열
+    const [hashArr, setHashArr] = useState([]);
+
     const [selectedSeason, setSelectedSeason] = useState("");
 
     const options = [
@@ -81,13 +86,34 @@ const Form = () => {
         setName(event.target.value);
     };
 
-    const handleHashtagsChange = (event) => {
-        setHashtags(event.target.value);
-    };
-
     const handleSeasonChange = (event) => {
         setSelectedSeason(event.target.value);
     };
+
+    const onKeyUp = useCallback(
+        (e) => {
+            if (typeof window !== "undefined") {
+                const $HashWrapOuter = document.querySelector(".HashWrapOuter");
+                const $HashWrapInner = document.createElement("div");
+                $HashWrapInner.className = "HashWrapInner";
+
+                $HashWrapInner.addEventListener("click", () => {
+                    $HashWrapOuter?.removeChild($HashWrapInner);
+                    console.log($HashWrapInner.innerHTML);
+                    setHashArr((hashArr) => hashArr.filter((h) => h !== $HashWrapInner.innerHTML.replace("#", "")));
+                });
+
+                if (e.keyCode === 13 && e.currentTarget.value.trim() !== "") {
+                    console.log("Enter Key 입력됨!", e.currentTarget.value);
+                    $HashWrapInner.innerHTML = "#" + e.currentTarget.value;
+                    $HashWrapOuter?.appendChild($HashWrapInner);
+                    setHashArr((prev) => [...prev, e.currentTarget.value.trim()]);
+                    setHashtag("");
+                }
+            }
+        },
+        [hashtag, hashArr]
+    );
 
     return (
         <>
@@ -153,7 +179,13 @@ const Form = () => {
             </Genre>
             <Hashtags>
                 <label>해시태그:</label>
-                <input placeholder="해시태그를 입력해주세요." value={hashtags} onChange={handleHashtagsChange} />
+                <input
+                    type="text"
+                    value={hashtag}
+                    onChange={onChangeHashtag}
+                    onKeyUp={onKeyUp}
+                    placeholder="해시태그 입력"
+                />
             </Hashtags>
             <Button>게시글 작성</Button>
         </>
