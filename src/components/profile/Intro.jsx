@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
+import { UserContext } from "../../context/UserContext";
 
-const Intro = ({ user }) => {
+const Intro = () => {
+    const { user } = useContext(UserContext);
     // TODO useParam으로 ..?
 
     return (
         <ProfileContentContainer>
-            <ProfileContent>{!user.userIntro ? `작성된 소개글이 없습니다.` : user.userIntro}</ProfileContent>
+            {/* <ProfileContent>{!user.userIntro ? `작성된 소개글이 없습니다.` : user.userIntro}</ProfileContent> */}
         </ProfileContentContainer>
     );
 };

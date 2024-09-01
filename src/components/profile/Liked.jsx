@@ -4,24 +4,24 @@ import { Item, ItemCounter, ItemImgBox, Items, ItemsContainer, ItemTxtBox } from
 import supabase from "../../supabaseClient";
 
 const Liked = () => {
-    const [likePosts, setLikePosts] = useState([]);
+    // const [likePosts, setLikePosts] = useState([]);
 
-    useEffect(() => {
-        const fetchLikePosts = async () => {
-            const { data, error } = await supabase
-                .from("STARTIFY_LIKES")
-                .select("post_id, STARTIFY_DATA(postTitle, userName), STARTIFY_USER(userId)")
-                .eq("user_id", "test1");
+    // useEffect(() => {
+    //     const fetchLikePosts = async () => {
+    //         const { data, error } = await supabase
+    //             .from("STARTIFY_LIKES")
+    //             .select("post_id, STARTIFY_DATA(postTitle, userName), STARTIFY_USER(userId)")
+    //             .eq("user_id", "test1");
 
-            if (error) {
-                console.log(error);
-            } else {
-                console.log("likedata", data);
-                setLikePosts(data);
-            }
-        };
-        fetchLikePosts();
-    }, []);
+    //         if (error) {
+    //             console.log(error);
+    //         } else {
+    //             console.log("likedata", data);
+    //             setLikePosts(data);
+    //         }
+    //     };
+    //     fetchLikePosts();
+    // }, []);
 
     return (
         <ProfileContentContainer>

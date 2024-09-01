@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import exampImg from "../../assets/temporalLogo.png";
+import { UserContext } from "../../context/UserContext";
 
-export const ProfileHeader = ({ user }) => {
+export const ProfileHeader = () => {
+    // const { user } = useContext(UserContext);
     // console.table("user", user);
     // console.log("userName", user.userName);
     return (
@@ -14,10 +16,8 @@ export const ProfileHeader = ({ user }) => {
                         <img src={exampImg} />
                     </ProfileImgBox>
                     <ProfileTxtBox>
-                        <span>
-                            {user.userName} <button>프로필 편집</button>
-                        </span>
-                        <span>{user.userId}</span>
+                        <span>{/* {user.userName} <button>프로필 편집</button> */}</span>
+                        {/* <span>{user.userId}</span> */}
                     </ProfileTxtBox>
                 </UserInfoContainer>
                 <ProfileNavigation>

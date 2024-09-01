@@ -2,8 +2,10 @@ import React from "react";
 import { ProfileContent, ProfileContentContainer } from "./Intro";
 import styled from "styled-components";
 import testImg from "../../assets/temporalLogo.png";
+import { UserContext } from "../../context/UserContext";
 
-const Created = ({ user, posts }) => {
+const Created = () => {
+    const { user } = UserContext(UserContext);
     return (
         <ProfileContentContainer>
             <ProfileContent>
