@@ -1,37 +1,44 @@
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import supabase from "../../supabaseClient";
 import { UserContext } from "../../context/UserContext";
 import { DetailEditModal } from "./DetailEditModal";
+import { DetailDeleteModal } from "./DetailDeleteModal";
 
-const DetailVisitor = ({ commentId, text, STARTIFY_USER }) => {
+const defaultProfileImgUrl = "/defaultProfile.gif";
+
+const DetailVisitor = ({ commentId, text, STARTIFY_USER, fetchPostData }) => {
     const { user } = useContext(UserContext);
     const userId = user.id;
 
     const { user_id, userName, profileImgUrl, id } = STARTIFY_USER;
-    // const user = {
-    //     id: 28,
-    //     user_id: "eeb6009e-5417-4da3-998e-9e611a82e4f4",
-    //     userName: "신장구",
-    //     profileImgUrl:
-    //         "https://i.namu.wiki/i/Hb-VM7F-Ki4dWs3GcAz2KkMCg22qSbp_i2gguEhEmmpmlBoxCpXpd9eWW2AdTXB3z12CvgVj_Ra_2e0o7yL5FQ.web"
-    // };
 
     const navigate = useNavigate();
 
-    const removeComment = async () => {
-        await supabase.from("STARTIFY_COMMENTS").delete().eq("id", commentId);
+    const [editInputText, setEditInputText] = useState(text);
+
+    const [confirmEdit, setConfirmEdit] = useState(false);
+    const openEditModal = () => {
+        setConfirmEdit(true);
+        setConfirmDelete(false);
+        setEditInputText(text);
     };
-    const [isEdit, setIsEdiit] = useState(false);
-    const openEditModal = () => setIsEdiit(true);
-    const closeEditModal = () => setIsEdiit(false);
+    const closeEditModal = () => {
+        setConfirmEdit(false);
+    };
+
+    const [confirmDelete, setConfirmDelete] = useState(false);
+    const openDeleteModal = () => {
+        setConfirmDelete(true);
+        setConfirmEdit(false);
+    };
+    const closeDeleteModal = () => setConfirmDelete(false);
 
     return (
         <div>
             <StVisitorCommentBox>
                 <Link to={`/profile?id=${id}`}>
-                    <StVisitorProfileImg src={profileImgUrl} />
+                    <StVisitorProfileImg src={profileImgUrl ?? defaultProfileImgUrl} />
                 </Link>
                 <StVisitorProfileTextDiv>
                     <StVisitorProfileNameSpan onClick={() => navigate(`/profile?id=${id}`)}>
@@ -40,21 +47,30 @@ const DetailVisitor = ({ commentId, text, STARTIFY_USER }) => {
                     <StVisitorCommentSpan>{text}</StVisitorCommentSpan>
                 </StVisitorProfileTextDiv>
                 <StVisitorCommentBtns>
-                    {/* 로그인된 아이디와 댓글 아이디가 같을 경우 보이기 */}
                     {userId !== user_id ? null : (
                         <div>
                             <div>
                                 <div>
                                     <button onClick={openEditModal}>수정</button>
                                     <DetailEditModal
-                                        openEditModal={isEdit}
+                                        editInputText={editInputText}
+                                        setEditInputText={setEditInputText}
+                                        openEditModal={confirmEdit}
                                         closeEditModal={closeEditModal}
                                         text={text}
                                         commentId={commentId}
+                                        fetchPostData={fetchPostData}
                                     />
                                 </div>
-
-                                <button onClick={() => removeComment(commentId)}>삭제</button>
+                                <div>
+                                    <button onClick={openDeleteModal}>삭제</button>
+                                    <DetailDeleteModal
+                                        openDeleteModal={confirmDelete}
+                                        closeDeleteModal={closeDeleteModal}
+                                        commentId={commentId}
+                                        fetchPostData={fetchPostData}
+                                    />
+                                </div>
                             </div>
                         </div>
                     )}
@@ -76,6 +92,7 @@ const StVisitorProfileImg = styled.img`
     display: flex;
     width: 50px;
     height: 50px;
+    object-fit: cover;
 
     border-radius: 50%;
 `;

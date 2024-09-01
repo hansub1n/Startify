@@ -12,26 +12,26 @@ const Detail = () => {
     const postId = searchParams.get("id");
 
     useEffect(() => {
-        const fetchPostData = async () => {
-            console.log(parseInt(postId));
-            const { data, error } = await supabase
-                .from("STARTIFY_DATA")
-                .select(
-                    `*, STARTIFY_COMMENTS(id, text, STARTIFY_USER(id, user_id, userName, profileImgUrl)), STARTIFY_USER(id, user_id, userName, profileImgUrl)`
-                )
-                .eq("id", postId);
-
-            if (error) {
-                console.log("error => ", error);
-            } else {
-                console.log("data => ", data);
-                const targetData = data[0];
-                setPost(targetData);
-            }
-        };
-
         fetchPostData();
     }, [postId]);
+
+    const fetchPostData = async () => {
+        const { data, error } = await supabase
+            .from("STARTIFY_DATA")
+            .select(
+                `*, STARTIFY_COMMENTS(id, text, STARTIFY_USER(id, user_id, userName, profileImgUrl)), STARTIFY_USER(id, user_id, userName, profileImgUrl)`
+            )
+            .eq("id", postId);
+
+        if (error) {
+            console.log("error => ", error);
+        } else {
+            console.log("data => ", data);
+
+            data[0].STARTIFY_COMMENTS.sort((a, b) => a.id - b.id);
+            setPost(data[0]);
+        }
+    };
 
     if (!post) {
         return <div>Loading...</div>;
@@ -56,7 +56,7 @@ const Detail = () => {
                     likes={post.likes}
                     hashtags={post.hashtags}
                 />
-                <DetailComment id={post.id} comments={post.STARTIFY_COMMENTS} />
+                <DetailComment id={post.id} comments={post.STARTIFY_COMMENTS} fetchPostData={fetchPostData} />
             </div>
         </DetailDiv>
     );

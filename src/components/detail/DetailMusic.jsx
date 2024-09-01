@@ -8,17 +8,11 @@ const DetailMusic = ({ name, title, url, likes, hashtags }) => {
     // const musicId = () => searchParams.get("v");
     const getEmbedLink = (url) => {
         const videoId = getYoutubeKey(url);
-        return `https://www.youtube.com/embed/${videoId}?loop=1&autoplay=1&mute=1&playlist=${videoId}`;
+        return `https://www.youtube.com/embed/${videoId}?loop=1&autoplay=0&mute=1&playlist=${videoId}`;
     };
     return (
         <div>
             <StMusicDiv>
-                {/* <StMusicLinkDiv>
-                    <a href={url} rel="noopener noreferrer">
-                        <StMusicImg src={`https://img.youtube.com/vi/${musicId}/0.jpg`} alt="노래 썸네일" />
-                    </a>
-                    <StMusicBtn>동영상 이동</StMusicBtn>
-                </StMusicLinkDiv> */}
                 <div>
                     {
                         <Preview>
@@ -27,7 +21,7 @@ const DetailMusic = ({ name, title, url, likes, hashtags }) => {
                                 height="315"
                                 src={getEmbedLink(url)}
                                 frameBorder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowFullScreen
                                 title="YouTube Video Preview"
                             ></iframe>

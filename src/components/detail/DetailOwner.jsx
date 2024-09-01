@@ -2,6 +2,8 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
+const defaultProfileImgUrl = "/defaultProfile.gif";
+
 const DetailOwner = ({ userId, userName, postTitle, desc, profileImgUrl }) => {
     const navigate = useNavigate();
 
@@ -9,7 +11,7 @@ const DetailOwner = ({ userId, userName, postTitle, desc, profileImgUrl }) => {
         <div>
             <StOwnerProfileBoxDiv>
                 <Link to={`/profile?id=${userId}`}>
-                    <StOwnerProfileImg src={profileImgUrl} />
+                    <StOwnerProfileImg src={profileImgUrl ?? defaultProfileImgUrl} />
                 </Link>
                 <StOwnerProfileTextDiv>
                     <StOwnerProfileNameSpan onClick={() => navigate(`/profile?id=${userId}`)}>
@@ -35,7 +37,7 @@ const StOwnerProfileImg = styled.img`
     display: flex;
     width: 60px;
     height: 60px;
-
+    object-fit: cover;
     border-radius: 50%;
 `;
 

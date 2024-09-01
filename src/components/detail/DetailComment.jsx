@@ -4,37 +4,32 @@ import { useContext, useEffect, useState } from "react";
 import supabase from "../../supabaseClient";
 import { UserContext } from "../../context/UserContext";
 
-const DetailComment = ({ id, comments }) => {
+const DetailComment = ({ id, comments, fetchPostData }) => {
     const { user } = useContext(UserContext);
     const userId = user.id;
     console.log(user.id);
-    // console.log(user);
-    // mock data
-    // const user = {
-    //     id: 28,
-    //     user_id: "eeb6009e-5417-4da3-998e-9e611a82e4f4",
-    //     userName: "신장구",
-    //     profileImgUrl:
-    //         "https://i.namu.wiki/i/Hb-VM7F-Ki4dWs3GcAz2KkMCg22qSbp_i2gguEhEmmpmlBoxCpXpd9eWW2AdTXB3z12CvgVj_Ra_2e0o7yL5FQ.web"
-    // };
 
     const [inputText, setInputText] = useState("");
+
     const addComment = async () => {
-        await supabase.from("STARTIFY_COMMENTS").insert({
-            text: inputText,
-            user_id: userId,
-            post_id: id
-        });
+        if (inputText !== "") {
+            await supabase.from("STARTIFY_COMMENTS").insert({ text: inputText, user_id: userId, post_id: id });
+            setInputText("");
+        } else {
+            alert("댓글을 입력하세요.");
+            return;
+        }
+
+        fetchPostData();
     };
 
     return (
         <div>
             <StCommentFieldDiv>
-                {/* 댓글 작성시, 로그인 된 정보 유저아이디, 닉네임, 이미지, 댓글 넘어감*/}
                 <StCommentFieldTextarea
                     value={inputText}
                     onChange={(e) => {
-                        setInputText(e.target.value);
+                        setInputText(e.target.value.trim());
                     }}
                 />
                 <StCommentFieldBtn onClick={addComment}>등록</StCommentFieldBtn>
@@ -42,7 +37,15 @@ const DetailComment = ({ id, comments }) => {
             <StDetailCommentsDiv>
                 {comments.map((comment) => {
                     const { id, text, STARTIFY_USER } = comment;
-                    return <DetailVisitor key={id} commentId={id} STARTIFY_USER={STARTIFY_USER} text={text} />;
+                    return (
+                        <DetailVisitor
+                            key={id}
+                            commentId={id}
+                            STARTIFY_USER={STARTIFY_USER}
+                            text={text}
+                            fetchPostData={fetchPostData}
+                        />
+                    );
                 })}
             </StDetailCommentsDiv>
         </div>
