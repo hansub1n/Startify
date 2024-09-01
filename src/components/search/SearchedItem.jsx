@@ -1,16 +1,16 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
 import { getYoutubeKey } from "../../utils";
-import useMusicContext from "../../hooks/useMusicContext";
 import { UserContext } from "../../context/UserContext";
+import useSearchedMusicContext from "../../hooks/useSearchedMusicContext";
 import { useNavigate } from "react-router-dom";
 
-const PostItem = ({ music }) => {
+const SearchedItem = ({ music }) => {
     const { postTitle, name, title, url, id } = music;
     const navigate = useNavigate();
     const { user } = useContext(UserContext);
     const userId = user?.id;
-    const { toggleLiked } = useMusicContext();
+    const { toggleLikedSearched } = useSearchedMusicContext();
     const thumbnailKey = getYoutubeKey(url);
     const likeCount = music.likes.length;
     const isUserLiked = music.likes.some((el) => el.user_id == userId);
@@ -19,7 +19,7 @@ const PostItem = ({ music }) => {
             <h3>{postTitle}</h3>
             <ThumbnailWrap>
                 <ThumbnailImg src={`https://img.youtube.com/vi/${thumbnailKey}/0.jpg`} />
-                <ThumbnailTextWrap onClick={(e) => toggleLiked(isUserLiked, id, e)}>
+                <ThumbnailTextWrap onClick={(e) => toggleLikedSearched(isUserLiked, id, e)}>
                     <LikesText>{likeCount}</LikesText>
                     <LikesButton>♡</LikesButton>
                 </ThumbnailTextWrap>
@@ -31,7 +31,7 @@ const PostItem = ({ music }) => {
     );
 };
 
-export default PostItem;
+export default SearchedItem;
 
 const ItemLi = styled.li`
     box-sizing: border-box;
