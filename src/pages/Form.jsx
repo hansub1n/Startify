@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { styled } from "styled-components";
 import { getYoutubeKey } from "../utils";
+import supabase from "../supabaseClient";
 
 const PostTitle = styled.div``;
 const SongTitle = styled.div``;
@@ -120,6 +121,47 @@ const Form = () => {
         setHashArr((prev) => prev.filter((tag) => tag !== tagToRemove));
     };
 
+    const handleSubmit = async () => {
+        // 사용자 정보를 가져옴
+        const {
+            data: { session }
+        } = await supabase.auth.getSession();
+
+        if (!session?.user) {
+            alert("로그인을 먼저 해주세요.");
+            return;
+        }
+
+        const userId = session.user.id; // 사용자 ID 가져오기
+
+        const { data, error } = await supabase.from("STARTIFY_DATA").insert([
+            {
+                user_id: userId,
+                postTitle: postTitle,
+                title: title,
+                url: youtubeLink,
+                desc: desc,
+                name: name,
+                genre: selectedSeason,
+                hashtags: hashArr
+            }
+        ]);
+
+        if (error) {
+            alert("입력이 되지 않았습니다");
+        } else {
+            setPostTitle("");
+            setTitle("");
+            setYoutubeLink("");
+            setDesc("");
+            setName("");
+            setHashtag("");
+            setHashArr([]);
+            setSelectedSeason("");
+            alert("게시글이 입력되었습니다.");
+        }
+    };
+
     return (
         <>
             <PostTitle>
@@ -199,7 +241,7 @@ const Form = () => {
                     ))}
                 </div>
             </Hashtags>
-            <Button>게시글 작성</Button>
+            <Button onClick={handleSubmit}>게시글 작성</Button>
         </>
     );
 };
