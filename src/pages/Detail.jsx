@@ -19,7 +19,7 @@ const Detail = () => {
         const { data, error } = await supabase
             .from("STARTIFY_DATA")
             .select(
-                `*,likes:STARTIFY_LIKES(user_id), STARTIFY_COMMENTS(id, text, STARTIFY_USER(id, user_id, userName, profileImgUrl)), STARTIFY_USER(id, user_id, userName, profileImgUrl)`
+                `*, STARTIFY_COMMENTS(id, text, STARTIFY_USER(id, user_id, userName, profileImgUrl)), STARTIFY_USER(id, user_id, userName, profileImgUrl)`
             )
             .eq("id", postId);
 
