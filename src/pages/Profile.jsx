@@ -5,7 +5,6 @@ import Intro from "../components/profile/Intro";
 import { ProfileContents } from "../components/profile/ProfileContents";
 import supabase from "../supabaseClient";
 import { useParams } from "react-router-dom";
-import UserProvider from "../context/UserContext";
 
 const Profile = () => {
     // const [posts, setPosts] = useState([]);
@@ -24,12 +23,12 @@ const Profile = () => {
     // }
 
     return (
-        <UserProvider>
+        <>
             <Wrapper>
                 <ProfileHeader />
                 <ProfileContents />
             </Wrapper>
-        </UserProvider>
+        </>
     );
 };
 

@@ -9,12 +9,10 @@ const Created = () => {
     return (
         <ProfileContentContainer>
             <ProfileContent>
-                <ItemCounter>
-                    <span>{posts.length}개의 게시물이 있습니다.</span>
-                </ItemCounter>
+                <ItemCounter>{/* <span>{posts.length}개의 게시물이 있습니다.</span> */}</ItemCounter>
                 <ItemsContainer>
                     <Items>
-                        {posts.map((post) => (
+                        {/* {posts.map((post) => (
                             <Item key={post.id}>
                                 <ItemImgBox>
                                     <img src={testImg} alt="" />
@@ -24,7 +22,7 @@ const Created = () => {
                                     <h1>{post.postTitle}</h1>
                                 </ItemTxtBox>
                             </Item>
-                        ))}
+                        ))} */}
                     </Items>
                 </ItemsContainer>
             </ProfileContent>

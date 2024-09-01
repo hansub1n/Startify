@@ -5,10 +5,10 @@ import { UserContext } from "../../context/UserContext";
 const Intro = () => {
     const { user } = useContext(UserContext);
     // TODO useParam으로 ..?
-    console.log(user);
+
     return (
         <ProfileContentContainer>
-            {/* <ProfileContent>{!user.userIntro ? `작성된 소개글이 없습니다.` : user.userIntro}</ProfileContent> */}
+            <ProfileContent>{!user.userIntro ? `작성된 소개글이 없습니다.` : user.userIntro}</ProfileContent>
         </ProfileContentContainer>
     );
 };

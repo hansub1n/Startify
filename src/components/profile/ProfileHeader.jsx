@@ -5,8 +5,8 @@ import exampImg from "../../assets/temporalLogo.png";
 import { UserContext } from "../../context/UserContext";
 
 export const ProfileHeader = () => {
-    // const { user } = useContext(UserContext);
-    // console.table("user", user);
+    const { user } = useContext(UserContext);
+    console.table("user", user);
     // console.log("userName", user.userName);
     return (
         <ProfileHeaderWrap>
@@ -16,8 +16,10 @@ export const ProfileHeader = () => {
                         <img src={exampImg} />
                     </ProfileImgBox>
                     <ProfileTxtBox>
-                        <span>{/* {user.userName} <button>프로필 편집</button> */}</span>
-                        {/* <span>{user.userId}</span> */}
+                        <span>
+                            {user.userName} <button>프로필 편집</button>
+                        </span>
+                        <span>{user.email}</span>
                     </ProfileTxtBox>
                 </UserInfoContainer>
                 <ProfileNavigation>
