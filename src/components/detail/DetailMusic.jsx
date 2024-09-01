@@ -1,15 +1,27 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import { getYoutubeKey } from "../../utils";
+import { UserContext } from "../../context/UserContext";
 
-const DetailMusic = ({ name, title, url, likes, hashtags }) => {
+const DetailMusic = ({ name, title, url, likes, hashtags, toggleLikeData }) => {
     // const [searchParams, setSearchParams] = useSearchParams(url);
     // const musicId = () => searchParams.get("v");
     const getEmbedLink = (url) => {
         const videoId = getYoutubeKey(url);
         return `https://www.youtube.com/embed/${videoId}?loop=1&autoplay=0&mute=1&playlist=${videoId}`;
     };
+
+    //유저 좋아요 상태를 만들기위해 userId사용
+    const { user } = useContext(UserContext);
+    const userId = user?.id;
+    let likesCount;
+    let isUserLiked;
+    if (likes) {
+        likesCount = likes.length;
+        isUserLiked = likes.some((el) => el.user_id == userId);
+    }
+
     return (
         <div>
             <StMusicDiv>
@@ -45,7 +57,8 @@ const DetailMusic = ({ name, title, url, likes, hashtags }) => {
                     )}
 
                     <StMusicLikeBtnDiv>
-                        <button>{likes}</button>
+                        <p>{likesCount}</p>
+                        <button onClick={() => toggleLikeData(isUserLiked, userId)}>{isUserLiked ? "♥" : "♡"}</button>
                     </StMusicLikeBtnDiv>
                 </StMusicInfoDiv>
             </StMusicDiv>
