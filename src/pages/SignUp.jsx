@@ -3,10 +3,10 @@ import App from "./../App";
 import supabase from "../supabaseClient";
 import styled from "styled-components";
 import { SupabaseClient } from "@supabase/supabase-js";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
-    const Navigate = useNavigate();
+    const navigate = useNavigate();
     const [userEmail, setUserEmail] = useState("");
     const [userPassword, setUserPassword] = useState("");
     const [userName, setUserName] = useState("");
@@ -42,6 +42,7 @@ const SignUp = () => {
             console.log("회원가입오류!", error.message);
         } else {
             alert("회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.");
+            navigate("/Login");
 
             const userUid = data.user.id;
             const { userData, userError } = await supabase
@@ -107,10 +108,11 @@ const SignUp = () => {
                 </div>
                 <button type="submit">회원 가입</button>
             </form>
+            <button type="submit" onClick={() => navigate("/")}>
+                메인으로
+            </button>
         </div>
     );
-
-    return <div>SignUp</div>;
 };
 
 export default SignUp;

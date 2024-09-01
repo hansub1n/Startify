@@ -7,11 +7,9 @@ export function UserProvider({ children }) {
     const [user, setUser] = useState();
 
     useEffect(() => {
+        // 유저 정보 가져와서 전역상태로 사용
         const getSession = async () => {
-            // 유저 정보 가져와서 전역상태로 사용
-
             const response = await supabase.auth.getSession();
-            console.log("세션", response);
             setUser(response.data.session.user);
         };
         getSession();
