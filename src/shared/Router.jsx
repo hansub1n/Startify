@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { BrowserRouter, Navigate, Outlet, Route, Routes } from "react-router-dom";
 import Home from "../pages/Home";
 import Detail from "../pages/Detail";
@@ -12,6 +12,7 @@ import NotFound from "../pages/NotFound";
 import { MusicProvider } from "../context/MusicContext";
 import SearchedMusicProvider from "../context/SearchedMusicContext";
 import SignUp from "../pages/SignUp";
+import { UserContext } from "../context/UserContext";
 
 const AuthRoute = () => {
     const { user } = useContext(UserContext);
