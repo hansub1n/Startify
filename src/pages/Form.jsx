@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { styled } from "styled-components";
 import { getYoutubeKey } from "../utils";
 
@@ -90,23 +90,14 @@ const Form = () => {
         setSelectedSeason(event.target.value);
     };
 
+    const onChangeHashtag = (e) => {
+        setHashtag(e.target.value);
+    };
+
     const onKeyUp = useCallback(
         (e) => {
             if (typeof window !== "undefined") {
-                const $HashWrapOuter = document.querySelector(".HashWrapOuter");
-                const $HashWrapInner = document.createElement("div");
-                $HashWrapInner.className = "HashWrapInner";
-
-                $HashWrapInner.addEventListener("click", () => {
-                    $HashWrapOuter?.removeChild($HashWrapInner);
-                    console.log($HashWrapInner.innerHTML);
-                    setHashArr((hashArr) => hashArr.filter((h) => h !== $HashWrapInner.innerHTML.replace("#", "")));
-                });
-
                 if (e.keyCode === 13 && e.currentTarget.value.trim() !== "") {
-                    console.log("Enter Key 입력됨!", e.currentTarget.value);
-                    $HashWrapInner.innerHTML = "#" + e.currentTarget.value;
-                    $HashWrapOuter?.appendChild($HashWrapInner);
                     setHashArr((prev) => [...prev, e.currentTarget.value.trim()]);
                     setHashtag("");
                 }
@@ -114,6 +105,9 @@ const Form = () => {
         },
         [hashtag, hashArr]
     );
+    const handleRemoveTag = (tag) => {
+        setHashArr(hashArr.filter((t) => t !== tag));
+    };
 
     return (
         <>
@@ -184,8 +178,15 @@ const Form = () => {
                     value={hashtag}
                     onChange={onChangeHashtag}
                     onKeyUp={onKeyUp}
-                    placeholder="해시태그 입력"
+                    placeholder="해시태그 입력 후 Enter"
                 />
+                <div className="HashWrapOuter">
+                    {hashArr.map((tag, index) => (
+                        <Tag key={index} onClick={() => console.log(`Tag clicked: ${tag}`)}>
+                            #{tag}
+                        </Tag>
+                    ))}
+                </div>
             </Hashtags>
             <Button>게시글 작성</Button>
         </>
