@@ -14,11 +14,6 @@ const LayoutHeader = () => {
         navigate("/");
     };
 
-    const isLogin = true;
-    // const isLogin = localStorage.getItem(userToken) ? true : false
-    const userName = "ㅇㅇㅇ";
-    // const userName = localStorage.getItem(userName)
-
     const navigate = useNavigate();
     const goToHome = () => navigate("/");
     return (
@@ -27,25 +22,22 @@ const LayoutHeader = () => {
                 <LogoImg src={temporalLogo} alt="로고이미지" onClick={goToHome} />
                 <HeaderTitle onClick={goToHome}>Startify</HeaderTitle>
                 <LoginUl>
-                    {isLogin ? (
-                        <>
-                            <p>{user ? <>{user.email}님 안녕하세요!</> : <>로그인이 필요합니다.</>}</p>
+                    <>
+                        <p>{user ? <>{user.email}님 안녕하세요!</> : <>로그인이 필요합니다.</>}</p>
+                        {/* 나중에 닉네임으로 변경하기 */}
 
-                            {user ? (
-                                <>
-                                    <Button onClick={() => navigate("/profile")}>마이페이지</Button>
-                                    <Button onClick={handleSignOut}>로그아웃</Button>
-                                </>
-                            ) : (
-                                <>
-                                    <Button onClick={() => navigate("/login")}>로그인</Button>
-                                    <Button onClick={() => navigate("/signup")}>회원가입</Button>
-                                </>
-                            )}
-                        </>
-                    ) : (
-                        <></>
-                    )}
+                        {user ? (
+                            <>
+                                <Button onClick={() => navigate("/profile")}>마이페이지</Button>
+                                <Button onClick={handleSignOut}>로그아웃</Button>
+                            </>
+                        ) : (
+                            <>
+                                <Button onClick={() => navigate("/login")}>로그인</Button>
+                                <Button onClick={() => navigate("/signup")}>회원가입</Button>
+                            </>
+                        )}
+                    </>
                 </LoginUl>
             </HeaderNav>
         </Header>

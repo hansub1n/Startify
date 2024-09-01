@@ -13,15 +13,17 @@ const Login = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
 
-        try {
-            await supabase.auth.signInWithPassword({
-                email: userEmail,
-                password: userPassword
-            });
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email: userEmail,
+            password: userPassword
+        });
+
+        if (error) {
+            alert("로그인실패! 로그인정보를 다시 확인해주세요.");
+            console.log("로그인오류!", error.message);
+        } else {
             alert("로그인완료! 메인페이지로 이동합니다.");
             navigate("/");
-        } catch (error) {
-            console.log("에러", error);
         }
     };
 
