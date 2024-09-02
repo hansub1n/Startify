@@ -3,7 +3,6 @@ import { styled } from "styled-components";
 import { getYoutubeKey } from "../utils";
 import supabase from "../supabaseClient";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { UserContext } from "../context/UserContext";
 
 const EditForm = () => {
     const navigate = useNavigate();
@@ -45,6 +44,7 @@ const EditForm = () => {
                 setYoutubeLink(postData.url);
                 setDesc(postData.desc);
                 setName(postData.name);
+                console.log("hashtags => ", postData.hashtags);
                 setHashArr(postData.hashtags || []);
                 setSelectedSeason(postData.genre);
             }
@@ -98,7 +98,9 @@ const EditForm = () => {
             if (e && e.currentTarget) {
                 const value = e.currentTarget.value.trim();
                 if (e.keyCode === 13 && value !== "") {
-                    setHashArr((prev) => [...prev, value]);
+                    if (!hashArr.includes(value)) {
+                        setHashArr((prev) => [...prev, value]);
+                    }
                     setHashtag("");
                 }
             }
@@ -111,43 +113,38 @@ const EditForm = () => {
     };
 
     const handleSubmit = async () => {
-        // 사용자 정보를 가져옴
-        const {
-            data: { session }
-        } = await supabase.auth.getSession();
+        // await supabase.from("STARTIFY_DATA").update({ hashtags: null }).eq("id", postId);
 
-        if (!session?.user) {
-            alert("로그인을 먼저 해주세요.");
-            navigate("/login");
-            return;
+        const updatedHashArr = [...hashArr]; // 해시테그가 빈값일 때 자동으로 가수명과 곡명을 저장하도록 하기
+        if (updatedHashArr.length === 0) {
+            updatedHashArr.push(title, name);
         }
+        // if (!name && !title && !updatedHashArr.includes(title, name)) {
+        //     updatedHashArr.push(title, name);
+        // }
 
-        const { error } = await supabase.from("STARTIFY_DATA").update({
-            user_id: userId,
-            postTitle: postTitle,
-            title: title,
-            url: youtubeLink,
-            desc: desc,
-            name: name,
-            genre: selectedSeason,
-            hashtags: hashArr
-        });
+        const { error } = await supabase
+            .from("STARTIFY_DATA")
+            .update({
+                postTitle,
+                title,
+                url: youtubeLink,
+                desc,
+                name,
+                genre: selectedSeason,
+                hashtags: updatedHashArr
+            })
+            .eq("id", postId);
+
+        alert("게시글이 수정되었습니다.");
+        navigate(`/detail?id=${postId}`);
 
         if (error) {
             alert("입력이 되지 않았습니다");
-        } else {
-            setPostTitle("");
-            setTitle("");
-            setYoutubeLink("");
-            setDesc("");
-            setName("");
-            setHashtag("");
-            setHashArr([]);
-            setSelectedSeason("");
-            alert("게시글이 수정되었습니다.");
-            navigate(`/detail?id=${postId}`);
+            return;
         }
     };
+
     if (!post) {
         return <div>Loading...</div>;
     }
@@ -219,7 +216,7 @@ const EditForm = () => {
                         />
                         <div className="HashWrapOuter">
                             {hashArr.map((tag, index) => (
-                                <Tag key={index} onClick={() => handleTagClick(tag)}>
+                                <Tag key={`${index}: ${tag}`} onClick={() => handleTagClick(tag)}>
                                     #{tag}
                                 </Tag>
                             ))}
@@ -231,7 +228,6 @@ const EditForm = () => {
         </Container>
     );
 };
-
 export default EditForm;
 
 const Container = styled.div`
