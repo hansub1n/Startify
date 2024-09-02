@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Button from "../components/common/Button";
 import PostItem from "../components/home/PostItem";
 import useSearchedMusicContext from "../hooks/useSearchedMusicContext";
+import SearchedItem from "../components/search/SearchedItem";
 
 const Search = () => {
     const { searchText, handleSearchText, SearchHandle, searchedSongs } = useSearchedMusicContext();
@@ -15,7 +16,7 @@ const Search = () => {
             <ListUl>
                 {searchedSongs ? (
                     searchedSongs.map((music) => {
-                        return <PostItem key={music.id} music={music} />;
+                        return <SearchedItem key={music.id} music={music} />;
                     })
                 ) : (
                     <div>해당하는 노래가 없습니다.</div>

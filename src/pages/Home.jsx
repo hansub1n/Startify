@@ -4,9 +4,10 @@ import SearchInput from "../components/home/SearchInput";
 import useMusicContext from "../hooks/useMusicContext";
 
 const Home = () => {
-    const { searchText, handleSearchText, handleSearch } = useMusicContext();
+    const { searchText, handleSearchText, handleSearch, songs } = useMusicContext();
     return (
         <ListWrapper>
+            <button onClick={() => console.log("songs :>> ", songs)}>dd</button>
             <SearchInput searchText={searchText} handleSearchText={handleSearchText} handleSearch={handleSearch} />
             <PostItemList title="언제나 듣기 좋은 노래" type="전체" />
             <PostItemList title="봄에 듣기 좋은 노래" type="봄" />
