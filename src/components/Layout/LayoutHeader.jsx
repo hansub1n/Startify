@@ -126,7 +126,7 @@ const LayoutButton = styled.button`
     color: #fff;
     border: none;
     border-radius: 20px;
-    font-size: 12px;
+    font-size: 15px;
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease;
