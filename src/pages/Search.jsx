@@ -6,7 +6,6 @@ import SearchedItem from "../components/search/SearchedItem";
 
 const Search = () => {
     const { searchText, handleSearchText, SearchHandle, searchedSongs } = useSearchedMusicContext();
-
     return (
         <ListWrapper>
             <div>
@@ -14,7 +13,7 @@ const Search = () => {
                 <Button onClick={SearchHandle}>검색</Button>
             </div>
             <ListUl>
-                {searchedSongs ? (
+                {searchedSongs && searchedSongs.length ? (
                     searchedSongs.map((music) => {
                         return <SearchedItem key={music.id} music={music} />;
                     })

@@ -2,15 +2,13 @@ import PostItem from "./PostItem";
 import styled from "styled-components";
 import useMusicContext from "../../hooks/useMusicContext";
 
-const PostItemList = ({ title, type }) => {
-    const { songs } = useMusicContext();
-    let musics = songs[type];
+const PostItemList = ({ songs, title }) => {
     return (
         <PostItemWrapper>
             <PostWrapTitle>{title}</PostWrapTitle>
             <PostItemsDiv>
-                {musics.length ? (
-                    musics.map((music) => {
+                {songs.length ? (
+                    songs.map((music) => {
                         return <PostItem key={music.id} music={music} />;
                     })
                 ) : (
@@ -33,7 +31,6 @@ const PostItemWrapper = styled.ul`
     padding: 20px 30px;
     background-color: #d4eaf7;
     border: 3px solid red;
-    overflow: hidden;
 `;
 
 const PostWrapTitle = styled.h3`
@@ -51,7 +48,7 @@ const PostItemsDiv = styled.div`
     align-items: center;
     justify-content: flex-start;
     gap: 20px;
-    width: 1800px;
+    width: 100%;
     overflow-x: auto;
     padding-bottom: 10px;
 `;
