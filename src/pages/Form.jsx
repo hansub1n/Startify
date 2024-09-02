@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { styled } from "styled-components";
 import { getYoutubeKey } from "../utils";
 import supabase from "../supabaseClient";
@@ -227,12 +227,6 @@ const Form = () => {
         return `https://www.youtube.com/embed/${videoId}?loop=1&autoplay=1&mute=1&playlist=${videoId}`;
     };
 
-    // //유튜브 썸네일만 뜨게할 때 필요한 값
-    // const getThumbnailLink = (link) => {
-    //     const videoId = getYoutubeKey(link);
-    //     return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-    // };
-
     const handlePostTitleChange = (event) => {
         setPostTitle(event.target.value);
     };
@@ -278,6 +272,15 @@ const Form = () => {
         setHashArr((prev) => prev.filter((tag) => tag !== tagToRemove));
     };
 
+    // useEffect(() => {
+    //     if (hashArr.length === 0 && title && name) {
+    //         const newTags = [];
+    //         if (title) newTags.push(title);
+    //         if (name) newTags.push(name);
+    //         setHashArr((prev) => [...prev, ...newTags]);
+    //     }
+    // }, [hashArr, title, name]);
+
     const handleSubmit = async () => {
         // 사용자 정보를 가져옴
         const {
@@ -319,6 +322,14 @@ const Form = () => {
             alert("게시글이 입력되었습니다.");
             navigate("/");
         }
+
+        const newTags = [...hashArr];
+        if (title && !newTags.includes(title)) {
+            newTags.push(title);
+        }
+        if (name && !newTags.includes(name)) {
+            newTags.push(name);
+        }
     };
 
     return (
@@ -342,16 +353,6 @@ const Form = () => {
                             <PlaceholderMessage>유튜브 링크를 넣어주세요.</PlaceholderMessage>
                         )}
                     </div>
-                    {/* //유튜브썸네일 사진만
-            <div>
-                {youtubeLink ? (
-                    <Preview>
-                        <img src={getThumbnailLink(youtubeLink)} alt="YouTube Thumbnail Preview" />
-                    </Preview>
-                ) : (
-                    <PlaceholderMessage>유튜브 링크를 넣어주세요.</PlaceholderMessage>
-                )}
-            </div> */}
                 </VideoWrapper>
                 <FormWrapper>
                     <SongTitle>
