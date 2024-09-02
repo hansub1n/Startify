@@ -37,8 +37,7 @@ const EditForm = () => {
 
     const options = [
         { value: "", label: "노래에 어울리는 계절을 선택해주세요.", disabled: true },
-        //disabled를 통해 선택이 안되도록 한다.
-        { value: "모든 계절", label: "모든 계절" },
+        { value: "전체", label: "모든 계절" },
         { value: "봄", label: "봄" },
         { value: "여름", label: "여름" },
         { value: "가을", label: "가을" },
@@ -60,7 +59,6 @@ const EditForm = () => {
                 setYoutubeLink(postData.url);
                 setDesc(postData.desc);
                 setName(postData.name);
-                console.log("hashtags => ", postData.hashtags);
                 setHashArr(postData.hashtags || []);
                 setSelectedSeason(postData.genre);
             }
@@ -69,17 +67,10 @@ const EditForm = () => {
         fetchPostData();
     }, [postId]);
 
-    // 유튜브 영상으로 틀때 필요한 값
     const getEmbedLink = (link) => {
         const videoId = getYoutubeKey(link);
         return `https://www.youtube.com/embed/${videoId}?loop=1&autoplay=0&mute=1&playlist=${videoId}`;
     };
-
-    // //유튜브 썸네일만 뜨게할 때 필요한 값
-    // const getThumbnailLink = (link) => {
-    //     const videoId = getYoutubeKey(link);
-    //     return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-    // };
 
     const handlePostTitleChange = (event) => {
         setPostTitle(event.target.value);
@@ -129,17 +120,28 @@ const EditForm = () => {
     };
 
     const handleSubmit = async () => {
-        // await supabase.from("STARTIFY_DATA").update({ hashtags: null }).eq("id", postId);
+        const fields = [
+            { value: postTitle, message: "제목을 입력해 주세요." },
+            { value: title, message: "노래 제목을 입력해 주세요." },
+            { value: youtubeLink, message: "유튜브 링크를 입력해 주세요." },
+            { value: desc, message: "내용을 입력해 주세요." },
+            { value: name, message: "가수 이름을 입력해 주세요." },
+            { value: selectedSeason, message: "계절을 선택해 주세요." }
+        ];
 
-        const updatedHashArr = [...hashArr]; // 해시테그가 빈값일 때 자동으로 가수명과 곡명을 저장하도록 하기
+        for (const field of fields) {
+            if (!field.value) {
+                alert(field.message);
+                return;
+            }
+        }
+
+        const updatedHashArr = [...hashArr];
         if (updatedHashArr.length === 0) {
             updatedHashArr.push(title, name);
         }
-        // if (!name && !title && !updatedHashArr.includes(title, name)) {
-        //     updatedHashArr.push(title, name);
-        // }
 
-        const { error } = await supabase
+        await supabase
             .from("STARTIFY_DATA")
             .update({
                 postTitle,
@@ -151,14 +153,8 @@ const EditForm = () => {
                 hashtags: updatedHashArr
             })
             .eq("id", postId);
-
         alert("게시글이 수정되었습니다.");
         navigate(`/detail?id=${postId}`);
-
-        if (error) {
-            alert("입력이 되지 않았습니다");
-            return;
-        }
     };
 
     if (!post) {
@@ -170,7 +166,6 @@ const EditForm = () => {
             <PostTitle placeholder="제목을 입력해주세요." value={postTitle} onChange={handlePostTitleChange} />
             <Text>
                 <VideoWrapper>
-                    {/* //유튜브영상 */}
                     <div>
                         {youtubeLink ? (
                             <Preview>
