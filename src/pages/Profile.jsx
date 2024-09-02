@@ -9,17 +9,33 @@ import { UserContext } from "../context/UserContext";
 import PostProvider from "../context/PostContext";
 
 const Profile = () => {
-    const { user, account } = useContext(UserContext);
+    const [account, setAccount] = useState();
+    const { userId } = useParams();
 
-    if (!user || !account) {
+    useEffect(() => {
+        const fetchAccountData = async () => {
+            const { data, error } = await supabase
+                .from("STARTIFY_USER")
+                .select("userName, userIntro, profileImgUrl, user_id, userEmail")
+                .eq("user_id", userId)
+                .single();
+            if (error) {
+                console.log("accountError", error);
+            }
+            setAccount(data);
+        };
+        fetchAccountData();
+    }, []);
+
+    if (!account) {
         return <div>로딩중</div>;
     }
 
     return (
         <PostProvider>
             <Wrapper>
-                <ProfileHeader />
-                <ProfileContents />
+                <ProfileHeader account={account} />
+                <ProfileContents account={account} />
             </Wrapper>
         </PostProvider>
     );
