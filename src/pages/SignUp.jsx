@@ -1,9 +1,104 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import App from "./../App";
 import supabase from "../supabaseClient";
 import styled from "styled-components";
 import { SupabaseClient } from "@supabase/supabase-js";
 import { useNavigate } from "react-router-dom";
+
+const SignUpContainer = styled.div`
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+
+    h2 {
+        margin-bottom: 20px;
+        font-size: 30px;
+        color: #3b3c3d;
+    }
+
+    button {
+        padding: 10px 20px;
+        background-color: #3b3c3d;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #00668c;
+    }
+`;
+
+const ImgUploadContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    input {
+        padding: 10px;
+        margin-bottom: 15px;
+    }
+
+    p {
+        color: #3b3c3d;
+        font-size: 14px;
+    }
+`;
+
+const PhotoContainer = styled.div`
+    width: 100px;
+    height: 100px;
+    border-radius: 20%;
+    overflow: hidden;
+    background-color: #d9d9d9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+`;
+
+const InputContainer = styled.div`
+    width: 100%;
+
+    label {
+        font-weight: bold;
+        color: #3b3c3d;
+        margin-bottom: 20px;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        margin-top: 10px;
+        margin-bottom: 20px;
+        border-radius: 4px;
+        font-size: 14px;
+        color: #3b3c3d;
+        box-sizing: border-box;
+    }
+
+    p {
+        color: #e74c3c;
+        font-size: 20px;
+        margin-top: 5px;
+
+        text-align: center;
+    }
+`;
 
 const SignUp = () => {
     const navigate = useNavigate();
@@ -16,11 +111,14 @@ const SignUp = () => {
     //유효성
     const [validUserEmailMessage, setValidUserEmailMessage] = useState(false);
     const [validUserPasswordMessage, setValidUserPasswordMessage] = useState("");
+    const emailRef = useRef(null);
+    const passwordRef = useRef(null);
 
     //유저테이블에 존재하는 이메일을 가져오기 및 이메일 중복체크
     useEffect(() => {
         CheckUserEmailData(userEmail);
     }, [userEmail]);
+
     const CheckUserEmailData = async (userEmail) => {
         const { data, error } = await supabase
             .from("STARTIFY_USER")
@@ -43,7 +141,7 @@ const SignUp = () => {
     const handleSetUserPassword = (event) => {
         const inputPassword = event.target.value;
         setUserPassword(inputPassword);
-        if (inputPassword.length < 6) {
+        if (inputPassword.length < 6 && inputPassword.length > 0) {
             setValidUserPasswordMessage("비밀번호는 6자 이상이어야 합니다.🙂");
         } else {
             setValidUserPasswordMessage("");
@@ -73,8 +171,15 @@ const SignUp = () => {
     const handleSignUp = async (e) => {
         e.preventDefault();
 
-        if (!userEmail || !userPassword) {
-            alert("이메일과 비밀번호는 필수입니다.");
+        if (!userEmail) {
+            alert("이메일을 입력해주세요.");
+            emailRef.current.focus();
+            return;
+        }
+
+        if (!userPassword) {
+            passwordRef.current.focus();
+            alert("비밀번호를 입력해주세요.");
             return;
         }
 
@@ -127,39 +232,46 @@ const SignUp = () => {
         }
     };
     return (
-        <div>
+        <SignUpContainer>
             <h2>회원가입</h2>
             <form onSubmit={handleSignUp}>
-                <div className="userImgUpload">
-                    <div>
+                <ImgUploadContainer className="userImgUpload">
+                    <PhotoContainer>
                         {profileImgView ? <img src={profileImgView} alt="이미지" /> : <p>선택된 이미지가 없습니다.</p>}
-                    </div>
+                    </PhotoContainer>
                     <input type="file" id="userProfileImg" name="userProfileImg" onChange={handleFileSelect} />
-                </div>
+                </ImgUploadContainer>
 
-                <div>
-                    <label>이메일</label>
-                    <input type="email" placeholder="Email" value={userEmail} onChange={handleSetUserEmail} />
+                <InputContainer>
+                    <label>이메일*</label>
+                    <input
+                        type="email"
+                        placeholder="이메일"
+                        value={userEmail}
+                        onChange={handleSetUserEmail}
+                        ref={emailRef}
+                    />
                     <p>{validUserEmailMessage}</p>
-                    <label>비밀번호</label>
+                    <label>비밀번호*</label>
                     <input
                         type="password"
-                        placeholder="Password"
+                        placeholder="비밀번호"
                         value={userPassword}
                         onChange={handleSetUserPassword}
+                        ref={passwordRef}
                     />
                     <p>{validUserPasswordMessage}</p>
                     <label>닉네임</label>
                     <input type="text" value={userName} placeholder="닉네임" onChange={handleSetUserName} />
                     <label>소개글</label>
                     <input type="text" placeholder="소개글" value={userIntro} onChange={handleSetUserIntro} />
-                </div>
+                </InputContainer>
                 <button type="submit">회원 가입</button>
             </form>
             {/* <button type="submit" onClick={() => navigate("/")}>
                 메인으로
             </button> */}
-        </div>
+        </SignUpContainer>
     );
 };
 
