@@ -4,7 +4,7 @@ export const Container = styled.div`
     align-items: center;
     justify-content: center;
     width: 1000px;
-    height: 800px;
+    height: auto;
     margin: auto;
     margin-top: 20px;
     margin-bottom: 30px;
@@ -12,6 +12,7 @@ export const Container = styled.div`
     background-color: #ffffff;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
+    font-family: "HakgyoansimNadeuriTTF-B", sans-serif;
 `;
 export const Text = styled.div`
     display: flex;
@@ -20,6 +21,7 @@ export const Text = styled.div`
     gap: 30px;
     line-height: 2.5;
     font-size: 17px;
+    font-family: "HakgyoansimNadeuriTTF-B", sans-serif;
 `;
 
 export const VideoWrapper = styled.div`
@@ -125,28 +127,32 @@ export const Hashtags = styled.div`
         height: 10px;
     }
 `;
-export const Button = styled.button`
-    display: block;
-    margin-top: 10px;
+export const Buttons = styled.div`
+    display: flex;
+    gap: 10px;
     margin-left: auto;
-    padding: 12px 24px;
-    background-color: #71c4ef;
-    color: #fff;
-    border: none;
-    border-radius: 20px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    button {
+        display: block;
+        margin-top: 10px;
+        padding: 10px 24px;
+        background-color: #71c4ef;
+        color: #fff;
+        border: none;
+        border-radius: 20px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
 
-    &:hover {
-        background-color: #0056b3;
-        transform: translateY(-2px);
-    }
+        &:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
 
-    &:active {
-        background-color: #004494;
-        transform: translateY(0);
+        &:active {
+            background-color: #004494;
+            transform: translateY(0);
+        }
     }
 `;
 //유튜브화면
