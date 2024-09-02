@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import exampImg from "../../assets/temporalLogo.png";
 import { UserContext } from "../../context/UserContext";
 
 export const ProfileHeader = ({ account }) => {
+    const navigate = useNavigate();
     console.log("header-account", account);
     return (
         <ProfileHeaderWrap>
@@ -15,7 +16,7 @@ export const ProfileHeader = ({ account }) => {
                     </ProfileImgBox>
                     <ProfileTxtBox>
                         <span>
-                            {account.userName} <button>프로필 편집</button>
+                            {account.userName} <button onClick={() => navigate("/modify-profile")}>프로필 편집</button>
                         </span>
                         <span>{account.userEmail}</span>
                     </ProfileTxtBox>

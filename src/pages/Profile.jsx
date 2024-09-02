@@ -9,15 +9,15 @@ import { UserContext } from "../context/UserContext";
 import PostProvider from "../context/PostContext";
 
 const Profile = () => {
+    const { user } = useContext(UserContext);
     const [account, setAccount] = useState();
-    const { userId } = useParams();
 
     useEffect(() => {
         const fetchAccountData = async () => {
             const { data, error } = await supabase
                 .from("STARTIFY_USER")
                 .select("userName, userIntro, profileImgUrl, user_id, userEmail")
-                .eq("user_id", userId)
+                .eq("user_id", user.id)
                 .single();
             if (error) {
                 console.log("accountError", error);
