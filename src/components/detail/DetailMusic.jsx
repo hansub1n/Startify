@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
-import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import { getYoutubeKey } from "../../utils";
 import { UserContext } from "../../context/UserContext";
+import likeImg from "../../assets/like.png";
+import dislikeImg from "../../assets/dislike.png";
 
-const DetailMusic = ({ name, title, url, likes, hashtags, toggleLikeData }) => {
+const DetailMusic = ({ url, name, title, desc, likes, hashtags, toggleLikeData }) => {
     // const [searchParams, setSearchParams] = useSearchParams(url);
     // const musicId = () => searchParams.get("v");
     const getEmbedLink = (url) => {
@@ -27,32 +28,36 @@ const DetailMusic = ({ name, title, url, likes, hashtags, toggleLikeData }) => {
             <StMusicDiv>
                 <div>
                     {
-                        <Preview>
+                        <div>
                             <iframe
-                                width="560"
-                                height="315"
+                                width=" 1120"
+                                height="630"
+                                object-fit="cover"
                                 src={getEmbedLink(url)}
                                 frameBorder="0"
                                 allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowFullScreen
                                 title="YouTube Video Preview"
                             ></iframe>
-                        </Preview>
+                        </div>
                     }
                 </div>
                 <StMusicInfoDiv>
                     <StMusicInfoTitleSpan>
                         {name} - {title}
                     </StMusicInfoTitleSpan>
+                    <StMusicLikeBtnDiv>
+                        <LikeCountP>{likesCount}</LikeCountP>
+                        <div onClick={() => toggleLikeData(isUserLiked, userId)}>
+                            {isUserLiked ? <LikeBtmImg src={likeImg} /> : <LikeBtmImg src={dislikeImg} />}
+                        </div>
+                    </StMusicLikeBtnDiv>
+                    <StPostDescSpan>{desc}</StPostDescSpan>
                     <StMusicInfoHashDiv>
                         {hashtags.map((hashtag) => {
                             return <div key={hashtag}>#{hashtag}</div>;
                         })}
                     </StMusicInfoHashDiv>
-                    <StMusicLikeBtnDiv>
-                        <p>{likesCount}</p>
-                        <button onClick={() => toggleLikeData(isUserLiked, userId)}>{isUserLiked ? "♥" : "♡"}</button>
-                    </StMusicLikeBtnDiv>
                 </StMusicInfoDiv>
             </StMusicDiv>
         </div>
@@ -66,28 +71,17 @@ const StMusicDiv = styled.div`
     flex-wrap: wrap;
     flex-direction: column;
     justify-content: center;
-    margin: 15px 0 80px 0;
+    margin-top: 15px;
+`;
+const StMusicInfoTitleSpan = styled.span`
+    font-size: 20px;
+    font-weight: 700;
+    margin: 20px 0;
 `;
 
-const Preview = styled.div``;
-
-const StMusicLinkDiv = styled.div`
+const StPostDescSpan = styled.span`
     display: flex;
-    justify-content: center;
-    align-items: center;
-`;
-
-const StMusicImg = styled.img`
-    display: flex;
-    width: 1100px;
-    height: 600px;
-    object-fit: cover;
-    border-radius: 30px;
-`;
-
-const StMusicBtn = styled.button`
-    display: flex;
-    position: absolute;
+    font-size: 18px;
 `;
 
 const StMusicInfoDiv = styled.div`
@@ -99,17 +93,35 @@ const StMusicInfoDiv = styled.div`
 const StMusicLikeBtnDiv = styled.div`
     display: flex;
     position: absolute;
-    top: 20px;
-    right: 10px;
+    top: 10px;
+    right: 50px;
 `;
 
-const StMusicInfoTitleSpan = styled.span`
+const LikeCountP = styled.p`
+    display: flex;
+    position: absolute;
+    top: 10px;
+    right: 5px;
     font-size: 20px;
-    font-weight: 500;
-    margin: 20px 0;
+`;
+
+const LikeBtmImg = styled.img`
+    display: flex;
+    position: absolute;
+    top: -3px;
+    width: 45px;
+    height: 45px;
+    object-fit: cover;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    &:hover {
+        transform: scale(1.1);
+    }
 `;
 
 const StMusicInfoHashDiv = styled.div`
     display: flex;
-    color: #a9a9a9;
+    color: #056ee8;
+    margin: 50px 0 30px 0;
 `;
