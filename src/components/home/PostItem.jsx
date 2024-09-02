@@ -4,6 +4,7 @@ import { getYoutubeKey } from "../../utils";
 import { UserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import Button from "../common/Button";
+import playButton from "../../assets/playButton.png";
 
 const PostItem = ({ music }) => {
     const [isVideoPlayed, setIsVideoPlayed] = useState(false);
@@ -49,8 +50,11 @@ const PostItem = ({ music }) => {
                     setIsVideoPlayed(!isVideoPlayed);
                 }}
                 $fontSize="40px"
+                $width="60px"
+                $height="60px"
+                $borderRadius="30px"
             >
-                ▶️
+                <img src={playButton} />
             </Button>
         </ItemLi>
     );
@@ -69,7 +73,6 @@ const ItemLi = styled.li`
     width: 360px;
     height: 400px;
     border-radius: 30px;
-    /* border: 5px solid #747272; */
     padding: 20px;
     transition: transform 0.2s, box-shadow 0.2s;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 5px;
