@@ -6,8 +6,12 @@ import { UserContext } from "../../context/UserContext";
 
 export const ProfileHeader = () => {
     const { user, account } = useContext(UserContext);
-    console.table("user", user);
-    console.log("account", account);
+
+    if (!user || !account) {
+        return <div>로딩중..</div>;
+    }
+    // console.table("user", user);
+    // console.log("account", account);
 
     return (
         <ProfileHeaderWrap>
