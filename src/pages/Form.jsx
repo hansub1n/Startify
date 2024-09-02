@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { styled } from "styled-components";
 import { getYoutubeKey } from "../utils";
 import supabase from "../supabaseClient";
@@ -227,12 +227,6 @@ const Form = () => {
         return `https://www.youtube.com/embed/${videoId}?loop=1&autoplay=1&mute=1&playlist=${videoId}`;
     };
 
-    // //유튜브 썸네일만 뜨게할 때 필요한 값
-    // const getThumbnailLink = (link) => {
-    //     const videoId = getYoutubeKey(link);
-    //     return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-    // };
-
     const handlePostTitleChange = (event) => {
         setPostTitle(event.target.value);
     };
@@ -271,7 +265,7 @@ const Form = () => {
                 }
             }
         },
-        [hashtag, hashArr]
+        [hashtag]
     );
 
     const handleTagClick = (tagToRemove) => {
@@ -279,7 +273,6 @@ const Form = () => {
     };
 
     const handleSubmit = async () => {
-        // 사용자 정보를 가져옴
         const {
             data: { session }
         } = await supabase.auth.getSession();
@@ -292,6 +285,11 @@ const Form = () => {
 
         const userId = session.user.id; // 사용자 ID 가져오기
 
+        const updatedHashArr = [...hashArr]; // 해시테그가 빈값일 때 자동으로 가수명과 곡명을 저장하도록 하기
+        if (name && title && !updatedHashArr.includes(title, name)) {
+            updatedHashArr.push(title, name);
+        }
+
         const { data, error } = await supabase.from("STARTIFY_DATA").insert([
             {
                 user_id: userId,
@@ -301,7 +299,7 @@ const Form = () => {
                 desc: desc,
                 name: name,
                 genre: selectedSeason,
-                hashtags: hashArr
+                hashtags: updatedHashArr
             }
         ]);
 
@@ -342,16 +340,6 @@ const Form = () => {
                             <PlaceholderMessage>유튜브 링크를 넣어주세요.</PlaceholderMessage>
                         )}
                     </div>
-                    {/* //유튜브썸네일 사진만
-            <div>
-                {youtubeLink ? (
-                    <Preview>
-                        <img src={getThumbnailLink(youtubeLink)} alt="YouTube Thumbnail Preview" />
-                    </Preview>
-                ) : (
-                    <PlaceholderMessage>유튜브 링크를 넣어주세요.</PlaceholderMessage>
-                )}
-            </div> */}
                 </VideoWrapper>
                 <FormWrapper>
                     <SongTitle>
@@ -394,7 +382,7 @@ const Form = () => {
                             value={hashtag}
                             onChange={onChangeHashtag}
                             onKeyUp={onKeyUp}
-                            placeholder="해시태그 입력"
+                            placeholder="해시태그 입력 후 ENTER해주세요."
                         />
                         <div className="HashWrapOuter">
                             {hashArr.map((tag, index) => (
