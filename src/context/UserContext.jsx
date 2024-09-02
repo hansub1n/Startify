@@ -14,11 +14,10 @@ export function UserProvider({ children }) {
             .eq("user_id", userId)
             .single();
         if (error) {
-            return null;
+            console.log("accountError", error);
         }
         return data;
     };
-
     useEffect(() => {
         // 유저 정보 가져와서 전역상태로 사용
         const getSession = async () => {
