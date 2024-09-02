@@ -265,24 +265,14 @@ const Form = () => {
                 }
             }
         },
-        [hashtag, hashArr]
+        [hashtag]
     );
 
     const handleTagClick = (tagToRemove) => {
         setHashArr((prev) => prev.filter((tag) => tag !== tagToRemove));
     };
 
-    // useEffect(() => {
-    //     if (hashArr.length === 0 && title && name) {
-    //         const newTags = [];
-    //         if (title) newTags.push(title);
-    //         if (name) newTags.push(name);
-    //         setHashArr((prev) => [...prev, ...newTags]);
-    //     }
-    // }, [hashArr, title, name]);
-
     const handleSubmit = async () => {
-        // 사용자 정보를 가져옴
         const {
             data: { session }
         } = await supabase.auth.getSession();
@@ -295,6 +285,11 @@ const Form = () => {
 
         const userId = session.user.id; // 사용자 ID 가져오기
 
+        const updatedHashArr = [...hashArr]; // 해시테그가 빈값일 때 자동으로 가수명과 곡명을 저장하도록 하기
+        if (name && title && !updatedHashArr.includes(title, name)) {
+            updatedHashArr.push(title, name);
+        }
+
         const { data, error } = await supabase.from("STARTIFY_DATA").insert([
             {
                 user_id: userId,
@@ -304,7 +299,7 @@ const Form = () => {
                 desc: desc,
                 name: name,
                 genre: selectedSeason,
-                hashtags: hashArr
+                hashtags: updatedHashArr
             }
         ]);
 
@@ -321,14 +316,6 @@ const Form = () => {
             setSelectedSeason("");
             alert("게시글이 입력되었습니다.");
             navigate("/");
-        }
-
-        const newTags = [...hashArr];
-        if (title && !newTags.includes(title)) {
-            newTags.push(title);
-        }
-        if (name && !newTags.includes(name)) {
-            newTags.push(name);
         }
     };
 
@@ -395,7 +382,7 @@ const Form = () => {
                             value={hashtag}
                             onChange={onChangeHashtag}
                             onKeyUp={onKeyUp}
-                            placeholder="해시태그 입력"
+                            placeholder="해시태그 입력 후 ENTER해주세요."
                         />
                         <div className="HashWrapOuter">
                             {hashArr.map((tag, index) => (
