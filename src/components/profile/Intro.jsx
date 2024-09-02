@@ -3,12 +3,12 @@ import styled from "styled-components";
 import { UserContext } from "../../context/UserContext";
 
 const Intro = () => {
-    const { user } = useContext(UserContext);
+    const { account } = useContext(UserContext);
     // TODO useParam으로 ..?
 
     return (
         <ProfileContentContainer>
-            <ProfileContent>{!user.userIntro ? `작성된 소개글이 없습니다.` : user.userIntro}</ProfileContent>
+            <ProfileContent>{!account.userIntro ? `작성된 소개글이 없습니다.` : account.userIntro}</ProfileContent>
         </ProfileContentContainer>
     );
 };
