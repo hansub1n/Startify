@@ -61,9 +61,10 @@ const Router = () => {
                     <Route path="/search" element={<Search />} />
                     <Route path="/form" element={<Form />} />
                     <Route path="/modify-profile" element={<ModifyProfile />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/signup" element={<SignUp />} />
                 </Route>
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<SignUp />} />
+
                 <Route path="*" element={<NotFound />} />
             </Routes>
         </BrowserRouter>
