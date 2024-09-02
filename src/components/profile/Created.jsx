@@ -1,28 +1,35 @@
-import React from "react";
+import React, { useContext } from "react";
 import { ProfileContent, ProfileContentContainer } from "./Intro";
 import styled from "styled-components";
 import testImg from "../../assets/temporalLogo.png";
 import { UserContext } from "../../context/UserContext";
+import { PostContext } from "../../context/PostContext";
 
 const Created = () => {
-    const { user } = UserContext(UserContext);
+    const { posts } = useContext(PostContext);
+    if (!posts) {
+        return <div>로딩중</div>;
+    }
+    console.log("posts", posts);
     return (
         <ProfileContentContainer>
             <ProfileContent>
-                <ItemCounter>{/* <span>{posts.length}개의 게시물이 있습니다.</span> */}</ItemCounter>
+                <ItemCounter>
+                    <span>{posts.length}개의 게시물이 있습니다.</span>
+                </ItemCounter>
                 <ItemsContainer>
                     <Items>
-                        {/* {posts.map((post) => (
+                        {posts.map((post) => (
                             <Item key={post.id}>
                                 <ItemImgBox>
-                                    <img src={testImg} alt="" />
+                                    <img src={post.url} alt="" />
                                 </ItemImgBox>
                                 <ItemTxtBox>
                                     <span>{post.userName}</span>
                                     <h1>{post.postTitle}</h1>
                                 </ItemTxtBox>
                             </Item>
-                        ))} */}
+                        ))}
                     </Items>
                 </ItemsContainer>
             </ProfileContent>
