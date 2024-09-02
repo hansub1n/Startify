@@ -6,7 +6,6 @@ export const DetailEditModal = ({
     setEditInputText,
     openEditModal,
     closeEditModal,
-    text,
     commentId,
     fetchPostData
 }) => {

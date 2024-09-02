@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import DetailOwner from "../components/detail/DetailOwner";
 import DetailMusic from "../components/detail/DetailMusic";
 import DetailComment from "../components/detail/DetailComment";
 import styled from "styled-components";
 import supabase from "../supabaseClient";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { DetailDeleteModal } from "../components/detail/DetailDeleteModal";
+import { UserContext } from "../context/UserContext";
 
 const Detail = () => {
+    const { user } = useContext(UserContext);
+    const navigate = useNavigate();
     const [post, setPost] = useState(null);
     const [searchParams] = useSearchParams();
     const postId = searchParams.get("id");
@@ -57,6 +61,10 @@ const Detail = () => {
         fetchLikeData();
     }, []);
 
+    const [confirmDelete, setConfirmDelete] = useState(false);
+    const openDeleteModal = () => setConfirmDelete(true);
+    const closeDeleteModal = () => setConfirmDelete(false);
+
     if (!post) {
         return <div>Loading...</div>;
     }
@@ -64,6 +72,23 @@ const Detail = () => {
     return (
         <DetailDiv>
             <div>
+                {user.id !== post.STARTIFY_USER.user_id ? null : (
+                    <div>
+                        <div>
+                            <button onClick={() => navigate("/form")}>수정</button>
+                        </div>
+                        <div>
+                            <button onClick={openDeleteModal}>삭제</button>
+                            <DetailDeleteModal
+                                openDeleteModal={confirmDelete}
+                                closeDeleteModal={closeDeleteModal}
+                                postId={post.id}
+                                fetchPostData={fetchPostData}
+                            />
+                        </div>
+                    </div>
+                )}
+
                 <DetailOwner
                     userId={post.STARTIFY_USER.id}
                     userName={post.STARTIFY_USER.userName}
