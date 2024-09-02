@@ -41,7 +41,7 @@ const Form = () => {
     const options = [
         { value: "", label: "노래에 어울리는 계절을 선택해주세요.", disabled: true },
         //disabled를 통해 선택이 안되도록 한다.
-        { value: "모든 계절", label: "모든 계절" },
+        { value: "전체", label: "모든 계절" },
         { value: "봄", label: "봄" },
         { value: "여름", label: "여름" },
         { value: "가을", label: "가을" },
