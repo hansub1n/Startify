@@ -1,6 +1,7 @@
 import { styled } from "styled-components";
 
 export const Container = styled.div`
+    font-family: "SUITE-Regular";
     align-items: center;
     justify-content: center;
     width: 1000px;
@@ -12,7 +13,6 @@ export const Container = styled.div`
     background-color: #ffffff;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    font-family: "HakgyoansimNadeuriTTF-B", sans-serif;
 `;
 export const Text = styled.div`
     display: flex;
@@ -21,7 +21,6 @@ export const Text = styled.div`
     gap: 30px;
     line-height: 2.5;
     font-size: 17px;
-    font-family: "HakgyoansimNadeuriTTF-B", sans-serif;
 `;
 
 export const VideoWrapper = styled.div`
@@ -36,6 +35,7 @@ export const FormWrapper = styled.div`
     justify-content: center;
 `;
 export const PostTitle = styled.input`
+    font-family: "SUITE-Regular";
     font-size: 36px;
     margin: 0 auto;
     color: #000000;
@@ -49,6 +49,7 @@ export const PostTitle = styled.input`
 `;
 export const SongTitle = styled.div`
     input {
+        font-family: "SUITE-Regular";
         width: 77%;
         padding: 10px;
         font-size: 16px;
@@ -60,6 +61,7 @@ export const SongTitle = styled.div`
 `;
 export const YoutubeLink = styled.div`
     input {
+        font-family: "SUITE-Regular";
         width: 74%;
         padding: 10px;
         font-size: 16px;
@@ -71,6 +73,7 @@ export const YoutubeLink = styled.div`
 `;
 export const Desc = styled.div`
     textarea {
+        font-family: "SUITE-Regular";
         width: 95%;
         padding: 10px;
         font-size: 16px;
@@ -83,6 +86,7 @@ export const Desc = styled.div`
 `;
 export const Name = styled.div`
     input {
+        font-family: "SUITE-Regular";
         width: 77%;
         padding: 10px;
         font-size: 16px;
@@ -94,6 +98,7 @@ export const Name = styled.div`
 `;
 export const Genre = styled.div`
     select {
+        font-family: "SUITE-Regular";
         width: 90%;
         padding: 10px 20px;
         appearance: none;
@@ -118,6 +123,7 @@ export const Genre = styled.div`
 
 export const Hashtags = styled.div`
     input {
+        font-family: "SUITE-Regular";
         width: 78%;
         padding: 10px;
         font-size: 16px;
@@ -132,6 +138,7 @@ export const Buttons = styled.div`
     gap: 10px;
     margin-left: auto;
     button {
+        font-family: "SUITE-Regular";
         display: block;
         margin-top: 10px;
         padding: 10px 24px;
@@ -178,6 +185,7 @@ export const PlaceholderMessage = styled.div`
     border-radius: 20px;
 `;
 export const Tag = styled.div`
+    font-family: "SUITE-Regular";
     display: inline-block;
     background-color: #00668c;
     color: #ffffff;
