@@ -107,7 +107,7 @@ const SignUp = () => {
         });
 
         if (error) {
-            console.log("회원가입오류!", error.message);
+            console.log("회원가입오류", error.message);
         } else {
             alert("회원가입이 완료되었습니다. 메인 페이지로 이동합니다.");
             navigate("/");
