@@ -100,6 +100,30 @@ const Form = () => {
     };
 
     const handleSubmit = async () => {
+        if (!postTitle) {
+            alert("제목을 입력해 주세요.");
+            return;
+        }
+        if (!title) {
+            alert("노래 제목을 입력해 주세요.");
+            return;
+        }
+        if (!youtubeLink) {
+            alert("유튜브 링크를 입력해 주세요.");
+            return;
+        }
+        if (!desc) {
+            alert("내용을 입력해 주세요.");
+            return;
+        }
+        if (!name) {
+            alert("가수 이름을 입력해 주세요.");
+            return;
+        }
+        if (!selectedSeason) {
+            alert("계절을 선택해 주세요.");
+            return;
+        }
         const {
             data: { session }
         } = await supabase.auth.getSession();
