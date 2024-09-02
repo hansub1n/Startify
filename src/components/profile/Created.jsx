@@ -1,7 +1,63 @@
-import React from "react";
+import React, { useContext } from "react";
+import { ProfileContent, ProfileContentContainer } from "./Intro";
+import styled from "styled-components";
+import testImg from "../../assets/temporalLogo.png";
+import { UserContext } from "../../context/UserContext";
+import { PostContext } from "../../context/PostContext";
 
 const Created = () => {
-    return <div>Created</div>;
+    const { posts } = useContext(PostContext);
+    if (!posts) {
+        return <div>로딩중</div>;
+    }
+    console.log("posts", posts);
+    return (
+        <ProfileContentContainer>
+            <ProfileContent>
+                <ItemCounter>
+                    <span>{posts.length}개의 게시물이 있습니다.</span>
+                </ItemCounter>
+                <ItemsContainer>
+                    <Items>
+                        {posts.map((post) => (
+                            <Item key={post.id}>
+                                <ItemImgBox>
+                                    <img src={post.url} alt="" />
+                                </ItemImgBox>
+                                <ItemTxtBox>
+                                    <span>{post.userName}</span>
+                                    <h1>{post.postTitle}</h1>
+                                </ItemTxtBox>
+                            </Item>
+                        ))}
+                    </Items>
+                </ItemsContainer>
+            </ProfileContent>
+        </ProfileContentContainer>
+    );
 };
 
 export default Created;
+
+export const ItemCounter = styled.div`
+    padding-bottom: 20px;
+    font-size: 14px;
+`;
+
+export const ItemsContainer = styled.div``;
+export const Items = styled.ul`
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+`;
+export const Item = styled.li``;
+export const ItemImgBox = styled.div`
+    & img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+`;
+export const ItemTxtBox = styled.div`
+    text-align: center;
+`;
