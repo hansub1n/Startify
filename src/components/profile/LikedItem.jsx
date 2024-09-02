@@ -1,10 +1,12 @@
+import { useNavigate } from "react-router-dom";
 import { getYoutubeKey } from "../../utils";
 import { Item, ItemImgBox, ItemTxtBox } from "./CreatedItem";
 
 export const LikedItem = ({ likePost }) => {
     const thumbnailKey = getYoutubeKey(likePost.STARTIFY_DATA.url);
+    const navigate = useNavigate();
     return (
-        <Item>
+        <Item onClick={() => navigate(`/detail?id=${likePost.STARTIFY_DATA.id}`)}>
             <ItemImgBox>
                 <img src={`https://img.youtube.com/vi/${thumbnailKey}/0.jpg`} alt="" />
             </ItemImgBox>

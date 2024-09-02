@@ -1,11 +1,14 @@
 import React from "react";
 import { getYoutubeKey } from "../../utils";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 export const CreatedItem = ({ post }) => {
     const thumbnailKey = getYoutubeKey(post.url);
+    const navigate = useNavigate();
+
     return (
-        <Item>
+        <Item onClick={() => navigate(`/detail?id=${post.id}`)}>
             <ItemImgBox>
                 <img src={`https://img.youtube.com/vi/${thumbnailKey}/0.jpg`} alt={post.postTitle} />
             </ItemImgBox>
