@@ -43,20 +43,20 @@ const LayoutHeader = () => {
         <Header>
             <HeaderNav>
                 <LogoImg src={temporalLogo} alt="로고이미지" onClick={goToHome} />
-                <HeaderTitle onClick={goToHome}>Startify</HeaderTitle>
+
                 <LoginUl>
                     {user ? (
                         <UserGreeting>
                             {account?.profileImgUrl && <UserImage src={account.profileImgUrl} alt="유저 프로필" />}
-                            <p>{account?.userName ? `${account.userName}님 안녕하세요!` : "님 안녕하세요!"}</p>
-                            <Button onClick={() => navigate("/form")}>노래 공유하기</Button>
-                            <Button onClick={() => navigate(`/profile/${user.id}`)}>마이페이지</Button>
-                            <Button onClick={handleSignOut}>로그아웃</Button>
+                            {/* <p>{account?.userName ? `${account.userName}님 안녕하세요!` : "님 안녕하세요!"}</p> */}
+                            <LayoutButton onClick={() => navigate("/form")}>노래 공유하기</LayoutButton>
+                            <LayoutButton onClick={() => navigate(`/profile/${user.id}`)}>마이페이지</LayoutButton>
+                            <LayoutButton onClick={handleSignOut}>로그아웃</LayoutButton>
                         </UserGreeting>
                     ) : (
                         <>
-                            <Button onClick={() => navigate("/login")}>로그인</Button>
-                            <Button onClick={() => navigate("/signup")}>회원가입</Button>
+                            <LayoutButton onClick={() => navigate("/login")}>로그인</LayoutButton>
+                            <LayoutButton onClick={() => navigate("/signup")}>회원가입</LayoutButton>
                         </>
                     )}
                 </LoginUl>
@@ -76,6 +76,7 @@ const Header = styled.header`
 `;
 
 const HeaderNav = styled.nav`
+    align-items: flex-end;
     font-family: "SUITE-Regular";
     display: flex;
     flex-direction: row;
@@ -111,20 +112,21 @@ const UserGreeting = styled.div`
 `;
 
 const UserImage = styled.img`
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     object-fit: cover;
 `;
-const Button = styled.button`
+const LayoutButton = styled.button`
     font-family: "SUITE-Regular";
     display: block;
-    padding: 10px 24px;
+    margin-top: 10px;
+    padding: 5px 10px;
     background-color: #71c4ef;
     color: #fff;
     border: none;
     border-radius: 20px;
-    font-size: 16px;
+    font-size: 12px;
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease;
