@@ -1,5 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
-import { styled } from "styled-components";
+import React, { useCallback, useEffect, useState } from "react";
 import { getYoutubeKey } from "../utils";
 import supabase from "../supabaseClient";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -73,7 +72,7 @@ const EditForm = () => {
     // 유튜브 영상으로 틀때 필요한 값
     const getEmbedLink = (link) => {
         const videoId = getYoutubeKey(link);
-        return `https://www.youtube.com/embed/${videoId}?loop=1&autoplay=1&mute=1&playlist=${videoId}`;
+        return `https://www.youtube.com/embed/${videoId}?loop=1&autoplay=0&mute=1&playlist=${videoId}`;
     };
 
     // //유튜브 썸네일만 뜨게할 때 필요한 값
@@ -178,7 +177,7 @@ const EditForm = () => {
                                 <iframe
                                     src={getEmbedLink(youtubeLink)}
                                     frameBorder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     allowFullScreen
                                     title="YouTube Video Preview"
                                 ></iframe>
@@ -239,6 +238,7 @@ const EditForm = () => {
                             ))}
                         </div>
                     </Hashtags>
+                    <Button onClick={() => navigate(-1)}>취소</Button>
                     <Button onClick={handleSubmit}>수정</Button>
                 </FormWrapper>
             </Text>
