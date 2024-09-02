@@ -12,6 +12,7 @@ const SignUp = () => {
     const [userName, setUserName] = useState("");
     const [userIntro, setUserIntro] = useState("");
     const [profileImgFile, setProfileImgFile] = useState(null);
+    const [profileImgView, setProfileImgView] = useState(null);
     //유효성
     const [validUserEmailMessage, setValidUserEmailMessage] = useState(false);
     const [validUserPasswordMessage, setValidUserPasswordMessage] = useState("");
@@ -54,28 +55,21 @@ const SignUp = () => {
     const handleSetUserIntro = (event) => {
         setUserIntro(event.target.value);
     };
-    const handleFileSelect = (event) => {
-        setProfileImgFile(event.target.files[0]);
-    };
 
     // 이미지 업로드
-    const handleImgUpload = async () => {
-        if (!profileImgFile) {
-            alert("파일을 선택해주세요.");
-            return;
-        }
-        const { data, error } = await supabase.storage
-            .from("startify_storage")
-            .upload(`profileImgFolder/${profileImgFile.name}`, profileImgFile);
+    const handleFileSelect = (event) => {
+        const selectedImg = event.target.files[0];
+        setProfileImgFile(selectedImg);
 
-        if (error) {
-            alert("이미지 파일을 확인해주세요. 확장자는 png, jpeg, jpg, gif만 가능합니다.");
-            return;
-        } else {
-            alert("이미지 업로드 성공");
-            return data;
+        if (selectedImg) {
+            const imgReader = new FileReader();
+            imgReader.readAsDataURL(selectedImg);
+            imgReader.onloadend = () => {
+                setProfileImgView(imgReader.result);
+            };
         }
     };
+
     const handleSignUp = async (e) => {
         e.preventDefault();
 
@@ -89,13 +83,31 @@ const SignUp = () => {
             return;
         }
 
+        //이미지 업로드
+
+        let profileImgUrl = null;
+        if (profileImgFile) {
+            const uniqueImgName = new Date().getTime();
+            const imgFileName = `${uniqueImgName}_${profileImgFile.name}`;
+            const { imgData, imgError } = await supabase.storage
+                .from("startify_storage")
+                .upload(`profileImgFolder/${imgFileName}`, profileImgFile);
+
+            if (imgError) {
+                alert("업로드 실패");
+                return;
+            } else {
+                profileImgUrl = `https://lluyiezkzctkdodxpefi.supabase.co/storage/v1/object/public/startify_storage/profileImgFolder/${imgFileName}`;
+            }
+        }
+
         const { data, error } = await supabase.auth.signUp({
             email: userEmail,
             password: userPassword
         });
 
         if (error) {
-            console.log("회원가입오류!", error.message);
+            console.log("회원가입오류", error.message);
         } else {
             alert("회원가입이 완료되었습니다. 메인 페이지로 이동합니다.");
             navigate("/");
@@ -106,7 +118,8 @@ const SignUp = () => {
                 userEmail: userEmail,
                 userPassword: userPassword,
                 userName: userName,
-                userIntro: userIntro
+                userIntro: userIntro,
+                profileImgUrl: profileImgUrl
             });
             if (userError) {
                 console.log("유저테이블 에러", userError.message);
@@ -118,16 +131,10 @@ const SignUp = () => {
             <h2>회원가입</h2>
             <form onSubmit={handleSignUp}>
                 <div className="userImgUpload">
-                    <input
-                        type="file"
-                        id="userProfileImg"
-                        name="userProfileImg"
-                        accept="image/png, image/jpeg, image/jpg, image/gif"
-                        onChange={handleFileSelect}
-                    />
-                    <button type="button" onClick={handleImgUpload}>
-                        이미지 업로드
-                    </button>
+                    <div>
+                        {profileImgView ? <img src={profileImgView} alt="이미지" /> : <p>선택된 이미지가 없습니다.</p>}
+                    </div>
+                    <input type="file" id="userProfileImg" name="userProfileImg" onChange={handleFileSelect} />
                 </div>
 
                 <div>
