@@ -3,7 +3,7 @@ import { getYoutubeKey } from "../utils";
 import supabase from "../supabaseClient";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import {
-    Button,
+    Buttons,
     Container,
     Desc,
     FormWrapper,
@@ -233,8 +233,10 @@ const EditForm = () => {
                             ))}
                         </div>
                     </Hashtags>
-                    <Button onClick={() => navigate(-1)}>취소</Button>
-                    <Button onClick={handleSubmit}>수정</Button>
+                    <Buttons>
+                        <button onClick={() => navigate(-1)}>취소</button>
+                        <button onClick={handleSubmit}>수정</button>
+                    </Buttons>
                 </FormWrapper>
             </Text>
         </Container>
