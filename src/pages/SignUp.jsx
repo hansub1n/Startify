@@ -12,6 +12,7 @@ const SignUp = () => {
     const [userName, setUserName] = useState("");
     const [userIntro, setUserIntro] = useState("");
     const [profileImgFile, setProfileImgFile] = useState(null);
+    const [profileImgView, setProfileImgView] = useState(null);
     //유효성
     const [validUserEmailMessage, setValidUserEmailMessage] = useState(false);
     const [validUserPasswordMessage, setValidUserPasswordMessage] = useState("");
@@ -54,22 +55,33 @@ const SignUp = () => {
     const handleSetUserIntro = (event) => {
         setUserIntro(event.target.value);
     };
-    const handleFileSelect = (event) => {
-        setProfileImgFile(event.target.files[0]);
-    };
 
     // 이미지 업로드
+    const handleFileSelect = (event) => {
+        const selectedImg = event.target.files[0];
+        setProfileImgFile(selectedImg);
+
+        if (selectedImg) {
+            const imgReader = new FileReader();
+            imgReader.readAsDataURL(selectedImg);
+            imgReader.onloadend = () => {
+                setProfileImgView(imgReader.result);
+            };
+        }
+    };
+
     const handleImgUpload = async () => {
         if (!profileImgFile) {
             alert("파일을 선택해주세요.");
             return;
         }
+        const uniqueImgName = new Date().getTime();
         const { data, error } = await supabase.storage
             .from("startify_storage")
-            .upload(`profileImgFolder/${profileImgFile.name}`, profileImgFile);
+            .upload(`profileImgFolder/${uniqueImgName}_${profileImgFile.name}`, profileImgFile);
 
         if (error) {
-            alert("이미지 파일을 확인해주세요. 확장자는 png, jpeg, jpg, gif만 가능합니다.");
+            alert("업로드 실패");
             return;
         } else {
             alert("이미지 업로드 성공");
@@ -118,13 +130,10 @@ const SignUp = () => {
             <h2>회원가입</h2>
             <form onSubmit={handleSignUp}>
                 <div className="userImgUpload">
-                    <input
-                        type="file"
-                        id="userProfileImg"
-                        name="userProfileImg"
-                        accept="image/png, image/jpeg, image/jpg, image/gif"
-                        onChange={handleFileSelect}
-                    />
+                    <div>
+                        {profileImgView ? <img src={profileImgView} alt="이미지" /> : <p>선택된 이미지가 없습니다.</p>}
+                    </div>
+                    <input type="file" id="userProfileImg" name="userProfileImg" onChange={handleFileSelect} />
                     <button type="button" onClick={handleImgUpload}>
                         이미지 업로드
                     </button>
