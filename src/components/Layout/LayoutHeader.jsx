@@ -7,7 +7,7 @@ import { useContext } from "react";
 import supabase from "../../supabaseClient";
 
 const LayoutHeader = () => {
-    const { user } = useContext(UserContext);
+    const { user, account } = useContext(UserContext);
     const handleSignOut = async () => {
         await supabase.auth.signOut();
         alert("로그아웃 완료. 메인페이지로 갑니다🚀");
@@ -23,8 +23,7 @@ const LayoutHeader = () => {
                 <HeaderTitle onClick={goToHome}>Startify</HeaderTitle>
                 <LoginUl>
                     <>
-                        <p>{user ? <>{user.email}님 안녕하세요!</> : <>로그인이 필요합니다.</>}</p>
-                        {/* 나중에 닉네임으로 변경하기 */}
+                        <p>{user ? <>{account.userName}님 안녕하세요!</> : <>로그인이 필요합니다.</>}</p>
 
                         {user ? (
                             <>
