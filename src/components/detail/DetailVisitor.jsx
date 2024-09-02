@@ -57,7 +57,6 @@ const DetailVisitor = ({ commentId, text, STARTIFY_USER, fetchPostData }) => {
                                         setEditInputText={setEditInputText}
                                         openEditModal={confirmEdit}
                                         closeEditModal={closeEditModal}
-                                        text={text}
                                         commentId={commentId}
                                         fetchPostData={fetchPostData}
                                     />

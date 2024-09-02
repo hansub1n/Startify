@@ -12,8 +12,8 @@ const DetailComment = ({ id, comments, fetchPostData }) => {
     const [inputText, setInputText] = useState("");
 
     const addComment = async () => {
-        if (inputText !== "") {
-            await supabase.from("STARTIFY_COMMENTS").insert({ text: inputText, user_id: userId, post_id: id });
+        if (inputText.trim() !== "") {
+            await supabase.from("STARTIFY_COMMENTS").insert({ text: inputText.trim(), user_id: userId, post_id: id });
             setInputText("");
         } else {
             alert("댓글을 입력하세요.");
@@ -29,7 +29,7 @@ const DetailComment = ({ id, comments, fetchPostData }) => {
                 <StCommentFieldTextarea
                     value={inputText}
                     onChange={(e) => {
-                        setInputText(e.target.value.trim());
+                        setInputText(e.target.value);
                     }}
                 />
                 <StCommentFieldBtn onClick={addComment}>등록</StCommentFieldBtn>

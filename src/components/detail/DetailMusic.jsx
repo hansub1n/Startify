@@ -44,11 +44,18 @@ const DetailMusic = ({ name, title, url, likes, hashtags, toggleLikeData }) => {
                     <StMusicInfoTitleSpan>
                         {name} - {title}
                     </StMusicInfoTitleSpan>
-                    <StMusicInfoHashDiv>
-                        {hashtags.map((hashtag) => {
-                            return <div key={hashtag}>#{hashtag}</div>;
-                        })}
-                    </StMusicInfoHashDiv>
+                    {!hashtags ? (
+                        <StMusicInfoHashDiv>
+                            #{name}#{title}
+                        </StMusicInfoHashDiv>
+                    ) : (
+                        <StMusicInfoHashDiv>
+                            {hashtags.map((hashtag) => {
+                                return <div key={hashtag}>#{hashtag}</div>;
+                            })}
+                        </StMusicInfoHashDiv>
+                    )}
+
                     <StMusicLikeBtnDiv>
                         <p>{likesCount}</p>
                         <button onClick={() => toggleLikeData(isUserLiked, userId)}>{isUserLiked ? "♥" : "♡"}</button>
