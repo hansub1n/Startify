@@ -5,32 +5,33 @@ import exampImg from "../../assets/temporalLogo.png";
 import { UserContext } from "../../context/UserContext";
 
 export const ProfileHeader = () => {
-    const { user } = useContext(UserContext);
+    const { user, account } = useContext(UserContext);
     console.table("user", user);
-    // console.log("userName", user.userName);
+    console.log("account", account);
+
     return (
         <ProfileHeaderWrap>
             <ProfileHeaderContainer>
                 <UserInfoContainer>
                     <ProfileImgBox>
-                        <img src={exampImg} />
+                        <img src={account.profileImgUrl} />
                     </ProfileImgBox>
                     <ProfileTxtBox>
                         <span>
-                            {user.userName} <button>프로필 편집</button>
+                            {account.userName} <button>프로필 편집</button>
                         </span>
                         <span>{user.email}</span>
                     </ProfileTxtBox>
                 </UserInfoContainer>
                 <ProfileNavigation>
                     <li>
-                        <Link to={""}>소개</Link>
+                        <Link to={"/profile"}>소개</Link>
                     </li>
                     <li>
-                        <Link to={"created"}>작성한 게시물</Link>
+                        <Link to={"/profile/created"}>작성한 게시물</Link>
                     </li>
                     <li>
-                        <Link to={"liked"}>좋아요한 게시물</Link>
+                        <Link to={"/profile/liked"}>좋아요한 게시물</Link>
                     </li>
                 </ProfileNavigation>
             </ProfileHeaderContainer>
