@@ -27,7 +27,7 @@ const LayoutHeader = () => {
 
                         {user ? (
                             <>
-                                <Button onClick={() => navigate("/profile")}>마이페이지</Button>
+                                <Button onClick={() => navigate(`/profile/${user.id}`)}>마이페이지</Button>
                                 <Button onClick={handleSignOut}>로그아웃</Button>
                             </>
                         ) : (
