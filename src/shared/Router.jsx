@@ -13,6 +13,7 @@ import { MusicProvider } from "../context/MusicContext";
 import SearchedMusicProvider from "../context/SearchedMusicContext";
 import SignUp from "../pages/SignUp";
 import { UserContext } from "../context/UserContext";
+import EditForm from "../pages/EditForm";
 
 const AuthRoute = () => {
     const { user } = useContext(UserContext);
@@ -54,14 +55,19 @@ const Router = () => {
                             </SearchedMusicProvider>
                         }
                     />
-                    <Route path="/detail" element={<Detail />} />
-                    <Route path="/profile/:userId" element={<Profile />} />
-                    <Route path="/profile/:userId/*" element={<Profile />} />
-                    <Route path="/search" element={<Search />} />
-                    <Route path="/form" element={<Form />} />
-                    <Route path="/modify-profile" element={<ModifyProfile />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/signup" element={<SignUp />} />
+                    <Route element={<PrivateRoute />}>
+                        <Route path="/detail" element={<Detail />} />
+                        <Route path="/profile/:userId" element={<Profile />} />
+                        <Route path="/profile/:userId/*" element={<Profile />} />
+                        <Route path="/search" element={<Search />} />
+                        <Route path="/form" element={<Form />} />
+                        <Route path="/editform" element={<EditForm />} />
+                        <Route path="/modify-profile" element={<ModifyProfile />} />
+                    </Route>
+                    <Route element={<AuthRoute />}>
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/signup" element={<SignUp />} />
+                    </Route>
                 </Route>
 
                 <Route path="*" element={<NotFound />} />

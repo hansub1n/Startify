@@ -75,7 +75,7 @@ const Detail = () => {
                 {user.id !== post.STARTIFY_USER.user_id ? null : (
                     <div>
                         <div>
-                            <button onClick={() => navigate("/form")}>수정</button>
+                            <button onClick={() => navigate(`/editform?id=${post.id}`)}>수정</button>
                         </div>
                         <div>
                             <button onClick={openDeleteModal}>삭제</button>

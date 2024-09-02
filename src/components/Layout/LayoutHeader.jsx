@@ -7,7 +7,7 @@ import { useContext } from "react";
 import supabase from "../../supabaseClient";
 
 const LayoutHeader = () => {
-    const { user, account } = useContext(UserContext);
+    const { user } = useContext(UserContext);
     const handleSignOut = async () => {
         await supabase.auth.signOut();
         alert("로그아웃 완료. 메인페이지로 갑니다🚀");
@@ -23,10 +23,15 @@ const LayoutHeader = () => {
                 <HeaderTitle onClick={goToHome}>Startify</HeaderTitle>
                 <LoginUl>
                     <>
+<<<<<<< HEAD
                         <p>{user ? <>{user.id}님 안녕하세요!</> : <>로그인이 필요합니다.</>}</p>
+=======
+                        <p>{user ? <>{user.email}님 안녕하세요!</> : <>로그인이 필요합니다.</>}</p>
+>>>>>>> aad302ec06268bbc334933098fa8abeb194cce98
 
                         {user ? (
                             <>
+                                <Button onClick={() => navigate("/form")}>노래 공유하기</Button>
                                 <Button onClick={() => navigate(`/profile/${user.id}`)}>마이페이지</Button>
                                 <Button onClick={handleSignOut}>로그아웃</Button>
                             </>
@@ -46,13 +51,16 @@ const LayoutHeader = () => {
 export default LayoutHeader;
 
 const Header = styled.header`
-    /* position: fixed; */
     margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 `;
 
 const HeaderNav = styled.nav`
     display: flex;
     flex-direction: row;
+    width: 90vw;
     justify-content: space-between;
     border-bottom: 5px solid #d4eaf7;
     padding: 10px 50px;
