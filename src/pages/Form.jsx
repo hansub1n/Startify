@@ -41,7 +41,7 @@ const Form = () => {
     const options = [
         { value: "", label: "노래에 어울리는 계절을 선택해주세요.", disabled: true },
         //disabled를 통해 선택이 안되도록 한다.
-        { value: "모든 계절", label: "모든 계절" },
+        { value: "전체", label: "모든 계절" },
         { value: "봄", label: "봄" },
         { value: "여름", label: "여름" },
         { value: "가을", label: "가을" },
@@ -100,6 +100,30 @@ const Form = () => {
     };
 
     const handleSubmit = async () => {
+        if (!postTitle) {
+            alert("제목을 입력해 주세요.");
+            return;
+        }
+        if (!title) {
+            alert("노래 제목을 입력해 주세요.");
+            return;
+        }
+        if (!youtubeLink) {
+            alert("유튜브 링크를 입력해 주세요.");
+            return;
+        }
+        if (!desc) {
+            alert("내용을 입력해 주세요.");
+            return;
+        }
+        if (!name) {
+            alert("가수 이름을 입력해 주세요.");
+            return;
+        }
+        if (!selectedSeason) {
+            alert("계절을 선택해 주세요.");
+            return;
+        }
         const {
             data: { session }
         } = await supabase.auth.getSession();
