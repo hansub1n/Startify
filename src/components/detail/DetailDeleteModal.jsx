@@ -6,6 +6,7 @@ export const DetailDeleteModal = ({ openDeleteModal, closeDeleteModal, fetchPost
 
     const deleteComment = async () => {
         await supabase.from("STARTIFY_COMMENTS").delete().eq("id", commentId);
+        fetchPostData();
     };
 
     const deletePost = async () => {
