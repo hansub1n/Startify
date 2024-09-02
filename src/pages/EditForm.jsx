@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { getYoutubeKey } from "../utils";
 import supabase from "../supabaseClient";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
 import {
     Button,
     Container,
@@ -19,9 +19,17 @@ import {
     VideoWrapper,
     YoutubeLink
 } from "../components/form/style";
+import { UserContext } from "../context/UserContext";
 
 const EditForm = () => {
     const navigate = useNavigate();
+    const { user } = useContext(UserContext);
+
+    if (!user) {
+        alert("로그인이 필요한 페이지입니다. 로그인 해주세요. 🥺");
+        return <Navigate to="/login" />;
+    }
+
     const [searchParams, setSearchParams] = useSearchParams();
     const postId = searchParams.get("id");
     const [post, setPost] = useState(null);
@@ -45,27 +53,27 @@ const EditForm = () => {
     ];
 
     useEffect(() => {
-        const fetchPostData = async () => {
-            const { data, error } = await supabase.from("STARTIFY_DATA").select("*").eq("id", postId);
-
-            if (error) {
-                console.log("error => ", error);
-            } else {
-                console.log("data => ", data[0]);
-                const postData = data[0];
-                setPost(postData);
-                setPostTitle(postData.postTitle);
-                setTitle(postData.title);
-                setYoutubeLink(postData.url);
-                setDesc(postData.desc);
-                setName(postData.name);
-                setHashArr(postData.hashtags || []);
-                setSelectedSeason(postData.genre);
-            }
-        };
-
         fetchPostData();
     }, [postId]);
+
+    const fetchPostData = async () => {
+        const { data, error } = await supabase.from("STARTIFY_DATA").select("*").eq("id", postId);
+
+        if (error) {
+            console.log("error => ", error);
+        } else {
+            console.log("data => ", data[0]);
+            const postData = data[0];
+            setPost(postData);
+            setPostTitle(postData.postTitle);
+            setTitle(postData.title);
+            setYoutubeLink(postData.url);
+            setDesc(postData.desc);
+            setName(postData.name);
+            setHashArr(postData.hashtags || []);
+            setSelectedSeason(postData.genre);
+        }
+    };
 
     const getEmbedLink = (link) => {
         const videoId = getYoutubeKey(link);
@@ -154,6 +162,7 @@ const EditForm = () => {
             })
             .eq("id", postId);
         alert("게시글이 수정되었습니다.");
+        fetchPostData();
         navigate(`/detail?id=${postId}`);
     };
 

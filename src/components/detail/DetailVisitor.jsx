@@ -46,34 +46,32 @@ const DetailVisitor = ({ commentId, text, STARTIFY_USER, fetchPostData }) => {
                     </StVisitorProfileNameSpan>
                     <StVisitorCommentSpan>{text}</StVisitorCommentSpan>
                 </StVisitorProfileTextDiv>
-                <StVisitorCommentBtns>
+                <div>
                     {userId !== user_id ? null : (
-                        <div>
+                        <StCommentBtnDiv>
                             <div>
-                                <div>
-                                    <button onClick={openEditModal}>수정</button>
-                                    <DetailEditModal
-                                        editInputText={editInputText}
-                                        setEditInputText={setEditInputText}
-                                        openEditModal={confirmEdit}
-                                        closeEditModal={closeEditModal}
-                                        commentId={commentId}
-                                        fetchPostData={fetchPostData}
-                                    />
-                                </div>
-                                <div>
-                                    <button onClick={openDeleteModal}>삭제</button>
-                                    <DetailDeleteModal
-                                        openDeleteModal={confirmDelete}
-                                        closeDeleteModal={closeDeleteModal}
-                                        commentId={commentId}
-                                        fetchPostData={fetchPostData}
-                                    />
-                                </div>
+                                <button onClick={openEditModal}>수정</button>
+                                <DetailEditModal
+                                    editInputText={editInputText}
+                                    setEditInputText={setEditInputText}
+                                    openEditModal={confirmEdit}
+                                    closeEditModal={closeEditModal}
+                                    commentId={commentId}
+                                    fetchPostData={fetchPostData}
+                                />
                             </div>
-                        </div>
+                            <div>
+                                <button onClick={openDeleteModal}>삭제</button>
+                                <DetailDeleteModal
+                                    openDeleteModal={confirmDelete}
+                                    closeDeleteModal={closeDeleteModal}
+                                    commentId={commentId}
+                                    fetchPostData={fetchPostData}
+                                />
+                            </div>
+                        </StCommentBtnDiv>
                     )}
-                </StVisitorCommentBtns>
+                </div>
             </StVisitorCommentBox>
         </div>
     );
@@ -89,10 +87,9 @@ const StVisitorCommentBox = styled.div`
 `;
 const StVisitorProfileImg = styled.img`
     display: flex;
-    width: 50px;
-    height: 50px;
+    width: 65px;
+    height: 65px;
     object-fit: cover;
-
     border-radius: 50%;
 `;
 
@@ -106,16 +103,17 @@ const StVisitorProfileTextDiv = styled.div`
 
 const StVisitorProfileNameSpan = styled.span`
     display: flex;
-    font-size: 13px;
+    font-size: 18px;
     font-weight: 700;
     cursor: pointer;
 `;
+
 const StVisitorCommentSpan = styled.span`
     display: flex;
-    font-size: 14px;
+    font-size: 18px;
 `;
 
-const StVisitorCommentBtns = styled.div`
+const StCommentBtnDiv = styled.div`
     display: flex;
     margin-left: 30px;
     margin-bottom: 18px;
