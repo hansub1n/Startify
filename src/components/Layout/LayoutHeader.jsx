@@ -23,7 +23,7 @@ const LayoutHeader = () => {
                 <HeaderTitle onClick={goToHome}>Startify</HeaderTitle>
                 <LoginUl>
                     <>
-                        <p>{user ? <>{account.userName}님 안녕하세요!</> : <>로그인이 필요합니다.</>}</p>
+                        <p>{user ? <>{user.id}님 안녕하세요!</> : <>로그인이 필요합니다.</>}</p>
 
                         {user ? (
                             <>
