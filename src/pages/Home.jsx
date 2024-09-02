@@ -1,22 +1,39 @@
 import styled from "styled-components";
 import SearchInput from "../components/home/SearchInput";
 import useMusicContext from "../hooks/useMusicContext";
-import SpringItemList from "../components/home/SpringItemList";
-import SeasonalItemList from "../components/home/SeasonalItemList";
-import SummerItemList from "../components/home/SummerItemList";
-import AutumnItemList from "../components/home/AutumnItemList";
-import WinterItemList from "../components/home/WinterItemList";
+import PostItemList from "../components/home/PostItemList";
 
 const Home = () => {
-    const { searchText, handleSearchText, handleSearch } = useMusicContext();
+    const { searchText, handleSearchText, handleSearch, springs, summers, autumns, winters, seasonal } =
+        useMusicContext();
+    const lists = [
+        {
+            songs: seasonal,
+            title: "언제나 듣기 좋은 노래"
+        },
+        {
+            songs: springs,
+            title: "봄에 듣기 좋은 노래"
+        },
+        {
+            songs: summers,
+            title: "여름에 듣기 좋은 노래"
+        },
+        {
+            songs: autumns,
+            title: "가을에 듣기 좋은 노래"
+        },
+        {
+            songs: winters,
+            title: "겨울에 듣기 좋은 노래"
+        }
+    ];
     return (
         <ListWrapper>
             <SearchInput searchText={searchText} handleSearchText={handleSearchText} handleSearch={handleSearch} />
-            <SeasonalItemList />
-            <SpringItemList />
-            <SummerItemList />
-            <AutumnItemList />
-            <WinterItemList />
+            {lists.map((el) => {
+                return <PostItemList key={el.title} songs={el.songs} title={el.title} />;
+            })}
         </ListWrapper>
     );
 };
