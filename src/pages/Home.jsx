@@ -31,8 +31,8 @@ const Home = () => {
     return (
         <ListWrapper>
             <SearchInput searchText={searchText} handleSearchText={handleSearchText} handleSearch={handleSearch} />
-            {lists.map((el) => {
-                return <PostItemList key={el.title} songs={el.songs} title={el.title} />;
+            {lists.map((el, index) => {
+                return <PostItemList key={el.title} index={index} songs={el.songs} title={el.title} />;
             })}
         </ListWrapper>
     );
