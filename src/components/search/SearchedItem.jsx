@@ -1,27 +1,20 @@
-import React, { useContext } from "react";
 import styled from "styled-components";
 import { getYoutubeKey } from "../../utils";
-import { UserContext } from "../../context/UserContext";
-import useSearchedMusicContext from "../../hooks/useSearchedMusicContext";
 import { useNavigate } from "react-router-dom";
 
 const SearchedItem = ({ music }) => {
     const { postTitle, name, title, url, id } = music;
     const navigate = useNavigate();
-    const { user } = useContext(UserContext);
-    const userId = user?.id;
-    const { toggleLikedSearched } = useSearchedMusicContext();
     const thumbnailKey = getYoutubeKey(url);
     const likeCount = music.likes.length;
-    const isUserLiked = music.likes.some((el) => el.user_id == userId);
     return (
         <ItemLi onClick={() => navigate(`/detail?id=${id}`)}>
             <h3>{postTitle}</h3>
             <ThumbnailWrap>
                 <ThumbnailImg src={`https://img.youtube.com/vi/${thumbnailKey}/0.jpg`} />
-                <ThumbnailTextWrap onClick={(e) => toggleLikedSearched(isUserLiked, id, e)}>
+                <ThumbnailTextWrap>
                     <LikesText>{likeCount}</LikesText>
-                    <LikesButton>♡</LikesButton>
+                    <LikesButton>❤️</LikesButton>
                 </ThumbnailTextWrap>
             </ThumbnailWrap>
             <p>

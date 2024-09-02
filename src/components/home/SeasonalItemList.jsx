@@ -32,7 +32,6 @@ const PostItemWrapper = styled.ul`
     padding: 20px 30px;
     background-color: #d4eaf7;
     border: 3px solid red;
-    overflow: hidden;
 `;
 
 const PostWrapTitle = styled.h3`
@@ -50,7 +49,7 @@ const PostItemsDiv = styled.div`
     align-items: center;
     justify-content: flex-start;
     gap: 20px;
-    width: 1800px;
+    width: 100%;
     overflow-x: auto;
     padding-bottom: 10px;
 `;

@@ -1,32 +1,64 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { getYoutubeKey } from "../../utils";
-import useMusicContext from "../../hooks/useMusicContext";
 import { UserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
+import Button from "../common/Button";
 
 const PostItem = ({ music }) => {
-    const { postTitle, name, title, url, id, genre } = music;
+    const [isVideoPlayed, setIsVideoPlayed] = useState(false);
+    const { postTitle, name, title, url, id } = music;
     const navigate = useNavigate();
     const { user } = useContext(UserContext);
     const userId = user?.id;
-    const { toggleLiked } = useMusicContext();
     const thumbnailKey = getYoutubeKey(url);
     const likeCount = music.likes.length;
-    const isUserLiked = music.likes.some((el) => el.user_id == userId);
+    const moveToDetail = () => {
+        if (userId) {
+            navigate(`/detail?id=${id}`);
+        } else {
+            alert("로그인페이지로 이동합니다.");
+            navigate("/login");
+        }
+    };
+
     return (
-        <ItemLi onClick={() => navigate(`/detail?id=${id}`)}>
+        <ItemLi onClick={moveToDetail}>
             <h3>{postTitle}</h3>
             <ThumbnailWrap>
-                <ThumbnailImg src={`https://img.youtube.com/vi/${thumbnailKey}/0.jpg`} />
-                <ThumbnailTextWrap onClick={(e) => toggleLiked(isUserLiked, id, e, genre)}>
+                <ImgIframeWrap>
+                    <ThumbnailImg
+                        $isVideoPlayed={isVideoPlayed}
+                        src={`https://img.youtube.com/vi/${thumbnailKey}/0.jpg`}
+                    />
+                    <VideoIframe
+                        $isVideoPlayed={isVideoPlayed}
+                        width="300"
+                        height="224"
+                        src={`https://www.youtube.com/embed/${thumbnailKey}?mute=1&autoplay=1`}
+                        title="YouTube video player"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share;"
+                        referrerPolicy="strict-origin-when-cross-origin"
+                        allowFullScreen
+                    ></VideoIframe>
+                </ImgIframeWrap>
+                <ThumbnailTextWrap $isVideoPlayed={isVideoPlayed}>
                     <LikesText>{likeCount}</LikesText>
-                    <LikesButton>♡</LikesButton>
+                    <LikesButton>❤️</LikesButton>
                 </ThumbnailTextWrap>
             </ThumbnailWrap>
             <p>
                 {name} - {title}
             </p>
+            <Button
+                onClick={(e) => {
+                    e.stopPropagation();
+                    setIsVideoPlayed(!isVideoPlayed);
+                }}
+            >
+                재생
+            </Button>
         </ItemLi>
     );
 };
@@ -40,7 +72,7 @@ const ItemLi = styled.li`
     justify-content: space-around;
     align-items: center;
     width: 360px;
-    height: 360px;
+    height: 400px;
     border-radius: 30px;
     border: 10px solid black;
     padding: 20px;
@@ -54,14 +86,26 @@ const ThumbnailWrap = styled.div`
     position: relative;
 `;
 
+const ImgIframeWrap = styled.div`
+    width: 300px;
+    height: 224px;
+`;
+
 const ThumbnailImg = styled.img`
+    display: ${({ $isVideoPlayed }) => ($isVideoPlayed ? "none" : "block")};
     width: 300px;
     height: 224px;
     object-fit: fill;
 `;
 
+const VideoIframe = styled.iframe`
+    display: ${({ $isVideoPlayed }) => ($isVideoPlayed ? "block" : "none")};
+    width: 300px;
+    height: 224px;
+`;
+
 const ThumbnailTextWrap = styled.div`
-    display: flex;
+    display: ${({ $isVideoPlayed }) => ($isVideoPlayed ? "none" : "flex")};
     flex-direction: row;
     justify-content: center;
     align-items: center;
