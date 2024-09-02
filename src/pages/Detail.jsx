@@ -150,6 +150,6 @@ const StPostTitleSpan = styled.span`
     justify-content: center;
     margin-top: 50px;
     margin-bottom: 70px;
-    font-size: 20px;
-    font-weight: 700;
+    font-size: 30px;
+    font-weight: 900;
 `;

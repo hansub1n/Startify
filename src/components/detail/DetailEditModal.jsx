@@ -95,7 +95,7 @@ const TextArea = styled.textarea`
     border: none;
     border-radius: 13px;
     font-size: 20px;
-    padding: 15px;
+    padding: 15px 100px 15px 15px;
 `;
 
 const Button = styled.button`

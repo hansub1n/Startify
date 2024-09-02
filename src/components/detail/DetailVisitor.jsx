@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { UserContext } from "../../context/UserContext";
 import { DetailEditModal } from "./DetailEditModal";
 import { DetailDeleteModal } from "./DetailDeleteModal";
+import editImg from "../../assets/edit.png";
+import deleteImg from "../../assets/delete.png";
 
 const defaultProfileImgUrl = "/defaultProfile.jpg";
 
@@ -50,7 +52,7 @@ const DetailVisitor = ({ commentId, text, STARTIFY_USER, fetchPostData }) => {
                     {userId !== user_id ? null : (
                         <StCommentBtnDiv>
                             <div>
-                                <button onClick={openEditModal}>수정</button>
+                                <CommentBtnImg src={editImg} onClick={openEditModal} />
                                 <DetailEditModal
                                     editInputText={editInputText}
                                     setEditInputText={setEditInputText}
@@ -61,7 +63,7 @@ const DetailVisitor = ({ commentId, text, STARTIFY_USER, fetchPostData }) => {
                                 />
                             </div>
                             <div>
-                                <button onClick={openDeleteModal}>삭제</button>
+                                <CommentBtnImg src={deleteImg} onClick={openDeleteModal} />
                                 <DetailDeleteModal
                                     openDeleteModal={confirmDelete}
                                     closeDeleteModal={closeDeleteModal}
@@ -118,4 +120,18 @@ const StCommentBtnDiv = styled.div`
     margin-left: 30px;
     margin-bottom: 18px;
     gap: 3px;
+`;
+const CommentBtnImg = styled.img`
+    display: flex;
+    top: -3px;
+    width: 35px;
+    height: 35px;
+    object-fit: cover;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #a1d0d6;
+    }
 `;

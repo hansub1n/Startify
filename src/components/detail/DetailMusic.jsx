@@ -49,7 +49,7 @@ const DetailMusic = ({ url, name, title, desc, likes, hashtags, toggleLikeData }
                     <StMusicLikeBtnDiv>
                         <LikeCountP>{likesCount}</LikeCountP>
                         <div onClick={() => toggleLikeData(isUserLiked, userId)}>
-                            {isUserLiked ? <LikeImg src={likeImg} /> : <LikeImg src={dislikeImg} />}
+                            {isUserLiked ? <LikeBtmImg src={likeImg} /> : <LikeBtmImg src={dislikeImg} />}
                         </div>
                     </StMusicLikeBtnDiv>
                     <StPostDescSpan>{desc}</StPostDescSpan>
@@ -105,7 +105,7 @@ const LikeCountP = styled.p`
     font-size: 20px;
 `;
 
-const LikeImg = styled.img`
+const LikeBtmImg = styled.img`
     display: flex;
     position: absolute;
     top: -3px;
