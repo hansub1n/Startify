@@ -70,24 +70,6 @@ const SignUp = () => {
         }
     };
 
-    const handleImgUpload = async () => {
-        if (!profileImgFile) {
-            alert("파일을 선택해주세요.");
-            return;
-        }
-        const uniqueImgName = new Date().getTime();
-        const { data, error } = await supabase.storage
-            .from("startify_storage")
-            .upload(`profileImgFolder/${uniqueImgName}_${profileImgFile.name}`, profileImgFile);
-
-        if (error) {
-            alert("업로드 실패");
-            return;
-        } else {
-            alert("이미지 업로드 성공");
-            return data;
-        }
-    };
     const handleSignUp = async (e) => {
         e.preventDefault();
 
@@ -99,6 +81,24 @@ const SignUp = () => {
         if (userPassword.length < 6) {
             setValidUserPasswordMessage("비밀번호는 6자 이상이어야 합니다.");
             return;
+        }
+
+        //이미지 업로드
+
+        let profileImgUrl = null;
+        if (profileImgFile) {
+            const uniqueImgName = new Date().getTime();
+            const imgFileName = `${uniqueImgName}_${profileImgFile.name}`;
+            const { imgData, imgError } = await supabase.storage
+                .from("startify_storage")
+                .upload(`profileImgFolder/${imgFileName}`, profileImgFile);
+
+            if (imgError) {
+                alert("업로드 실패");
+                return;
+            } else {
+                profileImgUrl = `https://lluyiezkzctkdodxpefi.supabase.co/storage/v1/object/public/startify_storage/profileImgFolder/${imgFileName}`;
+            }
         }
 
         const { data, error } = await supabase.auth.signUp({
@@ -118,7 +118,8 @@ const SignUp = () => {
                 userEmail: userEmail,
                 userPassword: userPassword,
                 userName: userName,
-                userIntro: userIntro
+                userIntro: userIntro,
+                profileImgUrl: profileImgUrl
             });
             if (userError) {
                 console.log("유저테이블 에러", userError.message);
@@ -134,9 +135,6 @@ const SignUp = () => {
                         {profileImgView ? <img src={profileImgView} alt="이미지" /> : <p>선택된 이미지가 없습니다.</p>}
                     </div>
                     <input type="file" id="userProfileImg" name="userProfileImg" onChange={handleFileSelect} />
-                    <button type="button" onClick={handleImgUpload}>
-                        이미지 업로드
-                    </button>
                 </div>
 
                 <div>
