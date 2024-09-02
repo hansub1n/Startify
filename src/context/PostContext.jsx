@@ -6,13 +6,14 @@ export const PostContext = createContext();
 const PostProvider = ({ children }) => {
     const { user } = useContext(UserContext);
     const [posts, setPosts] = useState([]);
+    const [likePosts, setLikePosts] = useState([]);
 
     useEffect(() => {
         const fetchPostsData = async () => {
             if (user) {
                 const { data: postData, error: postError } = await supabase
                     .from("STARTIFY_DATA")
-                    .select("*")
+                    .select("id, postTitle, url, STARTIFY_USER(userName)")
                     .eq("user_id", user.id);
 
                 if (postError) {
@@ -24,9 +25,26 @@ const PostProvider = ({ children }) => {
             }
         };
         fetchPostsData();
-    }, []);
 
-    return <PostContext.Provider value={{ posts }}>{children}</PostContext.Provider>;
+        const fetchLikePostsData = async () => {
+            if (user) {
+                const { data: likePostData, error: likePostError } = await supabase
+                    .from("STARTIFY_LIKES")
+                    .select("*, STARTIFY_DATA(id, postTitle, url, STARTIFY_USER(userName))")
+                    .eq("user_id", user.id);
+
+                if (likePostError) {
+                    console.log("likePostError", likePostError);
+                } else {
+                    console.log("likePostData", likePostData);
+                    setLikePosts(likePostData);
+                }
+            }
+        };
+        fetchLikePostsData();
+    }, [user]);
+
+    return <PostContext.Provider value={{ posts, likePosts }}>{children}</PostContext.Provider>;
 };
 
 export default PostProvider;

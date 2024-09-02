@@ -4,6 +4,7 @@ import styled from "styled-components";
 import testImg from "../../assets/temporalLogo.png";
 import { UserContext } from "../../context/UserContext";
 import { PostContext } from "../../context/PostContext";
+import { CreatedItem } from "./CreatedItem";
 
 const Created = () => {
     const { posts } = useContext(PostContext);
@@ -20,15 +21,7 @@ const Created = () => {
                 <ItemsContainer>
                     <Items>
                         {posts.map((post) => (
-                            <Item key={post.id}>
-                                <ItemImgBox>
-                                    <img src={post.url} alt="" />
-                                </ItemImgBox>
-                                <ItemTxtBox>
-                                    <span>{post.userName}</span>
-                                    <h1>{post.postTitle}</h1>
-                                </ItemTxtBox>
-                            </Item>
+                            <CreatedItem key={post.id} post={post} />
                         ))}
                     </Items>
                 </ItemsContainer>
@@ -49,15 +42,4 @@ export const Items = styled.ul`
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
-`;
-export const Item = styled.li``;
-export const ItemImgBox = styled.div`
-    & img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-`;
-export const ItemTxtBox = styled.div`
-    text-align: center;
 `;

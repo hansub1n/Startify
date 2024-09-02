@@ -4,11 +4,8 @@ import styled from "styled-components";
 import exampImg from "../../assets/temporalLogo.png";
 import { UserContext } from "../../context/UserContext";
 
-export const ProfileHeader = () => {
-    const { user, account } = useContext(UserContext);
-    console.table("user", user);
-    console.log("account", account);
-
+export const ProfileHeader = ({ account }) => {
+    console.log("header-account", account);
     return (
         <ProfileHeaderWrap>
             <ProfileHeaderContainer>
@@ -20,18 +17,18 @@ export const ProfileHeader = () => {
                         <span>
                             {account.userName} <button>프로필 편집</button>
                         </span>
-                        <span>{user.email}</span>
+                        <span>{account.userEmail}</span>
                     </ProfileTxtBox>
                 </UserInfoContainer>
                 <ProfileNavigation>
                     <li>
-                        <Link to={"/profile"}>소개</Link>
+                        <Link to={`/profile/${account.user_id}`}>소개</Link>
                     </li>
                     <li>
-                        <Link to={"/profile/created"}>작성한 게시물</Link>
+                        <Link to={`/profile/${account.user_id}/created`}>작성한 게시물</Link>
                     </li>
                     <li>
-                        <Link to={"/profile/liked"}>좋아요한 게시물</Link>
+                        <Link to={`/profile/${account.user_id}/liked`}>좋아요한 게시물</Link>
                     </li>
                 </ProfileNavigation>
             </ProfileHeaderContainer>
