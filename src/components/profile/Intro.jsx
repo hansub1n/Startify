@@ -1,21 +1,25 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
+import { UserContext } from "../../context/UserContext";
 
 const Intro = () => {
+    const { account } = useContext(UserContext);
+    // TODO useParam으로 ..?
+
     return (
         <ProfileContentContainer>
-            <ProfileContent>작성된 소개글이 없습니다.</ProfileContent>
+            <ProfileContent>{!account.userIntro ? `작성된 소개글이 없습니다.` : account.userIntro}</ProfileContent>
         </ProfileContentContainer>
     );
 };
 
 export default Intro;
 
-const ProfileContentContainer = styled.section`
+export const ProfileContentContainer = styled.section`
     display: flex;
     width: 1280px;
     margin: 0 auto;
 `;
-const ProfileContent = styled.div`
-    padding: 24px 0;
+export const ProfileContent = styled.div`
+    padding: 24px 20px;
 `;

@@ -1,32 +1,37 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import exampImg from "../../assets/temporalLogo.png";
+import { UserContext } from "../../context/UserContext";
 
 export const ProfileHeader = () => {
+    const { user, account } = useContext(UserContext);
+    console.table("user", user);
+    console.log("account", account);
+
     return (
         <ProfileHeaderWrap>
             <ProfileHeaderContainer>
                 <UserInfoContainer>
                     <ProfileImgBox>
-                        <img src={exampImg} />
+                        <img src={account.profileImgUrl} />
                     </ProfileImgBox>
                     <ProfileTxtBox>
                         <span>
-                            닉네임 <Link to="#" />
+                            {account.userName} <button>프로필 편집</button>
                         </span>
-                        <span>ID1234</span>
+                        <span>{user.email}</span>
                     </ProfileTxtBox>
                 </UserInfoContainer>
                 <ProfileNavigation>
                     <li>
-                        <Link to={""}>소개</Link>
+                        <Link to={"/profile"}>소개</Link>
                     </li>
                     <li>
-                        <Link to={"created"}>작성한 게시물</Link>
+                        <Link to={"/profile/created"}>작성한 게시물</Link>
                     </li>
                     <li>
-                        <Link to={"liked"}>좋아요한 게시물</Link>
+                        <Link to={"/profile/liked"}>좋아요한 게시물</Link>
                     </li>
                 </ProfileNavigation>
             </ProfileHeaderContainer>
@@ -50,6 +55,7 @@ const UserInfoContainer = styled.div`
     align-items: center;
     width: 100%;
     padding: 20px;
+    gap: 1rem;
 `;
 
 const ProfileImgBox = styled.div`
@@ -71,5 +77,5 @@ const ProfileNavigation = styled.ul`
     gap: 1rem;
     width: 100%;
     margin: 0 auto;
-    padding: 20px 0;
+    padding: 20px;
 `;

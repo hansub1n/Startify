@@ -6,13 +6,12 @@ export const DetailEditModal = ({
     setEditInputText,
     openEditModal,
     closeEditModal,
-    text,
     commentId,
     fetchPostData
 }) => {
     const editComment = async () => {
-        if (editInputText !== "") {
-            await supabase.from("STARTIFY_COMMENTS").update({ text: editInputText }).eq("id", commentId);
+        if (editInputText.trim() !== "") {
+            await supabase.from("STARTIFY_COMMENTS").update({ text: editInputText.trim() }).eq("id", commentId);
 
             closeEditModal();
             fetchPostData();
@@ -27,7 +26,7 @@ export const DetailEditModal = ({
                 <textarea
                     value={editInputText}
                     onChange={(e) => {
-                        setEditInputText(e.target.value.trim());
+                        setEditInputText(e.target.value);
                     }}
                 />
                 <button onClick={() => editComment(commentId)}>확인</button>
