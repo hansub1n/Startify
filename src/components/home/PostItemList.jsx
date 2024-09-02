@@ -2,14 +2,13 @@ import PostItem from "./PostItem";
 import styled from "styled-components";
 import useMusicContext from "../../hooks/useMusicContext";
 
-const WinterItemList = () => {
-    const { winters } = useMusicContext();
+const PostItemList = ({ songs, title }) => {
     return (
         <PostItemWrapper>
-            <PostWrapTitle>겨울에 듣기 좋은 노래</PostWrapTitle>
+            <PostWrapTitle>{title}</PostWrapTitle>
             <PostItemsDiv>
-                {winters.length ? (
-                    winters.map((music) => {
+                {songs.length ? (
+                    songs.map((music) => {
                         return <PostItem key={music.id} music={music} />;
                     })
                 ) : (
@@ -20,7 +19,7 @@ const WinterItemList = () => {
     );
 };
 
-export default WinterItemList;
+export default PostItemList;
 
 const PostItemWrapper = styled.ul`
     display: flex;
@@ -32,7 +31,6 @@ const PostItemWrapper = styled.ul`
     padding: 20px 30px;
     background-color: #d4eaf7;
     border: 3px solid red;
-    overflow: hidden;
 `;
 
 const PostWrapTitle = styled.h3`
@@ -50,7 +48,7 @@ const PostItemsDiv = styled.div`
     align-items: center;
     justify-content: flex-start;
     gap: 20px;
-    width: 1800px;
+    width: 100%;
     overflow-x: auto;
     padding-bottom: 10px;
 `;

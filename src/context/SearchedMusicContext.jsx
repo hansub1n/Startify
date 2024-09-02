@@ -1,8 +1,7 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import useInput from "../hooks/useInput";
 import supabase from "../supabaseClient";
-import { UserContext } from "./UserContext";
 
 export const SearchedMusicContext = createContext();
 
