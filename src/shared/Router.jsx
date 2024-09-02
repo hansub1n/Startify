@@ -13,6 +13,7 @@ import { MusicProvider } from "../context/MusicContext";
 import SearchedMusicProvider from "../context/SearchedMusicContext";
 import SignUp from "../pages/SignUp";
 import { UserContext } from "../context/UserContext";
+import EditForm from "../pages/EditForm";
 
 const AuthRoute = () => {
     const { user } = useContext(UserContext);
@@ -60,6 +61,7 @@ const Router = () => {
                     <Route path="/profile/:userId/*" element={<Profile />} /> */}
                     <Route path="/search" element={<Search />} />
                     <Route path="/form" element={<Form />} />
+                    <Route path="/editform" element={<EditForm />} />
                     <Route path="/modify-profile" element={<ModifyProfile />} />
                 </Route>
                 <Route path="/login" element={<Login />} />
