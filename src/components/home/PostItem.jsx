@@ -6,7 +6,7 @@ import { UserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 
 const PostItem = ({ music }) => {
-    const { postTitle, name, title, url, id } = music;
+    const { postTitle, name, title, url, id, genre } = music;
     const navigate = useNavigate();
     const { user } = useContext(UserContext);
     const userId = user?.id;
@@ -19,7 +19,7 @@ const PostItem = ({ music }) => {
             <h3>{postTitle}</h3>
             <ThumbnailWrap>
                 <ThumbnailImg src={`https://img.youtube.com/vi/${thumbnailKey}/0.jpg`} />
-                <ThumbnailTextWrap onClick={(e) => toggleLiked(isUserLiked, id, e)}>
+                <ThumbnailTextWrap onClick={(e) => toggleLiked(isUserLiked, id, e, genre)}>
                     <LikesText>{likeCount}</LikesText>
                     <LikesButton>♡</LikesButton>
                 </ThumbnailTextWrap>

@@ -2,15 +2,14 @@ import PostItem from "./PostItem";
 import styled from "styled-components";
 import useMusicContext from "../../hooks/useMusicContext";
 
-const PostItemList = ({ title, type }) => {
-    const { songs, springs, summers, autumns, winters, seasonal } = useMusicContext();
-    let musics = songs[type];
+const SeasonalItemList = () => {
+    const { seasonal } = useMusicContext();
     return (
         <PostItemWrapper>
-            <PostWrapTitle>{title}</PostWrapTitle>
+            <PostWrapTitle>언제나 듣기 좋은 노래</PostWrapTitle>
             <PostItemsDiv>
-                {musics.length ? (
-                    musics.map((music) => {
+                {seasonal.length ? (
+                    seasonal.map((music) => {
                         return <PostItem key={music.id} music={music} />;
                     })
                 ) : (
@@ -21,7 +20,7 @@ const PostItemList = ({ title, type }) => {
     );
 };
 
-export default PostItemList;
+export default SeasonalItemList;
 
 const PostItemWrapper = styled.ul`
     display: flex;
