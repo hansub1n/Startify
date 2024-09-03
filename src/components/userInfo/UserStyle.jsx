@@ -4,6 +4,7 @@ import styled from "styled-components";
 // 로그인
 
 export const LoginContainer = styled.div`
+    font-family: "SUITE-Regular";
     max-width: 600px;
     margin: 30px auto;
     padding: 20px;
@@ -17,28 +18,38 @@ export const LoginContainer = styled.div`
     }
 
     h2 {
+        font-family: "SUITE-Regular";
         margin-bottom: 20px;
         font-size: 30px;
         color: #3b3c3d;
     }
 
     button {
-        padding: 10px 20px;
-        background-color: #d9d9d9;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        font-size: 16px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-        margin-bottom: 20px;
-    }
-
-    button:hover {
+        font-family: "SUITE-Regular";
+        margin-top: 10px;
+        padding: 10px 24px;
         background-color: #71c4ef;
+        color: #fff;
+        border: none;
+        border-radius: 20px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+
+        &:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        &:active {
+            background-color: #004494;
+            transform: translateY(0);
+        }
     }
 
     p {
+        font-family: "SUITE-Regular";
         color: #3b3c3d;
         font-size: 14px;
         margin: 10px;
@@ -64,6 +75,7 @@ export const ButtonContainer = styled.div`
 // 가입
 
 export const SignUpContainer = styled.div`
+    font-family: "SUITE-Regular";
     max-width: 600px;
     margin: 30px auto;
     padding: 20px;
@@ -79,18 +91,27 @@ export const SignUpContainer = styled.div`
     }
 
     button {
-        padding: 10px 20px;
-        background-color: #d9d9d9;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        font-size: 16px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-
-    button:hover {
+        font-family: "SUITE-Regular";
+        margin-top: 10px;
+        padding: 10px 24px;
         background-color: #71c4ef;
+        color: #fff;
+        border: none;
+        border-radius: 20px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+
+        &:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        &:active {
+            background-color: #004494;
+            transform: translateY(0);
+        }
     }
 `;
 
