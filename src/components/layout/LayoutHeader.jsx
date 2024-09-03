@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import temporalLogo from "../../assets/temporalLogo.png";
-import Button from "../common/Button";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 
@@ -49,7 +48,6 @@ const LayoutHeader = () => {
                     {user ? (
                         <UserGreeting>
                             {account?.profileImgUrl && <UserImage src={account.profileImgUrl} alt="유저 프로필" />}
-                            {/* <p>{account?.userName ? `${account.userName}님 안녕하세요!` : "님 안녕하세요!"}</p> */}
                             <LayoutButton onClick={() => navigate("/form")}>노래 공유하기</LayoutButton>
                             <LayoutButton onClick={() => navigate(`/profile?id=${account.id}`)}>
                                 마이페이지
@@ -92,11 +90,6 @@ const HeaderNav = styled.nav`
 const LogoImg = styled.img`
     width: 200px;
     height: 100px;
-`;
-
-const HeaderTitle = styled.h1`
-    font-family: "SUITE-Regular";
-    font-size: 30px;
 `;
 
 const LoginUl = styled.ul`
