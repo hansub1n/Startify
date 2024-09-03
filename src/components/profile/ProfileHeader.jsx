@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import * as Style from "./ProfileStyles";
 import blankProfileImg from "../../assets/blankProfile.png";
+import "./css/active.css";
 
 export const ProfileHeader = ({ account, paramId, paramView }) => {
     const navigate = useNavigate();
@@ -22,28 +23,31 @@ export const ProfileHeader = ({ account, paramId, paramView }) => {
                 </Style.UserInfoContainer>
                 <Style.ProfileNavigation>
                     <li>
-                        <LinkItem to={`/profile?id=${paramId}`} active={paramView === null}>
+                        <Link
+                            to={`/profile?id=${paramId}`}
+                            className={paramView === null ? "nav-link active" : "nav-link"}
+                        >
                             소개
-                        </LinkItem>
+                        </Link>
                     </li>
                     <li>
-                        <LinkItem to={`/profile?id=${paramId}&view=created`} active={paramView === "created"}>
+                        <Link
+                            to={`/profile?id=${paramId}&view=created`}
+                            className={paramView === "created" ? "nav-link active" : "nav-link"}
+                        >
                             작성한 게시물
-                        </LinkItem>
+                        </Link>
                     </li>
                     <li>
-                        <LinkItem to={`/profile?id=${paramId}&view=liked`} active={paramView === "liked"}>
+                        <Link
+                            to={`/profile?id=${paramId}&view=liked`}
+                            className={paramView === "liked" ? "nav-link active" : "nav-link"}
+                        >
                             좋아요한 게시물
-                        </LinkItem>
+                        </Link>
                     </li>
                 </Style.ProfileNavigation>
             </Style.ProfileHeaderContainer>
         </Style.ProfileHeaderWrap>
     );
 };
-const LinkItem = styled(Link)`
-    text-decoration: none;
-    color: ${({ active }) => (active ? "#000" : "#3d3d3d")};
-    font-weight: ${({ active }) => (active ? "bold" : "normal")};
-    /* border-bottom: ${({ active }) => (active ? "border 1px solid" : "none")}; */
-`;
