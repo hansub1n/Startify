@@ -4,6 +4,7 @@ import temporalLogo from "../../assets/temporalLogo.png";
 import Button from "../common/Button";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
+
 import supabase from "../../supabaseClient";
 
 const LayoutHeader = () => {
@@ -16,7 +17,7 @@ const LayoutHeader = () => {
             if (user && user.id) {
                 const { data, error } = await supabase
                     .from("STARTIFY_USER")
-                    .select("profileImgUrl, userName")
+                    .select("id,profileImgUrl, userName")
                     .eq("user_id", user.id)
                     .single();
 
@@ -50,7 +51,9 @@ const LayoutHeader = () => {
                             {account?.profileImgUrl && <UserImage src={account.profileImgUrl} alt="유저 프로필" />}
                             {/* <p>{account?.userName ? `${account.userName}님 안녕하세요!` : "님 안녕하세요!"}</p> */}
                             <LayoutButton onClick={() => navigate("/form")}>노래 공유하기</LayoutButton>
-                            <LayoutButton onClick={() => navigate(`/profile/${user.id}`)}>마이페이지</LayoutButton>
+                            <LayoutButton onClick={() => navigate(`/profile?id=${account.id}`)}>
+                                마이페이지
+                            </LayoutButton>
                             <LayoutButton onClick={handleSignOut}>로그아웃</LayoutButton>
                         </UserGreeting>
                     ) : (

@@ -4,19 +4,22 @@ import styled from "styled-components";
 import Intro from "../components/profile/Intro";
 import { ProfileContents } from "../components/profile/ProfileContents";
 import supabase from "../supabaseClient";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import PostProvider from "../context/PostContext";
 
 const Profile = () => {
     const { user } = useContext(UserContext);
     const [account, setAccount] = useState();
+    const [searchParams] = useSearchParams();
+    const paramId = searchParams.get("id");
+    const paramView = searchParams.get("view");
 
     useEffect(() => {
         const fetchAccountData = async () => {
             const { data, error } = await supabase
                 .from("STARTIFY_USER")
-                .select("userName, userIntro, profileImgUrl, user_id, userEmail")
+                .select("id, userName, userIntro, profileImgUrl, user_id, userEmail")
                 .eq("user_id", user.id)
                 .single();
             if (error) {
@@ -34,8 +37,8 @@ const Profile = () => {
     return (
         <PostProvider>
             <Wrapper>
-                <ProfileHeader account={account} />
-                <ProfileContents account={account} />
+                <ProfileHeader account={account} paramId={paramId} />
+                <ProfileContents account={account} paramView={paramView} />
             </Wrapper>
         </PostProvider>
     );

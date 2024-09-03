@@ -1,10 +1,7 @@
-import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import exampImg from "../../assets/temporalLogo.png";
-import { UserContext } from "../../context/UserContext";
 
-export const ProfileHeader = ({ account }) => {
+export const ProfileHeader = ({ account, paramId }) => {
     const navigate = useNavigate();
     console.log("header-account", account);
     return (
@@ -23,13 +20,13 @@ export const ProfileHeader = ({ account }) => {
                 </UserInfoContainer>
                 <ProfileNavigation>
                     <li>
-                        <Link to={`/profile/${account.user_id}`}>소개</Link>
+                        <Link to={`/profile?id=${paramId}`}>소개</Link>
                     </li>
                     <li>
-                        <Link to={`/profile/${account.user_id}/created`}>작성한 게시물</Link>
+                        <Link to={`/profile?id=${paramId}&view=created`}>작성한 게시물</Link>
                     </li>
                     <li>
-                        <Link to={`/profile/${account.user_id}/liked`}>좋아요한 게시물</Link>
+                        <Link to={`/profile?id=${paramId}&view=liked`}>좋아요한 게시물</Link>
                     </li>
                 </ProfileNavigation>
             </ProfileHeaderContainer>
