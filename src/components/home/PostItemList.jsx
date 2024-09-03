@@ -2,7 +2,7 @@ import PostItem from "./PostItem";
 import { useEffect, useState } from "react";
 import * as Style from "./HomeStyles";
 
-const PostItemList = ({ songs, title, index }) => {
+const PostItemList = ({ songs, title, index, imageUrl }) => {
     const [isListOpen, setIsListOpen] = useState(false);
 
     const largeScreen = matchMedia("screen and (min-width: 1660px)");
@@ -36,7 +36,10 @@ const PostItemList = ({ songs, title, index }) => {
 
     return (
         <Style.PostItemWrapper $index={index}>
-            <Style.PostWrapTitle>{title}</Style.PostWrapTitle>
+            <Style.PostWrapTitle>
+                {title}
+                <Style.TitleImg src={imageUrl} />
+            </Style.PostWrapTitle>
             <Style.PostItemsDiv $isListOpen={isListOpen}>
                 {songs.length ? (
                     songs.map((music) => {
