@@ -69,7 +69,6 @@ export default DetailMusic;
 const StMusicDiv = styled.div`
     width: 1000px;
     height: auto;
-    display: flex;
     flex-wrap: wrap;
     flex-direction: column;
     justify-content: center;
@@ -84,20 +83,23 @@ const Youtube = styled.iframe`
 `;
 
 const StMusicInfoTitleSpan = styled.span`
-    font-size: 20px;
+    font-family: "SUITE-Regular";
+    font-size: 30px;
     font-weight: 700;
     margin: 20px 0;
 `;
 
 const StPostDescSpan = styled.span`
+    font-family: "SUITE-Regular";
     display: flex;
-    font-size: 18px;
+    font-size: 20px;
 `;
 
 const StMusicInfoDiv = styled.div`
     display: flex;
     position: relative;
     flex-direction: column;
+    gap: 10px;
 `;
 
 const StMusicLikeBtnDiv = styled.div`
@@ -134,4 +136,5 @@ const StMusicInfoHashDiv = styled.div`
     display: flex;
     color: #056ee8;
     margin: 50px 0 30px 0;
+    gap: 10px;
 `;

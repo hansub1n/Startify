@@ -5,6 +5,7 @@ import { UserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import Button from "../common/Button";
 import playButton from "../../assets/playButton.png";
+import likeImg from "../../assets/like.png";
 
 const PostItem = ({ music }) => {
     const [isVideoPlayed, setIsVideoPlayed] = useState(false);
@@ -38,7 +39,7 @@ const PostItem = ({ music }) => {
                 </ImgIframeWrap>
                 <ThumbnailTextWrap $isVideoPlayed={isVideoPlayed}>
                     <LikesText>{likeCount}</LikesText>
-                    <LikesButton>❤️</LikesButton>
+                    <LikeBtmImg src={likeImg} />
                 </ThumbnailTextWrap>
             </ThumbnailWrap>
             <Text>
@@ -50,7 +51,7 @@ const PostItem = ({ music }) => {
                     setIsVideoPlayed(!isVideoPlayed);
                 }}
                 $fontSize="40px"
-                $width="60px"
+                $width="40px"
                 $height="60px"
                 $borderRadius="30px"
             >
@@ -133,18 +134,21 @@ const LikesText = styled.p`
     font-weight: 700;
 `;
 
-const LikesButton = styled.button`
-    color: red;
-    background-color: transparent;
-    border: none;
+const LikeBtmImg = styled.img`
+    width: 40px;
+    height: 40px;
 `;
 
 const TextName = styled.p`
     font-family: "SUITE-Regular";
-    font-size: 20px;
+    font-size: 25px;
+    font-weight: 700;
+    margin-bottom: 10px;
 `;
 
 const Text = styled.p`
     font-family: "SUITE-Regular";
     font-size: 18px;
+    margin-top: 10px;
+    margin-bottom: 5px;
 `;

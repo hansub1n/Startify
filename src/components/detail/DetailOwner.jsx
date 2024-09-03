@@ -24,6 +24,7 @@ const DetailOwner = ({ userId, userName, profileImgUrl }) => {
 export default DetailOwner;
 
 const StOwnerProfileBoxDiv = styled.div`
+    font-family: "SUITE-Regular";
     display: flex;
     flex-direction: row;
 `;
