@@ -98,17 +98,21 @@ const SignUp = () => {
 
         let profileImgUrl = null;
         if (profileImgFile) {
+            //한글파일명 업로드를 위해 파일명 변경
+            const lastDot = profileImgFile.name.lastIndexOf(".");
+            const fileExtension = profileImgFile.name.substring(lastDot + 1);
+            const newFileName = Math.random().toString(36).substr(2, 11);
             const uniqueImgName = new Date().getTime();
-            const imgFileName = `${uniqueImgName}_${profileImgFile.name}`;
+            const imgFileName = `${uniqueImgName}_${newFileName}`;
             const { imgData, imgError } = await supabase.storage
                 .from("startify_storage")
-                .upload(`profileImgFolder/${imgFileName}`, profileImgFile);
+                .upload(`profileImgFolder/${imgFileName}.${fileExtension}`, profileImgFile);
 
             if (imgError) {
                 alert("업로드 실패");
                 return;
             } else {
-                profileImgUrl = `https://lluyiezkzctkdodxpefi.supabase.co/storage/v1/object/public/startify_storage/profileImgFolder/${imgFileName}`;
+                profileImgUrl = `https://lluyiezkzctkdodxpefi.supabase.co/storage/v1/object/public/startify_storage/profileImgFolder/${imgFileName}.${fileExtension}`;
             }
         }
 
