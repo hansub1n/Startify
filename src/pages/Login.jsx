@@ -3,76 +3,7 @@ import { UserContext } from "../context/UserContext";
 import supabase from "../supabaseClient";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-
-const LoginContainer = styled.div`
-    max-width: 600px;
-    margin: 30px auto;
-    padding: 20px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-
-    img {
-        max-height: 200px;
-    }
-
-    h2 {
-        margin-bottom: 20px;
-        font-size: 30px;
-        color: #3b3c3d;
-    }
-
-    button {
-        padding: 10px 20px;
-        background-color: #3b3c3d;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        font-size: 16px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-        margin-bottom: 20px;
-    }
-
-    button:hover {
-        background-color: #00668c;
-    }
-
-    p {
-        color: #3b3c3d;
-        font-size: 14px;
-        margin: 10px;
-        text-align: center;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-    p:hover {
-        color: #00668c;
-    }
-`;
-
-const InputContainer = styled.div`
-    width: 100%;
-
-    label {
-        font-weight: bold;
-        color: #3b3c3d;
-        margin-bottom: 20px;
-    }
-
-    input {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        margin-top: 10px;
-        margin-bottom: 20px;
-        border-radius: 4px;
-        font-size: 14px;
-        color: #3b3c3d;
-        box-sizing: border-box;
-    }
-`;
+import { InputContainer, LoginContainer } from "../components/userInfo/UserStyle";
 
 const Login = () => {
     const { user } = useContext(UserContext);
@@ -124,7 +55,8 @@ const Login = () => {
             <div>
                 <img src="https://lluyiezkzctkdodxpefi.supabase.co/storage/v1/object/public/startify_storage/profileImgFolder/temporalLogo.png" />
             </div>
-            <h2>로그인</h2>
+            <h2>당신을 위한 노래</h2>
+            <h2>스타티파이</h2>
             <form onSubmit={handleLogin}>
                 <InputContainer>
                     <label>이메일</label>
