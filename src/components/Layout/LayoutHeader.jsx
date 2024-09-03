@@ -3,19 +3,45 @@ import temporalLogo from "../../assets/temporalLogo.png";
 import Button from "../common/Button";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import supabase from "../../supabaseClient";
 
 const LayoutHeader = () => {
     const { user } = useContext(UserContext);
+    const [account, setAccount] = useState();
+    const navigate = useNavigate();
+    const goToHome = () => navigate("/");
+
+    useEffect(() => {
+        const fetchAccountData = async () => {
+            if (user) {
+                const { data, error } = await supabase
+                    .from("STARTIFY_USER")
+                    .select("id, userName,user_id")
+                    .eq("user_id", user.id)
+                    .single();
+                if (error) {
+                    console.log("accountError", error);
+                } else {
+                    setAccount(data);
+                }
+            } else {
+                setAccount(null);
+            }
+        };
+        fetchAccountData();
+    }, [user]);
+
     const handleSignOut = async () => {
         await supabase.auth.signOut();
         alert("로그아웃 완료. 메인페이지로 갑니다🚀");
         navigate("/");
     };
 
-    const navigate = useNavigate();
-    const goToHome = () => navigate("/");
+    if (user === undefined || account === undefined) {
+        return <div>로딩중..</div>;
+    }
+
     return (
         <Header>
             <HeaderNav>
@@ -23,12 +49,12 @@ const LayoutHeader = () => {
                 <HeaderTitle onClick={goToHome}>Startify</HeaderTitle>
                 <LoginUl>
                     <>
-                        <p>{user ? <>{user.email}님 안녕하세요!</> : <>로그인이 필요합니다.</>}</p>
+                        <p>{account ? <>{account.userName}님 안녕하세요!</> : <>로그인이 필요합니다.</>}</p>
 
-                        {user ? (
+                        {account ? (
                             <>
                                 <Button onClick={() => navigate("/form")}>노래 공유하기</Button>
-                                <Button onClick={() => navigate(`/profile/${user.id}`)}>마이페이지</Button>
+                                <Button onClick={() => navigate(`/profile?id=${account.id}`)}>마이페이지</Button>
                                 <Button onClick={handleSignOut}>로그아웃</Button>
                             </>
                         ) : (
