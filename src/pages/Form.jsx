@@ -3,21 +3,21 @@ import { getYoutubeKey } from "../utils";
 import supabase from "../supabaseClient";
 import { useNavigate } from "react-router-dom";
 import {
+    Buttons,
     Container,
-    Text,
-    VideoWrapper,
-    FormWrapper,
-    PostTitle,
-    SongTitle,
-    YoutubeLink,
     Desc,
-    Name,
+    FormWrapper,
     Genre,
     Hashtags,
-    Buttons,
+    Name,
+    PlaceholderMessage,
+    PostTitle,
     Preview,
+    SongTitle,
     Tag,
-    PlaceholderMessage
+    Text,
+    VideoWrapper,
+    YoutubeLink
 } from "../components/form/style";
 
 const FormContext = createContext();
