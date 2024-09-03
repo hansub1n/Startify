@@ -6,8 +6,7 @@ import { DetailEditModal } from "./DetailEditModal";
 import { DetailDeleteModal } from "./DetailDeleteModal";
 import editImg from "../../assets/edit.png";
 import deleteImg from "../../assets/delete.png";
-
-const defaultProfileImgUrl = "/defaultProfile.jpg";
+import blankProfileImg from "../../assets/blankProfile.png";
 
 const DetailVisitor = ({ commentId, text, STARTIFY_USER, fetchPostData }) => {
     const { user } = useContext(UserContext);
@@ -40,7 +39,7 @@ const DetailVisitor = ({ commentId, text, STARTIFY_USER, fetchPostData }) => {
         <div>
             <StVisitorCommentBox>
                 <Link to={`/profile?id=${id}`}>
-                    <StVisitorProfileImg src={profileImgUrl ?? defaultProfileImgUrl} />
+                    <StVisitorProfileImg src={profileImgUrl ?? blankProfileImg} />
                 </Link>
                 <StVisitorProfileTextDiv>
                     <StVisitorProfileNameSpan onClick={() => navigate(`/profile?id=${id}`)}>
