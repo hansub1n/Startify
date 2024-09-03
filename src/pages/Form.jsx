@@ -235,8 +235,8 @@ const Form = () => {
                         </div>
                     </Hashtags>
                     <Buttons>
-                        <button onClick={() => navigate(-1)}>게시글 작성 취소</button>
-                        <button onClick={handleSubmit}>게시글 작성</button>
+                        <button onClick={() => navigate(-1)}>취소</button>
+                        <button onClick={handleSubmit}>등록</button>
                     </Buttons>
                 </FormWrapper>
             </Text>

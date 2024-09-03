@@ -78,7 +78,10 @@ export const ThumbnailTextWrap = styled.div`
 `;
 
 export const LikesText = styled.p`
-    /* color: white; */
+    color: white;
+    font-weight: bold;
+    text-shadow: 1px 1px 0px rgb(0, 0, 0), -1px -1px 0px rgb(0, 0, 0), 1px -1px 0px rgb(0, 0, 0),
+        -1px 1px 0px rgb(0, 0, 0);
     font-weight: 700;
 `;
 
