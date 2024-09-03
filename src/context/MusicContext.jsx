@@ -23,7 +23,9 @@ export const MusicProvider = ({ children }) => {
     //TODO - select범위 조절해야함
     const getAllData = async () => {
         initailizeStates();
-        const { data, error } = await supabase.from("STARTIFY_DATA").select("*, likes:STARTIFY_LIKES(user_id)");
+        const { data, error } = await supabase
+            .from("STARTIFY_DATA")
+            .select("postTitle, name, title, url, id, genre, likes:STARTIFY_LIKES(user_id)");
         if (error) {
             console.log("getAllData error :>> ", error);
             return;
