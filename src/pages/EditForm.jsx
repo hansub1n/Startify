@@ -53,27 +53,26 @@ const EditForm = () => {
     ];
 
     useEffect(() => {
+        const fetchPostData = async () => {
+            const { data, error } = await supabase.from("STARTIFY_DATA").select("*").eq("id", postId);
+
+            if (error) {
+                console.log("error => ", error);
+            } else {
+                console.log("data => ", data[0]);
+                const postData = data[0];
+                setPost(postData);
+                setPostTitle(postData.postTitle);
+                setTitle(postData.title);
+                setYoutubeLink(postData.url);
+                setDesc(postData.desc);
+                setName(postData.name);
+                setHashArr(postData.hashtags || []);
+                setSelectedSeason(postData.genre);
+            }
+        };
         fetchPostData();
     }, [postId]);
-
-    const fetchPostData = async () => {
-        const { data, error } = await supabase.from("STARTIFY_DATA").select("*").eq("id", postId);
-
-        if (error) {
-            console.log("error => ", error);
-        } else {
-            console.log("data => ", data[0]);
-            const postData = data[0];
-            setPost(postData);
-            setPostTitle(postData.postTitle);
-            setTitle(postData.title);
-            setYoutubeLink(postData.url);
-            setDesc(postData.desc);
-            setName(postData.name);
-            setHashArr(postData.hashtags || []);
-            setSelectedSeason(postData.genre);
-        }
-    };
 
     const getEmbedLink = (link) => {
         const videoId = getYoutubeKey(link);
@@ -162,7 +161,6 @@ const EditForm = () => {
             })
             .eq("id", postId);
         alert("게시글이 수정되었습니다.");
-        fetchPostData();
         navigate(`/detail?id=${postId}`);
     };
 
