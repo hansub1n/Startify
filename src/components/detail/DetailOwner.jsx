@@ -33,6 +33,7 @@ const StOwnerProfileImg = styled.img`
     height: 70px;
     object-fit: cover;
     border-radius: 50%;
+    cursor: pointer;
 `;
 
 const StOwnerProfileNameSpan = styled.span`

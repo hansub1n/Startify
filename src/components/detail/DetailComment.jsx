@@ -82,6 +82,7 @@ const StCommentFieldDiv = styled.div`
 const StCommentFieldTextarea = styled.textarea`
     resize: none;
     display: flex;
+    font-family: "SUITE-Regular";
     justify-content: center;
     align-items: center;
     width: 100%;
@@ -111,6 +112,7 @@ const StCommentFieldBtn = styled.button`
     border-radius: 13px;
     background-color: #71c4ef;
     box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
 
     &:hover {
         background-color: #a1d0d6;

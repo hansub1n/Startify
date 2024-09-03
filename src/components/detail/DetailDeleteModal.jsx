@@ -97,6 +97,7 @@ const Button = styled.button`
     background-color: #71c4ef;
     transition: background-color 0.3s ease, transform 0.3s ease;
     box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
 
     &:hover {
         background-color: #a1d0d6;
