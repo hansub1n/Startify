@@ -7,7 +7,7 @@ const Liked = () => {
     const { likePosts } = useContext(PostContext);
 
     return (
-        <Style.StyProfileContentContainer>
+        <Style.ProfileContentContainer>
             <Style.ProfileContent>
                 <Style.ItemCounter>
                     <span>{likePosts.length}개의 좋아요 한 게시물이 있습니다.</span>
@@ -24,7 +24,7 @@ const Liked = () => {
                     )}
                 </Style.ItemsContainer>
             </Style.ProfileContent>
-        </Style.StyProfileContentContainer>
+        </Style.ProfileContentContainer>
     );
 };
 
