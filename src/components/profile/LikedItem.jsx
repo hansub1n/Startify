@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { getYoutubeKey } from "../../utils";
-import * as Style from "../home/HomeStyles";
+import * as PostStyle from "../home/HomeStyles";
+import * as Style from "./ProfileStyles";
 import likeImg from "../../assets/like.png";
 
 export const LikedItem = ({ likePost }) => {
@@ -9,26 +10,26 @@ export const LikedItem = ({ likePost }) => {
     const likeCount = likePost.STARTIFY_DATA.STARTIFY_LIKES.length;
 
     return (
-        <Style.ItemLi onClick={() => navigate(`/detail?id=${likePost.STARTIFY_DATA.id}`)}>
-            <Style.TextName>{likePost.STARTIFY_DATA.postTitle}</Style.TextName>
-            <Style.ThumbnailWrap>
+        <PostStyle.ItemLi onClick={() => navigate(`/detail?id=${likePost.STARTIFY_DATA.id}`)}>
+            <PostStyle.TextName>{likePost.STARTIFY_DATA.postTitle}</PostStyle.TextName>
+            <PostStyle.ThumbnailWrap>
                 <Style.ItemImgBox>
-                    <Style.ThumbnailImg
+                    <PostStyle.ThumbnailImg
                         src={`https://img.youtube.com/vi/${thumbnailKey}/0.jpg`}
                         alt={likePost.STARTIFY_DATA.postTitle}
                     />
                 </Style.ItemImgBox>
                 <Style.LikesContainer>
-                    <Style.LikesText>{likeCount}</Style.LikesText>
-                    <Style.LikeBtmImg src={likeImg} />
+                    <PostStyle.LikesText>{likeCount}</PostStyle.LikesText>
+                    <PostStyle.LikeBtmImg src={likeImg} />
                 </Style.LikesContainer>
-            </Style.ThumbnailWrap>
+            </PostStyle.ThumbnailWrap>
             <Style.ItemTxtBox>
                 <span>{likePost.STARTIFY_DATA.STARTIFY_USER.userName}</span>
             </Style.ItemTxtBox>
-            <Style.Text>
+            <PostStyle.Text>
                 {likePost.STARTIFY_DATA.name} - {likePost.STARTIFY_DATA.title}
-            </Style.Text>
-        </Style.ItemLi>
+            </PostStyle.Text>
+        </PostStyle.ItemLi>
     );
 };
