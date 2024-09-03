@@ -44,7 +44,6 @@ const PostProvider = ({ children }) => {
                 if (likePostError) {
                     console.log("likePostError", likePostError);
                 } else {
-                    console.log("likePostData", likePostData);
                     setLikePosts(likePostData);
                 }
             }

@@ -1,10 +1,7 @@
 import React, { useContext } from "react";
-import { ProfileContent, ProfileContentContainer } from "./Intro";
-import styled from "styled-components";
-import testImg from "../../assets/temporalLogo.png";
-import { UserContext } from "../../context/UserContext";
 import { PostContext } from "../../context/PostContext";
 import { CreatedItem } from "./CreatedItem";
+import * as Style from "./ProfileStyles";
 
 const Created = () => {
     const { posts } = useContext(PostContext);
@@ -13,33 +10,21 @@ const Created = () => {
     }
 
     return (
-        <ProfileContentContainer>
-            <ProfileContent>
-                <ItemCounter>
+        <Style.ProfileContentContainer>
+            <Style.ProfileContent>
+                <Style.ItemCounter>
                     <span>{posts.length}개의 게시물이 있습니다.</span>
-                </ItemCounter>
-                <ItemsContainer>
-                    <Items>
+                </Style.ItemCounter>
+                <Style.ItemsContainer>
+                    <Style.Items>
                         {posts.map((post) => (
                             <CreatedItem key={post.id} post={post} />
                         ))}
-                    </Items>
-                </ItemsContainer>
-            </ProfileContent>
-        </ProfileContentContainer>
+                    </Style.Items>
+                </Style.ItemsContainer>
+            </Style.ProfileContent>
+        </Style.ProfileContentContainer>
     );
 };
 
 export default Created;
-
-export const ItemCounter = styled.div`
-    padding-bottom: 20px;
-    font-size: 14px;
-`;
-
-export const ItemsContainer = styled.div``;
-export const Items = styled.ul`
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-`;
