@@ -1,10 +1,9 @@
 import React, { useEffect, useState, useContext } from "react";
-import styled from "styled-components";
 import temporalLogo from "../../assets/temporalLogo.png";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
-
 import supabase from "../../supabaseClient";
+import * as Style from "./LayoutStyles";
 
 const LayoutHeader = () => {
     const { user } = useContext(UserContext);
@@ -40,100 +39,31 @@ const LayoutHeader = () => {
     const goToHome = () => navigate("/");
 
     return (
-        <Header>
-            <HeaderNav>
-                <LogoImg src={temporalLogo} alt="로고이미지" onClick={goToHome} />
-
-                <LoginUl>
+        <Style.Header>
+            <Style.HeaderNav>
+                <Style.LogoImg src={temporalLogo} alt="로고이미지" onClick={goToHome} />
+                <Style.LoginUl>
                     {user ? (
-                        <UserGreeting>
-                            {account?.profileImgUrl && <UserImage src={account.profileImgUrl} alt="유저 프로필" />}
-                            <LayoutButton onClick={() => navigate("/form")}>노래 공유하기</LayoutButton>
-                            <LayoutButton onClick={() => navigate(`/profile?id=${account.id}`)}>
+                        <Style.UserGreeting>
+                            {account?.profileImgUrl && (
+                                <Style.UserImage src={account.profileImgUrl} alt="유저 프로필" />
+                            )}
+                            <Style.LayoutButton onClick={() => navigate("/form")}>노래 공유하기</Style.LayoutButton>
+                            <Style.LayoutButton onClick={() => navigate(`/profile?id=${account.id}`)}>
                                 마이페이지
-                            </LayoutButton>
-                            <LayoutButton onClick={handleSignOut}>로그아웃</LayoutButton>
-                        </UserGreeting>
+                            </Style.LayoutButton>
+                            <Style.LayoutButton onClick={handleSignOut}>로그아웃</Style.LayoutButton>
+                        </Style.UserGreeting>
                     ) : (
                         <>
-                            <LayoutButton onClick={() => navigate("/login")}>로그인</LayoutButton>
-                            <LayoutButton onClick={() => navigate("/signup")}>회원가입</LayoutButton>
+                            <Style.LayoutButton onClick={() => navigate("/login")}>로그인</Style.LayoutButton>
+                            <Style.LayoutButton onClick={() => navigate("/signup")}>회원가입</Style.LayoutButton>
                         </>
                     )}
-                </LoginUl>
-            </HeaderNav>
-        </Header>
+                </Style.LoginUl>
+            </Style.HeaderNav>
+        </Style.Header>
     );
 };
 
 export default LayoutHeader;
-
-const Header = styled.header`
-    font-family: "SUITE-Regular";
-    margin-bottom: 10px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-`;
-
-const HeaderNav = styled.nav`
-    align-items: flex-end;
-    font-family: "SUITE-Regular";
-    display: flex;
-    flex-direction: row;
-    width: 90vw;
-    justify-content: space-between;
-    border-bottom: 5px solid #d4eaf7;
-    padding: 10px 50px;
-`;
-
-const LogoImg = styled.img`
-    width: 200px;
-    height: 100px;
-`;
-
-const LoginUl = styled.ul`
-    font-family: "SUITE-Regular";
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-`;
-
-const UserGreeting = styled.div`
-    display: flex;
-    align-items: center;
-    gap: 10px;
-`;
-
-const UserImage = styled.img`
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    object-fit: cover;
-`;
-const LayoutButton = styled.button`
-    font-family: "SUITE-Regular";
-    display: block;
-    margin-top: 10px;
-    padding: 5px 10px;
-    background-color: #71c4ef;
-    color: #fff;
-    border: none;
-    border-radius: 20px;
-    font-size: 15px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-
-    &:hover {
-        background-color: #0056b3;
-        transform: translateY(-2px);
-    }
-
-    &:active {
-        background-color: #004494;
-        transform: translateY(0);
-    }
-`;
