@@ -4,7 +4,6 @@ import { Buttons } from "../form/style";
 
 export const ProfileHeader = ({ account, paramId, paramView }) => {
     const navigate = useNavigate();
-    console.log("header-account", account);
     return (
         <ProfileHeaderWrap>
             <ProfileHeaderContainer>
