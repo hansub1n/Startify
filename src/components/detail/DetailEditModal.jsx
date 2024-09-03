@@ -89,7 +89,7 @@ const Span = styled.span`
 
 const TextArea = styled.textarea`
     resize: none;
-    width: 800px;
+    width: 700px;
     height: 150px;
     margin-top: 50px;
     border: none;

@@ -1,31 +1,28 @@
-import React, { useContext, useState } from "react";
-import styled from "styled-components";
+import React, { useState } from "react";
 import { getYoutubeKey } from "../../utils";
-import { UserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import Button from "../common/Button";
 import playButton from "../../assets/playButton.png";
 import likeImg from "../../assets/like.png";
+import * as Style from "./HomeStyles";
 
 const PostItem = ({ music }) => {
     const [isVideoPlayed, setIsVideoPlayed] = useState(false);
     const { postTitle, name, title, url, id } = music;
     const navigate = useNavigate();
-    const { user } = useContext(UserContext);
-    const userId = user?.id;
     const thumbnailKey = getYoutubeKey(url);
     const likeCount = music.likes.length;
 
     return (
-        <ItemLi onClick={() => navigate(`/detail?id=${id}`)}>
-            <TextName>{postTitle}</TextName>
-            <ThumbnailWrap>
-                <ImgIframeWrap>
-                    <ThumbnailImg
+        <Style.ItemLi onClick={() => navigate(`/detail?id=${id}`)}>
+            <Style.TextName>{postTitle}</Style.TextName>
+            <Style.ThumbnailWrap>
+                <Style.ImgIframeWrap>
+                    <Style.ThumbnailImg
                         $isVideoPlayed={isVideoPlayed}
                         src={`https://img.youtube.com/vi/${thumbnailKey}/0.jpg`}
                     />
-                    <VideoIframe
+                    <Style.VideoIframe
                         $isVideoPlayed={isVideoPlayed}
                         width="300"
                         height="224"
@@ -35,16 +32,16 @@ const PostItem = ({ music }) => {
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share;"
                         referrerPolicy="strict-origin-when-cross-origin"
                         allowFullScreen
-                    ></VideoIframe>
-                </ImgIframeWrap>
-                <ThumbnailTextWrap $isVideoPlayed={isVideoPlayed}>
-                    <LikesText>{likeCount}</LikesText>
-                    <LikeBtmImg src={likeImg} />
-                </ThumbnailTextWrap>
-            </ThumbnailWrap>
-            <Text>
+                    ></Style.VideoIframe>
+                </Style.ImgIframeWrap>
+                <Style.ThumbnailTextWrap $isVideoPlayed={isVideoPlayed}>
+                    <Style.LikesText>{likeCount}</Style.LikesText>
+                    <Style.LikeBtmImg src={likeImg} />
+                </Style.ThumbnailTextWrap>
+            </Style.ThumbnailWrap>
+            <Style.Text>
                 {name} - {title}
-            </Text>
+            </Style.Text>
             <Button
                 onClick={(e) => {
                     e.stopPropagation();
@@ -57,7 +54,7 @@ const PostItem = ({ music }) => {
             >
                 <img src={playButton} />
             </Button>
-        </ItemLi>
+        </Style.ItemLi>
     );
 };
 

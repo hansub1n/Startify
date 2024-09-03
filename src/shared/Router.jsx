@@ -17,7 +17,6 @@ import EditForm from "../pages/EditForm";
 
 const AuthRoute = () => {
     const { user } = useContext(UserContext);
-
     if (user) {
         alert("이미 로그인 되어있습니다. 메인으로 이동합니다. 🥺");
         return <Navigate to="/" />;
@@ -27,6 +26,10 @@ const AuthRoute = () => {
 
 const PrivateRoute = () => {
     const { user } = useContext(UserContext);
+
+    if (user === undefined) {
+        return null;
+    }
     if (!user) {
         alert("로그인이 필요한 페이지입니다. 로그인 해주세요. 🥺");
         return <Navigate to="/login" />;
