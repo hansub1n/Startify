@@ -5,15 +5,34 @@ import { useEffect, useState } from "react";
 const PostItemList = ({ songs, title, index }) => {
     const [isListOpen, setIsListOpen] = useState(false);
 
-    const a = matchMedia("screen and (min-width: 1660px)");
-    const b = matchMedia("screen and (min-width: 1200px) and (max-width: 1659px)");
-    const c = matchMedia("screen and (min-width: 840px) and (max-width: 1199px)");
-    const d = matchMedia("screen and (max-width: 839px)");
+    const largeScreen = matchMedia("screen and (min-width: 1660px)");
+    const mediumScreen = matchMedia("screen and (min-width: 1200px) and (max-width: 1659px)");
+    const smallScreen = matchMedia("screen and (min-width: 840px) and (max-width: 1199px)");
+    const extraSmallScreen = matchMedia("screen and (max-width: 839px)");
 
-    // const [aa, setAA] = useState(matchMedia("screen and (min-width: 1660px)"))
-    // useEffect(()=>{
+    const initializeVisibleCount = () => {
+        if (largeScreen.matches) {
+            return 4;
+        } else if (mediumScreen.matches) {
+            return 3;
+        } else if (smallScreen.matches) {
+            return 2;
+        } else if (extraSmallScreen.matches) {
+            return 1;
+        }
+    };
+    const [visibleCount, setVisibleCount] = useState(initializeVisibleCount());
 
-    // }, [window.innerWidth])
+    useEffect(() => {
+        const handleByResize = () => {
+            setVisibleCount(initializeVisibleCount());
+        };
+        window.addEventListener("resize", handleByResize);
+
+        return () => {
+            window.removeEventListener("resize", handleByResize);
+        };
+    });
 
     return (
         <PostItemWrapper $index={index}>
@@ -27,22 +46,7 @@ const PostItemList = ({ songs, title, index }) => {
                     <p>어울리는 음악이 없습니다! 해당 계절에 어울리는 음악을 추가해주세요!</p>
                 )}
             </PostItemsDiv>
-            {a.matches && songs.length > 4 ? (
-                <ListOpenButton $index={index} $isListOpen={isListOpen} onClick={() => setIsListOpen(!isListOpen)}>
-                    {isListOpen ? "▲" : "▼"}
-                </ListOpenButton>
-            ) : null}
-            {b.matches && songs.length > 3 ? (
-                <ListOpenButton $index={index} $isListOpen={isListOpen} onClick={() => setIsListOpen(!isListOpen)}>
-                    {isListOpen ? "▲" : "▼"}
-                </ListOpenButton>
-            ) : null}
-            {c.matches && songs.length > 2 ? (
-                <ListOpenButton $index={index} $isListOpen={isListOpen} onClick={() => setIsListOpen(!isListOpen)}>
-                    {isListOpen ? "▲" : "▼"}
-                </ListOpenButton>
-            ) : null}
-            {d.matches && songs.length > 1 ? (
+            {songs.length > visibleCount ? (
                 <ListOpenButton $index={index} $isListOpen={isListOpen} onClick={() => setIsListOpen(!isListOpen)}>
                     {isListOpen ? "▲" : "▼"}
                 </ListOpenButton>
