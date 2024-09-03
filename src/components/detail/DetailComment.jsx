@@ -7,7 +7,6 @@ import { UserContext } from "../../context/UserContext";
 const DetailComment = ({ id, comments, fetchPostData }) => {
     const { user } = useContext(UserContext);
     const userId = user.id;
-    console.log(user.id);
 
     const [inputText, setInputText] = useState("");
 
