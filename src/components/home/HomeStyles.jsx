@@ -183,6 +183,11 @@ export const ListOpenButton = styled.div`
         filter: brightness(0.95);
     }
 `;
+export const TitleImg = styled.img`
+    margin: auto;
+    width: 30px;
+    height: 30px;
+`;
 //-------------------------
 
 //-----SearchInput Css-----
