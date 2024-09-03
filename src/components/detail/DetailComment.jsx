@@ -24,7 +24,7 @@ const DetailComment = ({ id, comments, fetchPostData }) => {
     };
 
     return (
-        <div>
+        <DetailCommentDiv>
             <StCommentFieldDiv>
                 <StCommentFieldTextarea
                     value={inputText}
@@ -32,6 +32,7 @@ const DetailComment = ({ id, comments, fetchPostData }) => {
                         setInputText(e.target.value);
                     }}
                 />
+
                 <StCommentFieldBtn onClick={addComment}>등록</StCommentFieldBtn>
             </StCommentFieldDiv>
             <StDetailCommentsDiv>
@@ -48,32 +49,39 @@ const DetailComment = ({ id, comments, fetchPostData }) => {
                     );
                 })}
             </StDetailCommentsDiv>
-        </div>
+        </DetailCommentDiv>
     );
 };
 
 export default DetailComment;
+
+const DetailCommentDiv = styled.div`
+    width: 1120px;
+    height: 100%;
+`;
+
 const StCommentFieldDiv = styled.div`
     display: flex;
     position: relative;
+    width: 100%;
     flex-direction: column;
-    justify-content: center;
 
     border-top: 1px solid #b6ccd8;
     padding-top: 20px;
     margin-bottom: 70px;
 `;
 const StCommentFieldTextarea = styled.textarea`
+    resize: none;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 130px;
+    height: 200px;
     margin-bottom: 30px;
     box-sizing: border-box;
-    font-size: 15px;
-    padding: 15px;
-    background-color: #d9d9d9;
+    font-size: 20px;
+    padding: 15px 100px 15px 15px;
+    background-color: #f0f0f0;
     border: none;
     border-radius: 20px;
 `;
@@ -81,12 +89,22 @@ const StCommentFieldBtn = styled.button`
     display: flex;
     position: absolute;
     justify-content: center;
-    bottom: -20px;
-    right: 0;
-    width: 100px;
-    height: 30px;
+    align-items: center;
+    bottom: 40px;
+    right: 10px;
+    width: 90px;
+    height: 45px;
     padding: 5px;
     box-sizing: border-box;
+    font-size: 18px;
+    border: none;
+    border-radius: 13px;
+    background-color: #b0e0e6;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
+
+    &:hover {
+        background-color: #a1d0d6;
+    }
 `;
 const StDetailCommentsDiv = styled.div`
     display: flex;

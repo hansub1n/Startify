@@ -1,10 +1,11 @@
 import { styled } from "styled-components";
 
 export const Container = styled.div`
+    font-family: "SUITE-Regular";
     align-items: center;
     justify-content: center;
     width: 1000px;
-    height: 800px;
+    height: auto;
     margin: auto;
     margin-top: 20px;
     margin-bottom: 30px;
@@ -34,6 +35,7 @@ export const FormWrapper = styled.div`
     justify-content: center;
 `;
 export const PostTitle = styled.input`
+    font-family: "SUITE-Regular";
     font-size: 36px;
     margin: 0 auto;
     color: #000000;
@@ -47,6 +49,7 @@ export const PostTitle = styled.input`
 `;
 export const SongTitle = styled.div`
     input {
+        font-family: "SUITE-Regular";
         width: 77%;
         padding: 10px;
         font-size: 16px;
@@ -58,6 +61,7 @@ export const SongTitle = styled.div`
 `;
 export const YoutubeLink = styled.div`
     input {
+        font-family: "SUITE-Regular";
         width: 74%;
         padding: 10px;
         font-size: 16px;
@@ -69,6 +73,7 @@ export const YoutubeLink = styled.div`
 `;
 export const Desc = styled.div`
     textarea {
+        font-family: "SUITE-Regular";
         width: 95%;
         padding: 10px;
         font-size: 16px;
@@ -81,6 +86,7 @@ export const Desc = styled.div`
 `;
 export const Name = styled.div`
     input {
+        font-family: "SUITE-Regular";
         width: 77%;
         padding: 10px;
         font-size: 16px;
@@ -92,6 +98,7 @@ export const Name = styled.div`
 `;
 export const Genre = styled.div`
     select {
+        font-family: "SUITE-Regular";
         width: 90%;
         padding: 10px 20px;
         appearance: none;
@@ -116,6 +123,7 @@ export const Genre = styled.div`
 
 export const Hashtags = styled.div`
     input {
+        font-family: "SUITE-Regular";
         width: 78%;
         padding: 10px;
         font-size: 16px;
@@ -125,28 +133,33 @@ export const Hashtags = styled.div`
         height: 10px;
     }
 `;
-export const Button = styled.button`
-    display: block;
-    margin-top: 10px;
+export const Buttons = styled.div`
+    display: flex;
+    gap: 10px;
     margin-left: auto;
-    padding: 12px 24px;
-    background-color: #71c4ef;
-    color: #fff;
-    border: none;
-    border-radius: 20px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    button {
+        font-family: "SUITE-Regular";
+        display: block;
+        margin-top: 10px;
+        padding: 10px 24px;
+        background-color: #71c4ef;
+        color: #fff;
+        border: none;
+        border-radius: 20px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
 
-    &:hover {
-        background-color: #0056b3;
-        transform: translateY(-2px);
-    }
+        &:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
 
-    &:active {
-        background-color: #004494;
-        transform: translateY(0);
+        &:active {
+            background-color: #004494;
+            transform: translateY(0);
+        }
     }
 `;
 //유튜브화면
@@ -172,6 +185,7 @@ export const PlaceholderMessage = styled.div`
     border-radius: 20px;
 `;
 export const Tag = styled.div`
+    font-family: "SUITE-Regular";
     display: inline-block;
     background-color: #00668c;
     color: #ffffff;

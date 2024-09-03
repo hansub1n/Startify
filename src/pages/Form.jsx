@@ -14,7 +14,7 @@ import {
     Name,
     Genre,
     Hashtags,
-    Button,
+    Buttons,
     Preview,
     Tag,
     PlaceholderMessage
@@ -100,29 +100,20 @@ const Form = () => {
     };
 
     const handleSubmit = async () => {
-        if (!postTitle) {
-            alert("제목을 입력해 주세요.");
-            return;
-        }
-        if (!title) {
-            alert("노래 제목을 입력해 주세요.");
-            return;
-        }
-        if (!youtubeLink) {
-            alert("유튜브 링크를 입력해 주세요.");
-            return;
-        }
-        if (!desc) {
-            alert("내용을 입력해 주세요.");
-            return;
-        }
-        if (!name) {
-            alert("가수 이름을 입력해 주세요.");
-            return;
-        }
-        if (!selectedSeason) {
-            alert("계절을 선택해 주세요.");
-            return;
+        const fields = [
+            { value: postTitle, message: "제목을 입력해 주세요." },
+            { value: title, message: "노래 제목을 입력해 주세요." },
+            { value: youtubeLink, message: "유튜브 링크를 입력해 주세요." },
+            { value: desc, message: "내용을 입력해 주세요." },
+            { value: name, message: "가수 이름을 입력해 주세요." },
+            { value: selectedSeason, message: "계절을 선택해 주세요." }
+        ];
+
+        for (const field of fields) {
+            if (!field.value) {
+                alert(field.message);
+                return;
+            }
         }
         const {
             data: { session }
@@ -137,7 +128,7 @@ const Form = () => {
         const userId = session.user.id; // 사용자 ID 가져오기
 
         const updatedHashArr = [...hashArr]; // 해시테그가 빈값일 때 자동으로 가수명과 곡명을 저장하도록 하기
-        if (name && title && !updatedHashArr.includes(title, name)) {
+        if (updatedHashArr.length === 0) {
             updatedHashArr.push(title, name);
         }
 
@@ -180,9 +171,9 @@ const Form = () => {
                         {youtubeLink ? (
                             <Preview>
                                 <iframe
-                                    src={getEmbedLink(youtubeLink)}
+                                    src={getEmbedLink(youtubeLink).replace("autoplay=1", "autoplay=0")}
                                     frameBorder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     allowFullScreen
                                     title="YouTube Video Preview"
                                 ></iframe>
@@ -243,7 +234,10 @@ const Form = () => {
                             ))}
                         </div>
                     </Hashtags>
-                    <Button onClick={handleSubmit}>게시글 작성</Button>
+                    <Buttons>
+                        <button onClick={() => navigate(-1)}>게시글 작성 취소</button>
+                        <button onClick={handleSubmit}>게시글 작성</button>
+                    </Buttons>
                 </FormWrapper>
             </Text>
         </Container>
