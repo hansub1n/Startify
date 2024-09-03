@@ -11,7 +11,7 @@ const Created = () => {
     if (!posts) {
         return <div>로딩중</div>;
     }
-    console.log("posts", posts);
+
     return (
         <ProfileContentContainer>
             <ProfileContent>

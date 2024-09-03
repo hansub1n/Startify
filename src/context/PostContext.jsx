@@ -13,13 +13,16 @@ const PostProvider = ({ children }) => {
             if (user) {
                 const { data: postData, error: postError } = await supabase
                     .from("STARTIFY_DATA")
-                    .select("id, postTitle, url, name, title, STARTIFY_USER(userName)")
+                    .select(
+                        `id, postTitle, url, name, title,
+                        STARTIFY_USER(userName),
+                        STARTIFY_LIKES(user_id)`
+                    )
                     .eq("user_id", user.id);
 
                 if (postError) {
                     console.log(postError);
                 } else {
-                    console.log("postData", postData);
                     setPosts(postData);
                 }
             }
@@ -33,7 +36,8 @@ const PostProvider = ({ children }) => {
                     .select(
                         `*,
                         STARTIFY_DATA(id, postTitle, url, name, title
-                         ,STARTIFY_USER(userName))`
+                         ,STARTIFY_USER(userName)
+                         ,STARTIFY_LIKES(user_id))`
                     )
                     .eq("user_id", user.id);
 

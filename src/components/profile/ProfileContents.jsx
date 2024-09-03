@@ -5,7 +5,6 @@ import Liked from "./Liked";
 import { Route, Routes, useParams, useSearchParams } from "react-router-dom";
 
 export const ProfileContents = ({ account, paramView }) => {
-    console.log("paramView", paramView);
     return (
         // <Routes>
         //     {/* path는 사용하고 싶은 주소

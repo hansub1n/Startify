@@ -7,7 +7,6 @@ import { LikedItem } from "./LikedItem";
 
 const Liked = () => {
     const { likePosts } = useContext(PostContext);
-    console.log("likePosts", likePosts);
 
     return (
         <ProfileContentContainer>
