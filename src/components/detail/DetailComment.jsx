@@ -56,8 +56,17 @@ const DetailComment = ({ id, comments, fetchPostData }) => {
 export default DetailComment;
 
 const DetailCommentDiv = styled.div`
-    width: 1120px;
-    height: 100%;
+    font-family: "SUITE-Regular";
+    align-items: center;
+    justify-content: center;
+    width: 1000px;
+    height: auto;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
 `;
 
 const StCommentFieldDiv = styled.div`
@@ -86,6 +95,7 @@ const StCommentFieldTextarea = styled.textarea`
     border-radius: 20px;
 `;
 const StCommentFieldBtn = styled.button`
+    font-family: "SUITE-Regular";
     display: flex;
     position: absolute;
     justify-content: center;

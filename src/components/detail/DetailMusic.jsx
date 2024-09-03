@@ -29,16 +29,16 @@ const DetailMusic = ({ url, name, title, desc, likes, hashtags, toggleLikeData }
                 <div>
                     {
                         <div>
-                            <iframe
-                                width=" 1120"
-                                height="630"
+                            <Youtube
+                                width="1000"
+                                height="562"
                                 object-fit="cover"
                                 src={getEmbedLink(url)}
                                 frameBorder="0"
                                 allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowFullScreen
                                 title="YouTube Video Preview"
-                            ></iframe>
+                            ></Youtube>
                         </div>
                     }
                 </div>
@@ -67,12 +67,22 @@ const DetailMusic = ({ url, name, title, desc, likes, hashtags, toggleLikeData }
 export default DetailMusic;
 
 const StMusicDiv = styled.div`
+    width: 1000px;
+    height: auto;
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
     justify-content: center;
     margin-top: 15px;
 `;
+
+const Youtube = styled.iframe`
+    width: 1000px;
+    height: 562px;
+    align-items: center;
+    justify-content: center;
+`;
+
 const StMusicInfoTitleSpan = styled.span`
     font-size: 20px;
     font-weight: 700;

@@ -17,7 +17,7 @@ const PostItem = ({ music }) => {
 
     return (
         <ItemLi onClick={() => navigate(`/detail?id=${id}`)}>
-            <h3>{postTitle}</h3>
+            <TextName>{postTitle}</TextName>
             <ThumbnailWrap>
                 <ImgIframeWrap>
                     <ThumbnailImg
@@ -41,9 +41,9 @@ const PostItem = ({ music }) => {
                     <LikesButton>❤️</LikesButton>
                 </ThumbnailTextWrap>
             </ThumbnailWrap>
-            <p>
+            <Text>
                 {name} - {title}
-            </p>
+            </Text>
             <Button
                 onClick={(e) => {
                     e.stopPropagation();
@@ -133,4 +133,14 @@ const LikesButton = styled.button`
     color: red;
     background-color: transparent;
     border: none;
+`;
+
+const TextName = styled.p`
+    font-family: "SUITE-Regular";
+    font-size: 20px;
+`;
+
+const Text = styled.p`
+    font-family: "SUITE-Regular";
+    font-size: 18px;
 `;
