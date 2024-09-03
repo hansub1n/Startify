@@ -1,21 +1,17 @@
 import styled from "styled-components";
-import Button from "../components/common/Button";
 import PostItem from "../components/home/PostItem";
 import useSearchedMusicContext from "../hooks/useSearchedMusicContext";
-import SearchedItem from "../components/search/SearchedItem";
+import SearchInput from "../components/home/SearchInput";
 
 const Search = () => {
     const { searchText, handleSearchText, SearchHandle, searchedSongs } = useSearchedMusicContext();
     return (
         <ListWrapper>
-            <div>
-                <input value={searchText} onChange={handleSearchText} />
-                <Button onClick={SearchHandle}>검색</Button>
-            </div>
+            <SearchInput searchText={searchText} handleSearchText={handleSearchText} handleSearch={SearchHandle} />
             <ListUl>
                 {searchedSongs && searchedSongs.length ? (
                     searchedSongs.map((music) => {
-                        return <SearchedItem key={music.id} music={music} />;
+                        return <PostItem key={music.id} music={music} />;
                     })
                 ) : (
                     <div>해당하는 노래가 없습니다.</div>
@@ -30,6 +26,8 @@ export default Search;
 const ListWrapper = styled.div`
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     padding: 0px 30px;
 `;
 
@@ -38,7 +36,20 @@ const ListUl = styled.ul`
     grid-template-columns: repeat(4, 1fr);
     justify-items: center;
     gap: 20px;
-    border: 1px solid red;
     background-color: #d4eaf7;
-    padding: 20px;
+    border-radius: 20px;
+    padding: 30px 20px;
+    margin: 20px 0px;
+
+    @media all and (min-width: 1200px) and (max-width: 1559px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media all and (min-width: 840px) and (max-width: 1199px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media all and (max-width: 839px) {
+        grid-template-columns: repeat(1, 1fr);
+    }
 `;

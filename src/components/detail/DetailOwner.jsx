@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 const defaultProfileImgUrl = "/defaultProfile.jpg";
 
-const DetailOwner = ({ userId, userName, postTitle, desc, profileImgUrl }) => {
+const DetailOwner = ({ userId, userName, profileImgUrl }) => {
     const navigate = useNavigate();
 
     return (
@@ -13,15 +13,9 @@ const DetailOwner = ({ userId, userName, postTitle, desc, profileImgUrl }) => {
                 <Link to={`/profile?id=${userId}`}>
                     <StOwnerProfileImg src={profileImgUrl ?? defaultProfileImgUrl} />
                 </Link>
-                <StOwnerProfileTextDiv>
-                    <StOwnerProfileNameSpan onClick={() => navigate(`/profile?id=${userId}`)}>
-                        {userName}
-                    </StOwnerProfileNameSpan>
-                    <StCommentDiv>
-                        <StOwnerProfilesCommentTitleSpan>{postTitle}</StOwnerProfilesCommentTitleSpan>
-                        <StOwnerProfilesCommentSpan>{desc}</StOwnerProfilesCommentSpan>
-                    </StCommentDiv>
-                </StOwnerProfileTextDiv>
+                <StOwnerProfileNameSpan onClick={() => navigate(`/profile?id=${userId}`)}>
+                    {userName}
+                </StOwnerProfileNameSpan>
             </StOwnerProfileBoxDiv>
         </div>
     );
@@ -35,36 +29,18 @@ const StOwnerProfileBoxDiv = styled.div`
 `;
 const StOwnerProfileImg = styled.img`
     display: flex;
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
     object-fit: cover;
     border-radius: 50%;
 `;
 
-const StOwnerProfileTextDiv = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 10px;
-    margin-left: 10px;
-`;
-
 const StOwnerProfileNameSpan = styled.span`
     display: flex;
-    font-size: 14px;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+    font-size: 20px;
     font-weight: 700;
     cursor: pointer;
-`;
-const StCommentDiv = styled.div`
-    display: flex;
-    gap: 10px;
-`;
-const StOwnerProfilesCommentTitleSpan = styled.span`
-    display: flex;
-    font-size: 15px;
-    font-weight: 700;
-`;
-const StOwnerProfilesCommentSpan = styled.span`
-    display: flex;
-    font-size: 15px;
 `;

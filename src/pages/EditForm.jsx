@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { getYoutubeKey } from "../utils";
 import supabase from "../supabaseClient";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
 import {
-    Button,
+    Buttons,
     Container,
     Desc,
     FormWrapper,
@@ -19,9 +19,17 @@ import {
     VideoWrapper,
     YoutubeLink
 } from "../components/form/style";
+import { UserContext } from "../context/UserContext";
 
 const EditForm = () => {
     const navigate = useNavigate();
+    const { user } = useContext(UserContext);
+
+    if (!user) {
+        alert("로그인이 필요한 페이지입니다. 로그인 해주세요. 🥺");
+        return <Navigate to="/login" />;
+    }
+
     const [searchParams, setSearchParams] = useSearchParams();
     const postId = searchParams.get("id");
     const [post, setPost] = useState(null);
@@ -63,7 +71,6 @@ const EditForm = () => {
                 setSelectedSeason(postData.genre);
             }
         };
-
         fetchPostData();
     }, [postId]);
 
@@ -233,8 +240,10 @@ const EditForm = () => {
                             ))}
                         </div>
                     </Hashtags>
-                    <Button onClick={() => navigate(-1)}>취소</Button>
-                    <Button onClick={handleSubmit}>수정</Button>
+                    <Buttons>
+                        <button onClick={() => navigate(-1)}>취소</button>
+                        <button onClick={handleSubmit}>수정</button>
+                    </Buttons>
                 </FormWrapper>
             </Text>
         </Container>

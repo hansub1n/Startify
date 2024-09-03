@@ -31,8 +31,8 @@ const Home = () => {
     return (
         <ListWrapper>
             <SearchInput searchText={searchText} handleSearchText={handleSearchText} handleSearch={handleSearch} />
-            {lists.map((el) => {
-                return <PostItemList key={el.title} songs={el.songs} title={el.title} />;
+            {lists.map((el, index) => {
+                return <PostItemList key={el.title} index={index} songs={el.songs} title={el.title} />;
             })}
         </ListWrapper>
     );
@@ -43,5 +43,7 @@ export default Home;
 const ListWrapper = styled.div`
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     padding: 0px 30px;
 `;

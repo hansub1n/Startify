@@ -1,12 +1,43 @@
 import PostItem from "./PostItem";
 import styled from "styled-components";
-import useMusicContext from "../../hooks/useMusicContext";
+import { useEffect, useState } from "react";
 
-const PostItemList = ({ songs, title }) => {
+const PostItemList = ({ songs, title, index }) => {
+    const [isListOpen, setIsListOpen] = useState(false);
+
+    const largeScreen = matchMedia("screen and (min-width: 1660px)");
+    const mediumScreen = matchMedia("screen and (min-width: 1200px) and (max-width: 1659px)");
+    const smallScreen = matchMedia("screen and (min-width: 840px) and (max-width: 1199px)");
+    const extraSmallScreen = matchMedia("screen and (max-width: 839px)");
+
+    const initializeVisibleCount = () => {
+        if (largeScreen.matches) {
+            return 4;
+        } else if (mediumScreen.matches) {
+            return 3;
+        } else if (smallScreen.matches) {
+            return 2;
+        } else if (extraSmallScreen.matches) {
+            return 1;
+        }
+    };
+    const [visibleCount, setVisibleCount] = useState(initializeVisibleCount());
+
+    useEffect(() => {
+        const handleByResize = () => {
+            setVisibleCount(initializeVisibleCount());
+        };
+        window.addEventListener("resize", handleByResize);
+
+        return () => {
+            window.removeEventListener("resize", handleByResize);
+        };
+    });
+
     return (
-        <PostItemWrapper>
+        <PostItemWrapper $index={index}>
             <PostWrapTitle>{title}</PostWrapTitle>
-            <PostItemsDiv>
+            <PostItemsDiv $isListOpen={isListOpen}>
                 {songs.length ? (
                     songs.map((music) => {
                         return <PostItem key={music.id} music={music} />;
@@ -15,6 +46,11 @@ const PostItemList = ({ songs, title }) => {
                     <p>어울리는 음악이 없습니다! 해당 계절에 어울리는 음악을 추가해주세요!</p>
                 )}
             </PostItemsDiv>
+            {songs.length > visibleCount ? (
+                <ListOpenButton $index={index} $isListOpen={isListOpen} onClick={() => setIsListOpen(!isListOpen)}>
+                    {isListOpen ? "▲" : "▼"}
+                </ListOpenButton>
+            ) : null}
         </PostItemWrapper>
     );
 };
@@ -22,6 +58,8 @@ const PostItemList = ({ songs, title }) => {
 export default PostItemList;
 
 const PostItemWrapper = styled.ul`
+    background-color: ${({ $index }) => ($index % 2 == 0 ? "#e5f3fc" : "#6fabda")};
+    border-radius: 20px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -29,26 +67,58 @@ const PostItemWrapper = styled.ul`
     margin: 10px 0px;
     box-sizing: border-box;
     padding: 20px 30px;
-    background-color: #d4eaf7;
-    border: 3px solid red;
 `;
 
 const PostWrapTitle = styled.h3`
+    font-family: "SUITE-Regular";
     border-bottom: 1px solid black;
     width: 100%;
-    padding: 10px 5px;
-    margin-bottom: 40px;
+    padding: 10px 5px 20px 5px;
+    margin-bottom: 20px;
     font-size: 28px;
     font-weight: bold;
 `;
 
 const PostItemsDiv = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    justify-items: center;
     gap: 20px;
     width: 100%;
+    overflow-y: hidden;
     overflow-x: auto;
-    padding-bottom: 10px;
+    max-height: ${({ $isListOpen }) => ($isListOpen ? "5000px" : "500px")};
+    transition: max-height ${({ $isListOpen }) => ($isListOpen ? "2s ease-in-out" : "1s ease-in-out")};
+    height: auto;
+    padding: 20px 10px;
+
+    @media all and (min-width: 1200px) and (max-width: 1659px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media all and (min-width: 840px) and (max-width: 1199px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media all and (max-width: 839px) {
+        grid-template-columns: repeat(1, 1fr);
+    }
+`;
+
+const ListOpenButton = styled.div`
+    background-color: ${({ $index }) => ($index % 2 == 0 ? "#e5f3fc" : "#6fabda")};
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 10px;
+    padding: 3px 0px;
+    margin-top: 10px;
+    cursor: pointer;
+    &:hover {
+        filter: brightness(0.95);
+    }
 `;
