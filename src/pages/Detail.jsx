@@ -143,7 +143,18 @@ const DetailPostBtnDiv = styled.div`
 
 const StPostBtn = styled.button`
     width: 80px;
-    height: 40px;
+    height: 35px;
+    padding: 5px;
+    box-sizing: border-box;
+    font-size: 18px;
+    border: none;
+    border-radius: 13px;
+    background-color: #b0e0e6;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
+
+    &:hover {
+        background-color: #a1d0d6;
+    }
 `;
 const StPostTitleSpan = styled.span`
     display: flex;
