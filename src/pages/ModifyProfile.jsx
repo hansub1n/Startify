@@ -5,13 +5,7 @@ import styled from "styled-components";
 import { SupabaseClient } from "@supabase/supabase-js";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
-import {
-    ButtonContainer,
-    ImgUploadContainer,
-    InputContainer,
-    PhotoContainer,
-    SignUpContainer
-} from "../components/userInfo/UserStyle";
+import * as Style from "../components/userInfo/UserStyle";
 
 const ModifyProfile = () => {
     const { user } = useContext(UserContext);
@@ -125,17 +119,17 @@ const ModifyProfile = () => {
     };
 
     return (
-        <SignUpContainer>
+        <Style.SignUpContainer>
             <h2>프로필 수정</h2>
             <form onSubmit={handleModifyProfile}>
-                <ImgUploadContainer className="userImgUpload">
-                    <PhotoContainer>
+                <Style.ImgUploadContainer className="userImgUpload">
+                    <Style.PhotoContainer>
                         {profileImgView ? <img src={profileImgView} alt="이미지" /> : <p>선택된 이미지가 없습니다.</p>}
-                    </PhotoContainer>
+                    </Style.PhotoContainer>
                     <input type="file" id="userProfileImg" name="userProfileImg" onChange={handleFileSelect} />
-                </ImgUploadContainer>
+                </Style.ImgUploadContainer>
 
-                <InputContainer>
+                <Style.InputContainer>
                     <label>닉네임</label>
                     <input type="text" value={userName} placeholder="닉네임" onChange={handleSetUserName} />
                     <label>소개글</label>
@@ -148,12 +142,12 @@ const ModifyProfile = () => {
                         onChange={handleSetUserPassword}
                         ref={passwordRef}
                     />
-                </InputContainer>
-                <ButtonContainer>
+                </Style.InputContainer>
+                <Style.ButtonContainer>
                     <button type="submit">프로필 수정</button>
-                </ButtonContainer>
+                </Style.ButtonContainer>
             </form>
-        </SignUpContainer>
+        </Style.SignUpContainer>
     );
 };
 

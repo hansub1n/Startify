@@ -4,7 +4,7 @@ import supabase from "../supabaseClient";
 import styled from "styled-components";
 import { SupabaseClient } from "@supabase/supabase-js";
 import { useNavigate } from "react-router-dom";
-import { ImgUploadContainer, InputContainer, PhotoContainer, SignUpContainer } from "../components/userInfo/UserStyle";
+import * as Style from "../components/userInfo/UserStyle";
 
 const SignUp = () => {
     const navigate = useNavigate();
@@ -122,6 +122,7 @@ const SignUp = () => {
         } else {
             alert("회원가입이 완료되었습니다. 메인 페이지로 이동합니다.");
             navigate("/");
+
             const userUid = data.user.id;
             const { userData, userError } = await supabase.from("STARTIFY_USER").insert({
                 user_id: userUid,
@@ -137,17 +138,17 @@ const SignUp = () => {
         }
     };
     return (
-        <SignUpContainer>
+        <Style.SignUpContainer>
             <h2>회원가입</h2>
             <form onSubmit={handleSignUp}>
-                <ImgUploadContainer className="userImgUpload">
-                    <PhotoContainer>
+                <Style.ImgUploadContainer className="userImgUpload">
+                    <Style.PhotoContainer>
                         {profileImgView ? <img src={profileImgView} alt="이미지" /> : <p>선택된 이미지가 없습니다.</p>}
-                    </PhotoContainer>
+                    </Style.PhotoContainer>
                     <input type="file" id="userProfileImg" name="userProfileImg" onChange={handleFileSelect} />
-                </ImgUploadContainer>
+                </Style.ImgUploadContainer>
 
-                <InputContainer>
+                <Style.InputContainer>
                     <label>이메일*</label>
                     <input
                         type="email"
@@ -170,13 +171,13 @@ const SignUp = () => {
                     <input type="text" value={userName} placeholder="닉네임" onChange={handleSetUserName} />
                     <label>소개글</label>
                     <input type="text" placeholder="소개글" value={userIntro} onChange={handleSetUserIntro} />
-                </InputContainer>
+                </Style.InputContainer>
                 <button type="submit">회원 가입</button>
             </form>
             {/* <button type="submit" onClick={() => navigate("/")}>
                 메인으로
             </button> */}
-        </SignUpContainer>
+        </Style.SignUpContainer>
     );
 };
 
