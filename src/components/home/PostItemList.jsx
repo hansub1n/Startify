@@ -1,9 +1,38 @@
 import PostItem from "./PostItem";
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const PostItemList = ({ songs, title, index }) => {
     const [isListOpen, setIsListOpen] = useState(false);
+
+    const largeScreen = matchMedia("screen and (min-width: 1660px)");
+    const mediumScreen = matchMedia("screen and (min-width: 1200px) and (max-width: 1659px)");
+    const smallScreen = matchMedia("screen and (min-width: 840px) and (max-width: 1199px)");
+    const extraSmallScreen = matchMedia("screen and (max-width: 839px)");
+
+    const initializeVisibleCount = () => {
+        if (largeScreen.matches) {
+            return 4;
+        } else if (mediumScreen.matches) {
+            return 3;
+        } else if (smallScreen.matches) {
+            return 2;
+        } else if (extraSmallScreen.matches) {
+            return 1;
+        }
+    };
+    const [visibleCount, setVisibleCount] = useState(initializeVisibleCount());
+
+    useEffect(() => {
+        const handleByResize = () => {
+            setVisibleCount(initializeVisibleCount());
+        };
+        window.addEventListener("resize", handleByResize);
+
+        return () => {
+            window.removeEventListener("resize", handleByResize);
+        };
+    });
 
     return (
         <PostItemWrapper $index={index}>
@@ -17,7 +46,7 @@ const PostItemList = ({ songs, title, index }) => {
                     <p>어울리는 음악이 없습니다! 해당 계절에 어울리는 음악을 추가해주세요!</p>
                 )}
             </PostItemsDiv>
-            {songs.length > 4 ? (
+            {songs.length > visibleCount ? (
                 <ListOpenButton $index={index} $isListOpen={isListOpen} onClick={() => setIsListOpen(!isListOpen)}>
                     {isListOpen ? "▲" : "▼"}
                 </ListOpenButton>
@@ -30,7 +59,6 @@ export default PostItemList;
 
 const PostItemWrapper = styled.ul`
     background-color: ${({ $index }) => ($index % 2 == 0 ? "#e5f3fc" : "#6fabda")};
-    /* background-color: #e5f3fc; */
     border-radius: 20px;
     display: flex;
     flex-direction: column;
@@ -42,6 +70,7 @@ const PostItemWrapper = styled.ul`
 `;
 
 const PostWrapTitle = styled.h3`
+    font-family: "SUITE-Regular";
     border-bottom: 1px solid black;
     width: 100%;
     padding: 10px 5px 20px 5px;
@@ -58,12 +87,12 @@ const PostItemsDiv = styled.div`
     width: 100%;
     overflow-y: hidden;
     overflow-x: auto;
-    max-height: ${({ $isListOpen }) => ($isListOpen ? "30000px" : "500px")};
-    transition: max-height 0.5s ease-in-out;
+    max-height: ${({ $isListOpen }) => ($isListOpen ? "5000px" : "500px")};
+    transition: max-height ${({ $isListOpen }) => ($isListOpen ? "2s ease-in-out" : "1s ease-in-out")};
     height: auto;
     padding: 20px 10px;
 
-    @media all and (min-width: 1200px) and (max-width: 1559px) {
+    @media all and (min-width: 1200px) and (max-width: 1659px) {
         grid-template-columns: repeat(3, 1fr);
     }
 
@@ -91,6 +120,5 @@ const ListOpenButton = styled.div`
     cursor: pointer;
     &:hover {
         filter: brightness(0.95);
-        /* background-color: #cbe2ee; */
     }
 `;
