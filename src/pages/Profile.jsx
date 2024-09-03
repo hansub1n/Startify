@@ -37,7 +37,7 @@ const Profile = () => {
     return (
         <PostProvider>
             <Wrapper>
-                <ProfileHeader account={account} paramId={paramId} />
+                <ProfileHeader account={account} paramId={paramId} paramView={paramView} />
                 <ProfileContents account={account} paramView={paramView} />
             </Wrapper>
         </PostProvider>
@@ -48,4 +48,5 @@ export default Profile;
 
 const Wrapper = styled.div`
     width: 100%;
+    font-family: "SUITE-Regular";
 `;
