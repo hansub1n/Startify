@@ -86,17 +86,20 @@ const ModifyProfile = () => {
         //이미지 업로드
         let profileImgUrl = profileImgView;
         if (profileImgFile) {
+            const lastDot = profileImgFile.name.lastIndexOf(".");
+            const fileExtension = profileImgFile.name.substring(lastDot + 1);
+            const newFileName = Math.random().toString(36).substr(2, 11);
             const uniqueImgName = new Date().getTime();
-            const imgFileName = `${uniqueImgName}_${profileImgFile.name}`;
+            const imgFileName = `${uniqueImgName}_${newFileName}`;
             const { imgData, imgError } = await supabase.storage
                 .from("startify_storage")
-                .upload(`profileImgFolder/${imgFileName}`, profileImgFile);
+                .upload(`profileImgFolder/${imgFileName}.${fileExtension}`, profileImgFile);
 
             if (imgError) {
                 alert("업로드 실패", imgError);
                 return;
             } else {
-                profileImgUrl = `https://lluyiezkzctkdodxpefi.supabase.co/storage/v1/object/public/startify_storage/profileImgFolder/${imgFileName}`;
+                profileImgUrl = `https://lluyiezkzctkdodxpefi.supabase.co/storage/v1/object/public/startify_storage/profileImgFolder/${imgFileName}.${fileExtension}`;
             }
             console.log("Uploaded Data:", imgData);
         }
