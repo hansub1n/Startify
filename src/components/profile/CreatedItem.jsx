@@ -2,7 +2,8 @@ import React from "react";
 import { getYoutubeKey } from "../../utils";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import * as Style from "../home/HomeStyles";
+import * as PostStyle from "../home/HomeStyles";
+import * as Style from "./ProfileStyles";
 import likeImg from "../../assets/like.png";
 
 export const CreatedItem = ({ post }) => {
@@ -11,50 +12,26 @@ export const CreatedItem = ({ post }) => {
     const likeCount = post.STARTIFY_LIKES.length;
 
     return (
-        <Style.ItemLi onClick={() => navigate(`/detail?id=${post.id}`)}>
-            <Style.TextName>{post.postTitle}</Style.TextName>
-            <Style.ThumbnailWrap>
-                <ItemImgBox>
-                    <Style.ThumbnailImg src={`https://img.youtube.com/vi/${thumbnailKey}/0.jpg`} alt={post.postTitle} />
-                </ItemImgBox>
-                <LikesContainer>
-                    <Style.LikesText>{likeCount}</Style.LikesText>
-                    <Style.LikeBtmImg src={likeImg} />
-                </LikesContainer>
-            </Style.ThumbnailWrap>
-            <ItemTxtBox>
+        <PostStyle.ItemLi onClick={() => navigate(`/detail?id=${post.id}`)}>
+            <PostStyle.TextName>{post.postTitle}</PostStyle.TextName>
+            <PostStyle.ThumbnailWrap>
+                <Style.ItemImgBox>
+                    <PostStyle.ThumbnailImg
+                        src={`https://img.youtube.com/vi/${thumbnailKey}/0.jpg`}
+                        alt={post.postTitle}
+                    />
+                </Style.ItemImgBox>
+                <Style.LikesContainer>
+                    <PostStyle.LikesText>{likeCount}</PostStyle.LikesText>
+                    <PostStyle.LikeBtmImg src={likeImg} />
+                </Style.LikesContainer>
+            </PostStyle.ThumbnailWrap>
+            <Style.ItemTxtBox>
                 <span>{post.STARTIFY_USER.userName}</span>
-            </ItemTxtBox>
-            <Style.Text>
+            </Style.ItemTxtBox>
+            <PostStyle.Text>
                 {post.name} - {post.title}
-            </Style.Text>
-        </Style.ItemLi>
+            </PostStyle.Text>
+        </PostStyle.ItemLi>
     );
 };
-export const Item = styled.li`
-    display: flex;
-    flex-direction: column;
-`;
-export const ItemImgBox = styled.div`
-    & img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-`;
-export const ItemTxtBox = styled.div`
-    text-align: center;
-`;
-export const LikesContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 3px;
-    position: absolute;
-    bottom: 0px;
-    right: 0px;
-    padding: 5px;
-    background-color: rgb(255, 255, 255, 0.4);
-    border-radius: 10px;
-`;
