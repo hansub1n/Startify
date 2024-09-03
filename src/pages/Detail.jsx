@@ -93,7 +93,7 @@ const Detail = () => {
                         </div>
                     </DetailPostBtnDiv>
                 )}
-                <StPostTitleSpan>{post.title}</StPostTitleSpan>
+                <StPostTitleSpan>{post.postTitle}</StPostTitleSpan>
 
                 <DetailOwner
                     userId={post.STARTIFY_USER.id}
