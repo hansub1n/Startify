@@ -32,7 +32,6 @@ const DetailMusic = ({ url, name, title, desc, likes, hashtags, toggleLikeData }
                             <Youtube
                                 width="1000"
                                 height="562"
-                                object-fit="cover"
                                 src={getEmbedLink(url)}
                                 frameBorder="0"
                                 allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
