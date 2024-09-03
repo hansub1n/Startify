@@ -3,7 +3,7 @@ import { getYoutubeKey } from "../../utils";
 import { useNavigate } from "react-router-dom";
 import Button from "../common/Button";
 import playButton from "../../assets/playButton.png";
-import likeImg from "../../assets/like.png";
+import like03Img from "../../assets/like03.png";
 import * as Style from "./HomeStyles";
 
 const PostItem = ({ music }) => {
@@ -36,7 +36,7 @@ const PostItem = ({ music }) => {
                 </Style.ImgIframeWrap>
                 <Style.ThumbnailTextWrap $isVideoPlayed={isVideoPlayed}>
                     <Style.LikesText>{likeCount}</Style.LikesText>
-                    <Style.LikeBtmImg src={likeImg} />
+                    <Style.LikeBtmImg src={like03Img} />
                 </Style.ThumbnailTextWrap>
             </Style.ThumbnailWrap>
             <Style.Text>
