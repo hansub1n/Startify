@@ -1,7 +1,7 @@
-import styled from "styled-components";
 import SearchInput from "../components/home/SearchInput";
 import useMusicContext from "../hooks/useMusicContext";
 import PostItemList from "../components/home/PostItemList";
+import * as Style from "../components/home/HomeStyles";
 
 const Home = () => {
     const { searchText, handleSearchText, handleSearch, springs, summers, autumns, winters, seasonal } =
@@ -29,21 +29,13 @@ const Home = () => {
         }
     ];
     return (
-        <ListWrapper>
+        <Style.ListWrapper>
             <SearchInput searchText={searchText} handleSearchText={handleSearchText} handleSearch={handleSearch} />
             {lists.map((el, index) => {
                 return <PostItemList key={el.title} index={index} songs={el.songs} title={el.title} />;
             })}
-        </ListWrapper>
+        </Style.ListWrapper>
     );
 };
 
 export default Home;
-
-const ListWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 0px 30px;
-`;
