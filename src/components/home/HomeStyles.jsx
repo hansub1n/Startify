@@ -95,6 +95,12 @@ export const TextName = styled.p`
     font-size: 25px;
     font-weight: 700;
     margin-bottom: 10px;
+    text-align: center;
+    width: 300px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    padding-bottom: 0.14em;
 `;
 
 export const Text = styled.p`
@@ -102,6 +108,12 @@ export const Text = styled.p`
     font-size: 18px;
     margin-top: 10px;
     margin-bottom: 5px;
+    text-align: center;
+    width: 300px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    padding-bottom: 0.14em;
 `;
 //-------------------------
 
