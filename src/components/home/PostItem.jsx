@@ -63,6 +63,7 @@ const PostItem = ({ music }) => {
 export default PostItem;
 
 const ItemLi = styled.li`
+    font-family: "SUITE-Regular";
     cursor: pointer;
     background-color: white;
     box-sizing: border-box;
@@ -76,6 +77,9 @@ const ItemLi = styled.li`
     padding: 20px;
     transition: transform 0.2s, box-shadow 0.2s;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 5px;
+    h3 {
+        font-family: "GmarketSansMedium";
+    }
     &:hover {
         transform: translateY(-10px);
         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
