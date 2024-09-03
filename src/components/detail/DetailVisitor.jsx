@@ -92,6 +92,7 @@ const StVisitorProfileImg = styled.img`
     height: 65px;
     object-fit: cover;
     border-radius: 50%;
+    cursor: pointer;
 `;
 
 const StVisitorProfileTextDiv = styled.div`

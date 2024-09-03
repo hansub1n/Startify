@@ -53,6 +53,7 @@ const ModalBackdrop = styled.div`
 
 const DetailEditModalDiv = styled.div`
     position: fixed;
+    flex-wrap: wrap;
     background-color: #f0f0f0;
     width: 40%;
     height: 33%;
@@ -74,6 +75,7 @@ const CloseModalSpan = styled.div`
 
 const Div = styled.div`
     display: flex;
+    width: 60%;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -88,23 +90,26 @@ const Span = styled.span`
 `;
 
 const TextArea = styled.textarea`
+    display: flex;
     resize: none;
-    width: 700px;
+    width: 100%;
     height: 150px;
     margin-top: 50px;
     border: none;
     border-radius: 13px;
+    font-family: "SUITE-Regular";
     font-size: 20px;
     padding: 15px 100px 15px 15px;
 `;
 
 const Button = styled.button`
     display: flex;
+    font-family: "SUITE-Regular";
     position: absolute;
     justify-content: center;
     align-items: center;
     bottom: 10px;
-    right: 10px;
+    right: -40px;
     width: 90px;
     height: 45px;
     font-size: 18px;
@@ -113,6 +118,7 @@ const Button = styled.button`
     background-color: #71c4ef;
     transition: background-color 0.3s ease;
     box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
 
     &:hover {
         background-color: #a1d0d6;
