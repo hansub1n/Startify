@@ -4,28 +4,10 @@ import temporalLogo from "../../assets/temporalLogo.png";
 import Button from "../common/Button";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
-<<<<<<< HEAD
-import { useContext, useEffect, useState } from "react";
-=======
->>>>>>> 822d9a396e2d4142567d2dab7ee0fb0c4a033bcf
 import supabase from "../../supabaseClient";
 
 const LayoutHeader = () => {
     const { user } = useContext(UserContext);
-<<<<<<< HEAD
-    const [account, setAccount] = useState();
-    const navigate = useNavigate();
-    const goToHome = () => navigate("/");
-
-    useEffect(() => {
-        const fetchAccountData = async () => {
-            if (user) {
-                const { data, error } = await supabase
-                    .from("STARTIFY_USER")
-                    .select("id, userName,user_id")
-                    .eq("user_id", user.id)
-                    .single();
-=======
     const [account, setAccount] = useState(null);
     const navigate = useNavigate();
 
@@ -34,26 +16,18 @@ const LayoutHeader = () => {
             if (user && user.id) {
                 const { data, error } = await supabase
                     .from("STARTIFY_USER")
-                    .select("profileImgUrl, userName")
+                    .select("id, profileImgUrl, userName")
                     .eq("user_id", user.id)
                     .single();
 
->>>>>>> 822d9a396e2d4142567d2dab7ee0fb0c4a033bcf
                 if (error) {
                     console.log("accountError", error);
                 } else {
                     setAccount(data);
                 }
-<<<<<<< HEAD
-            } else {
-                setAccount(null);
-            }
-        };
-=======
             }
         };
 
->>>>>>> 822d9a396e2d4142567d2dab7ee0fb0c4a033bcf
         fetchAccountData();
     }, [user]);
 
@@ -63,44 +37,22 @@ const LayoutHeader = () => {
         navigate("/");
     };
 
-<<<<<<< HEAD
-    if (user === undefined || account === undefined) {
-        return <div>로딩중..</div>;
-    }
-=======
     const goToHome = () => navigate("/");
->>>>>>> 822d9a396e2d4142567d2dab7ee0fb0c4a033bcf
-
+    console.log("account", account);
     return (
         <Header>
             <HeaderNav>
                 <LogoImg src={temporalLogo} alt="로고이미지" onClick={goToHome} />
 
                 <LoginUl>
-<<<<<<< HEAD
-                    <>
-                        <p>{account ? <>{account.userName}님 안녕하세요!</> : <>로그인이 필요합니다.</>}</p>
-
-                        {account ? (
-                            <>
-                                <Button onClick={() => navigate("/form")}>노래 공유하기</Button>
-                                <Button onClick={() => navigate(`/profile?id=${account.id}`)}>마이페이지</Button>
-                                <Button onClick={handleSignOut}>로그아웃</Button>
-                            </>
-                        ) : (
-                            <>
-                                <Button onClick={() => navigate("/login")}>로그인</Button>
-                                <Button onClick={() => navigate("/signup")}>회원가입</Button>
-                            </>
-                        )}
-                    </>
-=======
                     {user ? (
                         <UserGreeting>
                             {account?.profileImgUrl && <UserImage src={account.profileImgUrl} alt="유저 프로필" />}
                             {/* <p>{account?.userName ? `${account.userName}님 안녕하세요!` : "님 안녕하세요!"}</p> */}
                             <LayoutButton onClick={() => navigate("/form")}>노래 공유하기</LayoutButton>
-                            <LayoutButton onClick={() => navigate(`/profile/${user.id}`)}>마이페이지</LayoutButton>
+                            <LayoutButton onClick={() => navigate(`/profile?id=${account.id}`)}>
+                                마이페이지
+                            </LayoutButton>
                             <LayoutButton onClick={handleSignOut}>로그아웃</LayoutButton>
                         </UserGreeting>
                     ) : (
@@ -109,7 +61,6 @@ const LayoutHeader = () => {
                             <LayoutButton onClick={() => navigate("/signup")}>회원가입</LayoutButton>
                         </>
                     )}
->>>>>>> 822d9a396e2d4142567d2dab7ee0fb0c4a033bcf
                 </LoginUl>
             </HeaderNav>
         </Header>
