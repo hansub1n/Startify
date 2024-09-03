@@ -86,6 +86,7 @@ const Span = styled.span`
 `;
 
 const Button = styled.button`
+    font-family: "SUITE-Regular";
     width: 90px;
     height: 45px;
     font-size: 18px;
@@ -93,7 +94,7 @@ const Button = styled.button`
     box-sizing: border-box;
     border: none;
     border-radius: 13px;
-    background-color: #b0e0e6;
+    background-color: #71c4ef;
     transition: background-color 0.3s ease, transform 0.3s ease;
     box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
 

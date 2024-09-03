@@ -29,16 +29,16 @@ const DetailMusic = ({ url, name, title, desc, likes, hashtags, toggleLikeData }
                 <div>
                     {
                         <div>
-                            <iframe
-                                width=" 1120"
-                                height="630"
+                            <Youtube
+                                width="1000"
+                                height="562"
                                 object-fit="cover"
                                 src={getEmbedLink(url)}
                                 frameBorder="0"
                                 allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowFullScreen
                                 title="YouTube Video Preview"
-                            ></iframe>
+                            ></Youtube>
                         </div>
                     }
                 </div>
@@ -67,27 +67,39 @@ const DetailMusic = ({ url, name, title, desc, likes, hashtags, toggleLikeData }
 export default DetailMusic;
 
 const StMusicDiv = styled.div`
-    display: flex;
+    width: 1000px;
+    height: auto;
     flex-wrap: wrap;
     flex-direction: column;
     justify-content: center;
     margin-top: 15px;
 `;
+
+const Youtube = styled.iframe`
+    width: 1000px;
+    height: 562px;
+    align-items: center;
+    justify-content: center;
+`;
+
 const StMusicInfoTitleSpan = styled.span`
-    font-size: 20px;
+    font-family: "SUITE-Regular";
+    font-size: 30px;
     font-weight: 700;
     margin: 20px 0;
 `;
 
 const StPostDescSpan = styled.span`
+    font-family: "SUITE-Regular";
     display: flex;
-    font-size: 18px;
+    font-size: 20px;
 `;
 
 const StMusicInfoDiv = styled.div`
     display: flex;
     position: relative;
     flex-direction: column;
+    gap: 10px;
 `;
 
 const StMusicLikeBtnDiv = styled.div`
@@ -124,4 +136,5 @@ const StMusicInfoHashDiv = styled.div`
     display: flex;
     color: #056ee8;
     margin: 50px 0 30px 0;
+    gap: 10px;
 `;

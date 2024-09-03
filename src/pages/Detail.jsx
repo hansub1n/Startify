@@ -128,8 +128,8 @@ const DetailDiv = styled.div`
     padding: 50px 30px;
 `;
 const Div = styled.div`
-    width: 1120px;
-    height: 100%;
+    width: 1000px;
+    height: auto;
 `;
 
 const DetailPostBtnDiv = styled.div`
@@ -142,6 +142,7 @@ const DetailPostBtnDiv = styled.div`
 `;
 
 const StPostBtn = styled.button`
+    font-family: "SUITE-Regular";
     width: 80px;
     height: 35px;
     padding: 5px;
@@ -149,7 +150,7 @@ const StPostBtn = styled.button`
     font-size: 18px;
     border: none;
     border-radius: 13px;
-    background-color: #b0e0e6;
+    background-color: #71c4ef;
     box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
 
     &:hover {
@@ -157,10 +158,11 @@ const StPostBtn = styled.button`
     }
 `;
 const StPostTitleSpan = styled.span`
+    font-family: "SUITE-Regular";
     display: flex;
     justify-content: center;
-    margin-top: 50px;
+    margin-top: 70px;
     margin-bottom: 70px;
-    font-size: 30px;
+    font-size: 50px;
     font-weight: 900;
 `;
