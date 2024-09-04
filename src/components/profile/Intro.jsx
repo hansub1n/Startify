@@ -1,21 +1,13 @@
-import React from "react";
-import styled from "styled-components";
+import * as Style from "./ProfileStyles";
 
-const Intro = () => {
+const Intro = ({ account }) => {
     return (
-        <ProfileContentContainer>
-            <ProfileContent>작성된 소개글이 없습니다.</ProfileContent>
-        </ProfileContentContainer>
+        <Style.ProfileContentContainer>
+            <Style.ProfileContent>
+                {!account.userIntro ? `작성된 소개글이 없습니다.` : account.userIntro}
+            </Style.ProfileContent>
+        </Style.ProfileContentContainer>
     );
 };
 
 export default Intro;
-
-const ProfileContentContainer = styled.section`
-    display: flex;
-    width: 1280px;
-    margin: 0 auto;
-`;
-const ProfileContent = styled.div`
-    padding: 24px 0;
-`;

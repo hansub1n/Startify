@@ -1,64 +1,65 @@
-import React from "react";
 import PostItem from "./PostItem";
-import styled from "styled-components";
+import { useEffect, useState } from "react";
+import * as Style from "./HomeStyles";
 
-const PostItemList = ({ title }) => {
+const PostItemList = ({ songs, title, index, imageUrl }) => {
+    const [isListOpen, setIsListOpen] = useState(false);
+
+    const largeScreen = matchMedia("screen and (min-width: 1660px)");
+    const mediumScreen = matchMedia("screen and (min-width: 1200px) and (max-width: 1659px)");
+    const smallScreen = matchMedia("screen and (min-width: 840px) and (max-width: 1199px)");
+    const extraSmallScreen = matchMedia("screen and (max-width: 839px)");
+
+    const initializeVisibleCount = () => {
+        if (largeScreen.matches) {
+            return 4;
+        } else if (mediumScreen.matches) {
+            return 3;
+        } else if (smallScreen.matches) {
+            return 2;
+        } else if (extraSmallScreen.matches) {
+            return 1;
+        }
+    };
+    const [visibleCount, setVisibleCount] = useState(initializeVisibleCount());
+
+    useEffect(() => {
+        const handleByResize = () => {
+            setVisibleCount(initializeVisibleCount());
+        };
+        window.addEventListener("resize", handleByResize);
+
+        return () => {
+            window.removeEventListener("resize", handleByResize);
+        };
+    });
+
     return (
-        <PostItemWrapper>
-            <PostWrapTitle>{title}</PostWrapTitle>
-            <PostItemsDiv>
-                {/* {musics.map((music) => {
-            const youtube_key = getYoutubeKey(music.url);
-            const thumbnail = `https://img.youtube.com/vi/${youtube_key}/0.jpg`;
-            return (
-                <div key={music.id}>
-                    <p>{music.postTitle}</p>
-                    <img src={thumbnail} alt={music.title} />
-                </div>
-            );
-        })} */}
-                <PostItem />
-                <PostItem />
-                <PostItem />
-                <PostItem />
-                <PostItem />
-                <PostItem />
-            </PostItemsDiv>
-        </PostItemWrapper>
+        <Style.PostItemWrapper $index={index}>
+            <Style.PostWrapTitle>
+                {title}
+                <Style.TitleImg src={imageUrl} />
+            </Style.PostWrapTitle>
+            <Style.PostItemsDiv $isListOpen={isListOpen}>
+                {songs.length ? (
+                    songs.map((music) => {
+                        return <PostItem key={music.id} music={music} />;
+                    })
+                ) : (
+                    <p>어울리는 음악이 없습니다! 해당 계절에 어울리는 음악을 추가해주세요!</p>
+                )}
+            </Style.PostItemsDiv>
+            {songs.length > visibleCount ? (
+                <Style.ListOpenButton
+                    $index={index}
+                    $isListOpen={isListOpen}
+                    onClick={() => setIsListOpen(!isListOpen)}
+                >
+                    {isListOpen ? "▲" : "▼"}
+                </Style.ListOpenButton>
+            ) : null}
+        </Style.PostItemWrapper>
     );
 };
 
 export default PostItemList;
-
-const PostItemWrapper = styled.ul`
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    margin: 10px 0px;
-    box-sizing: border-box;
-    padding: 20px 30px;
-    background-color: #d4eaf7;
-    border: 3px solid red;
-    overflow: hidden;
-`;
-
-const PostWrapTitle = styled.h3`
-    border-bottom: 1px solid black;
-    width: 100%;
-    padding: 10px 5px;
-    margin-bottom: 40px;
-    font-size: 28px;
-    font-weight: bold;
-`;
-
-const PostItemsDiv = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 20px;
-    width: 1800px;
-    overflow-x: auto;
-    padding-bottom: 10px;
-`;

@@ -1,72 +1,61 @@
-import React from "react";
-import styled from "styled-components";
+import React, { useState } from "react";
+import { getYoutubeKey } from "../../utils";
+import { useNavigate } from "react-router-dom";
+import Button from "../common/Button";
+import playButton from "../../assets/playButton.png";
+import like03Img from "../../assets/like03.png";
+import * as Style from "./HomeStyles";
 
-const PostItem = () => {
+const PostItem = ({ music }) => {
+    const [isVideoPlayed, setIsVideoPlayed] = useState(false);
+    const { postTitle, name, title, url, id } = music;
+    const navigate = useNavigate();
+    const thumbnailKey = getYoutubeKey(url);
+    const likeCount = music.likes.length;
+
     return (
-        <ItemLi>
-            <h3>아이유 노래 같이들어요</h3>
-            <ThumbnailWrap>
-                <ThumbnailImg src="https://img.youtube.com/vi/d9IxdwEFk1c/0.jpg" />
-                <ThumbnailTextWrap>
-                    <LikesText>1234</LikesText>
-                    <LikesButton>♡</LikesButton>
-                </ThumbnailTextWrap>
-            </ThumbnailWrap>
-            <p>아이유 - love wins all</p>
-        </ItemLi>
+        <Style.ItemLi onClick={() => navigate(`/detail?id=${id}`)}>
+            <Style.TextName>{postTitle}</Style.TextName>
+            <Style.ThumbnailWrap>
+                <Style.ImgIframeWrap>
+                    <Style.ThumbnailImg
+                        $isVideoPlayed={isVideoPlayed}
+                        src={`https://img.youtube.com/vi/${thumbnailKey}/0.jpg`}
+                    />
+                    <Style.VideoIframe
+                        $isVideoPlayed={isVideoPlayed}
+                        width="300"
+                        height="224"
+                        src={`https://www.youtube.com/embed/${thumbnailKey}?mute=1`}
+                        title="YouTube video player"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share;"
+                        referrerPolicy="strict-origin-when-cross-origin"
+                        allowFullScreen
+                    ></Style.VideoIframe>
+                </Style.ImgIframeWrap>
+                <Style.ThumbnailTextWrap $isVideoPlayed={isVideoPlayed}>
+                    <Style.LikesText>{likeCount}</Style.LikesText>
+                    <Style.LikeBtmImg src={like03Img} />
+                </Style.ThumbnailTextWrap>
+            </Style.ThumbnailWrap>
+            <Style.Text>
+                {name} - {title}
+            </Style.Text>
+            <Button
+                onClick={(e) => {
+                    e.stopPropagation();
+                    setIsVideoPlayed(!isVideoPlayed);
+                }}
+                $fontSize="40px"
+                $width="40px"
+                $height="60px"
+                $borderRadius="30px"
+            >
+                <img src={playButton} />
+            </Button>
+        </Style.ItemLi>
     );
 };
 
 export default PostItem;
-
-const ItemLi = styled.li`
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    width: 360px;
-    height: 360px;
-    border-radius: 30px;
-    border: 10px solid black;
-    padding: 20px;
-`;
-
-const ThumbnailWrap = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-`;
-
-const ThumbnailImg = styled.img`
-    width: 300px;
-    height: 224px;
-    object-fit: fill;
-`;
-
-const ThumbnailTextWrap = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 3px;
-    position: absolute;
-    bottom: 0px;
-    right: 0px;
-    padding: 5px;
-    background-color: rgb(255, 255, 255, 0.4);
-    border-radius: 10px;
-`;
-
-const LikesText = styled.p`
-    /* color: white; */
-    font-weight: 700;
-`;
-
-const LikesButton = styled.button`
-    color: red;
-    background-color: transparent;
-    border: none;
-`;

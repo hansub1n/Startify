@@ -1,39 +1,59 @@
-import React, { useEffect, useState } from "react";
-import supabase from "../supabaseClient";
-import { getYoutubeKey } from "../utils";
-import styled from "styled-components";
-import PostItem from "../components/home/PostItem";
+import SearchInput from "../components/home/SearchInput";
+import useMusicContext from "../hooks/useMusicContext";
 import PostItemList from "../components/home/PostItemList";
+import * as Style from "../components/home/HomeStyles";
+import songImg from "../assets/song.png";
+import springImg from "../assets/spring.png";
+import summerImg from "../assets/summer.png";
+import fallImg from "../assets/fall.png";
+import winterImg from "../assets/winter.png";
 
 const Home = () => {
-    // const [musics, setMusics] = useState([]);
-    // const getAllData = async () => {
-    //     const { data, error } = await supabase.from("STARTIFY_DATA").select("*");
-    //     if (error) {
-    //         console.log("getAllData error :>> ", error);
-    //         return;
-    //     } else {
-    //         setMusics(data);
-    //     }
-    // };
-    // useEffect(() => {
-    //     getAllData();
-    // }, []);
+    const { searchText, handleSearchText, handleSearch, springs, summers, autumns, winters, seasonal } =
+        useMusicContext();
+    const lists = [
+        {
+            songs: seasonal,
+            title: "언제나 듣기 좋은 노래",
+            imageUrl: songImg
+        },
+        {
+            songs: springs,
+            title: "봄에 듣기 좋은 노래",
+            imageUrl: springImg
+        },
+        {
+            songs: summers,
+            title: "여름에 듣기 좋은 노래",
+            imageUrl: summerImg
+        },
+        {
+            songs: autumns,
+            title: "가을에 듣기 좋은 노래",
+            imageUrl: fallImg
+        },
+        {
+            songs: winters,
+            title: "겨울에 듣기 좋은 노래",
+            imageUrl: winterImg
+        }
+    ];
     return (
-        <ListWrapper>
-            <PostItemList title="언제나 듣기 좋은 노래" />
-            <PostItemList title="봄에 듣기 좋은 노래" />
-            <PostItemList title="여름에 듣기 좋은 노래" />
-            <PostItemList title="가을에 듣기 좋은 노래" />
-            <PostItemList title="겨울에 듣기 좋은 노래" />
-        </ListWrapper>
+        <Style.ListWrapper>
+            <SearchInput searchText={searchText} handleSearchText={handleSearchText} handleSearch={handleSearch} />
+            {lists.map((el, index) => {
+                return (
+                    <PostItemList
+                        key={el.title}
+                        index={index}
+                        songs={el.songs}
+                        title={el.title}
+                        imageUrl={el.imageUrl}
+                    />
+                );
+            })}
+        </Style.ListWrapper>
     );
 };
 
 export default Home;
-
-const ListWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    padding: 0px 30px;
-`;

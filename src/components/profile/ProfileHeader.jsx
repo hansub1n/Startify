@@ -1,75 +1,53 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import exampImg from "../../assets/temporalLogo.png";
+import * as Style from "./ProfileStyles";
+import blankProfileImg from "../../assets/blankProfile.png";
+import "./css/active.css";
 
-export const ProfileHeader = () => {
+export const ProfileHeader = ({ account, paramId, paramView }) => {
+    const navigate = useNavigate();
     return (
-        <ProfileHeaderWrap>
-            <ProfileHeaderContainer>
-                <UserInfoContainer>
-                    <ProfileImgBox>
-                        <img src={exampImg} />
-                    </ProfileImgBox>
-                    <ProfileTxtBox>
-                        <span>
-                            닉네임 <Link to="#" />
-                        </span>
-                        <span>ID1234</span>
-                    </ProfileTxtBox>
-                </UserInfoContainer>
-                <ProfileNavigation>
+        <Style.ProfileHeaderWrap>
+            <Style.ProfileHeaderContainer>
+                <Style.UserInfoContainer>
+                    <Style.ProfileImgBox>
+                        {account.profileImgUrl ? <img src={account.profileImgUrl} /> : <img src={blankProfileImg} />}
+                    </Style.ProfileImgBox>
+                    <Style.ProfileTxtBox>
+                        <Style.ProfileUserName>
+                            {account.userName}
+                            <Style.Button onClick={() => navigate("/modify-profile")}>프로필 편집</Style.Button>
+                        </Style.ProfileUserName>
+                        <Style.ProfileEmail>{account.userEmail}</Style.ProfileEmail>
+                    </Style.ProfileTxtBox>
+                </Style.UserInfoContainer>
+                <Style.ProfileNavigation>
                     <li>
-                        <Link to={""}>소개</Link>
+                        <Link
+                            to={`/profile?id=${paramId}`}
+                            className={paramView === null ? "nav-link active" : "nav-link"}
+                        >
+                            소개
+                        </Link>
                     </li>
                     <li>
-                        <Link to={"created"}>작성한 게시물</Link>
+                        <Link
+                            to={`/profile?id=${paramId}&view=created`}
+                            className={paramView === "created" ? "nav-link active" : "nav-link"}
+                        >
+                            작성한 게시물
+                        </Link>
                     </li>
                     <li>
-                        <Link to={"liked"}>좋아요한 게시물</Link>
+                        <Link
+                            to={`/profile?id=${paramId}&view=liked`}
+                            className={paramView === "liked" ? "nav-link active" : "nav-link"}
+                        >
+                            좋아요한 게시물
+                        </Link>
                     </li>
-                </ProfileNavigation>
-            </ProfileHeaderContainer>
-        </ProfileHeaderWrap>
+                </Style.ProfileNavigation>
+            </Style.ProfileHeaderContainer>
+        </Style.ProfileHeaderWrap>
     );
 };
-const ProfileHeaderWrap = styled.div`
-    width: 100%;
-    border-bottom: 1px solid #000;
-`;
-
-const ProfileHeaderContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    max-width: 1280px;
-    margin: 0 auto;
-`;
-
-const UserInfoContainer = styled.div`
-    display: flex;
-    align-items: center;
-    width: 100%;
-    padding: 20px;
-`;
-
-const ProfileImgBox = styled.div`
-    width: 100px;
-    height: 100px;
-    & img {
-        width: 100%;
-        height: 100%;
-    }
-`;
-const ProfileTxtBox = styled.div`
-    display: flex;
-    flex-direction: column;
-`;
-
-const ProfileNavigation = styled.ul`
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
-    width: 100%;
-    margin: 0 auto;
-    padding: 20px 0;
-`;
