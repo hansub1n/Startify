@@ -133,19 +133,33 @@
 ![](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 ![](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
-![](https://img.shields.io/badge/Supabase-181818?style=for-the-badge&logo=supabase&logoColor=white)
+![](https://img.shields.io/badge/Supabase-181818?style=for-the-badge&logo=supabase&logoColor=3ccf8d)
 ![](https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white)
 
 <br/>
 
 ## 🔧 주요기능
-### 로그인 페이지 / 회원가입 페이지
+### 회원가입 페이지 / 로그인 페이지
+![회원가입](https://github.com/user-attachments/assets/2cdb3e79-eb23-4e2a-b186-2269e912471b)
+- 회원가입 페이지에서 필수 입력값인 이메일, 비밀번호를 입력해 가입할 수 있으며 선택사항인 프로필이미지, 닉네임, 소개글도 등록하여 가입할 수 있습니다.
+
+![로그인](https://github.com/user-attachments/assets/17630a6e-1181-4872-9a0d-a328ec41afff)
+- 로그인 페이지에서 가입한 이메일과 비밀번호를 사용하여 로그인 할 수 있습니다. 입력하지 않은 값이 있다면 경고창과 함께 해당 입력창이 선택됩니다.
+<br/>
 
 ### 메인 페이지 / 검색 페이지
+![홈페이지_아이템_드롭다운_반응형](https://github.com/user-attachments/assets/75816a54-e506-494c-bc7e-a374882a75a9)
+- 랜딩 페이지인 홈페이지에서 데이터베이스에 있는 모든 게시물목록을 확인할 수 있으며, 재생버튼을 누르면 영상을 확인해 볼 수 있습니다.
+
+![홈페이지_검색페이지_키워드검색](https://github.com/user-attachments/assets/18b6d529-52fb-4621-8924-6d82b436afb2)
+- 홈페이지나 검색페이지에서 원하는 키워드 검색이 가능합니다. 게시글제목, 가수명, 노래제목으로 검색된 데이터를 검색페이지에서 확인할 수 있습니다.
+<br/>
 
 ### 게시물 작성 페이지
+<br/>
 
 ### 디테일 페이지 / 게시물 수정 페이지
+<br/>
 
 ### 프로필 페이지 / 프로필 편집 페이지
 
@@ -153,30 +167,30 @@
 
 ## 🏹 트러블 슈팅
 ### 1. 반응형에 따라 grid 행 아이템 개수가 변해 height값이 늘어나는데 드롭다운 버튼이 생기지 않는 문제
-=> resize이벤트를 사용하여 미리 설정해둔 width범위에 따라 한 줄에 보여줄 최소값을 설정하고, 리렌더링을 유발하여 드롭다운 버튼이 생기도록 구현함
+=> resize이벤트를 사용하여 미리 설정해둔 width범위에 따라 한 줄에 보여줄 최소값을 설정하고, 리렌더링을 유발하여 드롭다운 버튼이 생기도록 구현함<br/>
 ![image](https://github.com/user-attachments/assets/df0aa904-34f6-49de-a0a3-827f9b10844f)
 <br />
 
-### 2.
-
+### 2. 동일한 파일명이 있거나, 한글 파일명을 인식하지 못하는 문제
+=> getTime 메서드를 사용하여 유니크한 파일명으로 데이터 베이스에 올라가도록 수정함<br/>
+=> 한글파일명을 임의의 랜덤파일명으로 바꾸고 업로드하도록 수정함<br/>
+![image](https://github.com/user-attachments/assets/ba14ae21-474c-489f-bd34-d287b85443a0)
 <br />
 
-### 3.
-
+### 3. 해시태그에 가수명, 노래제목이 자동으로 들어가있는 문제 
+=> 저장 버튼을 눌렀을 때 해시태그 값을 검사하여 빈 값일경우 가수명과 노래제목을 넣어 supabase에 전달함<br/>
+![image](https://github.com/user-attachments/assets/49585989-2ff4-431a-bae2-ffab95de0201)
 <br />
 
-### 4.
-
-<br />
-
-### 5.
-
+### 4. supabase 데이터 테이블 간 외래키 공유 후 삭제 기능에서의 문제
+=> 해당 외래키의 참조행이 없어졌을 경우 연결된 데이터가 삭제되도록 정책설정<br/>
+![image](https://github.com/user-attachments/assets/2bdd4433-da48-467c-90d3-260754de8558)
 <br />
 
 ## 🗣️ 프로젝트 소감
 ### 한수빈(팀장)
 ```
- 기능 구현 첫 날 어떤식으로 로직을 짜야할지 갈피를 못 잡았는데 차근차근 프로젝트 마무리하니 속이 아주 후련하다.. 데이터베이스와 context api 사용이 아직 서툰게 보여 보완해야겠다
+ 프로젝트 첫날에는 해야 할 일들을 나열하고, 각 작업에 대한 접근 방식을 고민했지만 로직을 짜는 데 어려움을 겪었습니다. 그래서 구글링을 하며 하나씩 문제를 해결해 나갔고, 결국 프로젝트를 성공적으로 마무리할 수 있었습니다. 하지만 데이터베이스와 Context API 사용이 아직은 서툴다 느꼈고, 이 부분을 더 보완해야겠다고 생각했습니다.
 ```
 <br/>
 
