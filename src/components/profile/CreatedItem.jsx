@@ -1,6 +1,5 @@
 import React from "react";
 import { getYoutubeKey } from "../../utils";
-import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import * as PostStyle from "../home/HomeStyles";
 import * as Style from "./ProfileStyles";

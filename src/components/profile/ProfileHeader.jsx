@@ -1,5 +1,4 @@
 import { Link, useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import * as Style from "./ProfileStyles";
 import blankProfileImg from "../../assets/blankProfile.png";
 import "./css/active.css";
