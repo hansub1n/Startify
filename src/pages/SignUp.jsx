@@ -94,6 +94,8 @@ const SignUp = () => {
             return;
         }
 
+        const randomUserName = userName ? userName : `user_${Math.random().toString(36).substr(2, 7)}`;
+
         //이미지 업로드
 
         let profileImgUrl = null;
@@ -132,7 +134,7 @@ const SignUp = () => {
                 user_id: userUid,
                 userEmail: userEmail,
                 userPassword: userPassword,
-                userName: userName,
+                userName: randomUserName,
                 userIntro: userIntro,
                 profileImgUrl: profileImgUrl
             });
