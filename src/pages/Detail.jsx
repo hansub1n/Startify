@@ -36,8 +36,6 @@ const Detail = () => {
         if (error) {
             console.log("error => ", error);
         } else {
-            console.log("data => ", data);
-
             data[0].STARTIFY_COMMENTS.sort((a, b) => a.id - b.id);
             setPost(data[0]);
         }
@@ -51,7 +49,6 @@ const Detail = () => {
             console.log("error :>> ", error);
         }
         setLikes(data);
-        console.log("data :>> ", data);
     };
     const toggleLikeData = async (isUserLiked, userId) => {
         const { error } = isUserLiked

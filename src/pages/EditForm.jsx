@@ -43,7 +43,6 @@ const EditForm = () => {
             if (error) {
                 console.log("error => ", error);
             } else {
-                console.log("data => ", data[0]);
                 const postData = data[0];
                 setPost(postData);
                 setPostTitle(postData.postTitle);
