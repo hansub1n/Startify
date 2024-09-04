@@ -2,23 +2,7 @@ import React, { createContext, useCallback, useContext, useState } from "react";
 import { getYoutubeKey } from "../utils";
 import supabase from "../supabaseClient";
 import { useNavigate } from "react-router-dom";
-import {
-    Buttons,
-    Container,
-    Desc,
-    FormWrapper,
-    Genre,
-    Hashtags,
-    Name,
-    PlaceholderMessage,
-    PostTitle,
-    Preview,
-    SongTitle,
-    Tag,
-    Text,
-    VideoWrapper,
-    YoutubeLink
-} from "../components/form/style";
+import * as Style from "../components/form/style";
 
 const FormContext = createContext();
 
@@ -162,14 +146,13 @@ const Form = () => {
     };
 
     return (
-        <Container>
-            <PostTitle placeholder="제목을 입력해주세요." value={postTitle} onChange={handlePostTitleChange} />
-            <Text>
-                <VideoWrapper>
-                    {/* //유튜브영상 */}
+        <Style.Container>
+            <Style.PostTitle placeholder="제목을 입력해주세요." value={postTitle} onChange={handlePostTitleChange} />
+            <Style.Text>
+                <Style.VideoWrapper>
                     <div>
                         {youtubeLink ? (
-                            <Preview>
+                            <Style.Preview>
                                 <iframe
                                     src={getEmbedLink(youtubeLink).replace("autoplay=1", "autoplay=0")}
                                     frameBorder="0"
@@ -177,37 +160,37 @@ const Form = () => {
                                     allowFullScreen
                                     title="YouTube Video Preview"
                                 ></iframe>
-                            </Preview>
+                            </Style.Preview>
                         ) : (
-                            <PlaceholderMessage>유튜브 링크를 넣어주세요.</PlaceholderMessage>
+                            <Style.PlaceholderMessage>유튜브 링크를 넣어주세요.</Style.PlaceholderMessage>
                         )}
                     </div>
-                </VideoWrapper>
-                <FormWrapper>
-                    <SongTitle>
+                </Style.VideoWrapper>
+                <Style.FormWrapper>
+                    <Style.SongTitle>
                         <label>노래 제목 : </label>
                         <input placeholder="노래 제목을 입력해주세요." value={title} onChange={handleTitleChange} />
-                    </SongTitle>
-                    <YoutubeLink>
+                    </Style.SongTitle>
+                    <Style.YoutubeLink>
                         <label>유튜브 링크 : </label>
                         <input
                             placeholder="유튜브 링크를 입력해주세요."
                             value={youtubeLink}
                             onChange={handleYoutubeLinkChange}
                         />
-                    </YoutubeLink>
-                    <Desc>
+                    </Style.YoutubeLink>
+                    <Style.Desc>
                         <textarea
                             placeholder="자유롭게 노래에 대한 의견을 입력해주세요."
                             value={desc}
                             onChange={handleDescChange}
                         />
-                    </Desc>
-                    <Name>
+                    </Style.Desc>
+                    <Style.Name>
                         <label>가수 이름 : </label>
                         <input placeholder="가수 이름을 입력해주세요." value={name} onChange={handleNameChange} />
-                    </Name>
-                    <Genre>
+                    </Style.Name>
+                    <Style.Genre>
                         <label>계절 : </label>
                         <select value={selectedSeason} onChange={handleSeasonChange}>
                             {options.map((option) => (
@@ -216,8 +199,8 @@ const Form = () => {
                                 </option>
                             ))}
                         </select>
-                    </Genre>
-                    <Hashtags>
+                    </Style.Genre>
+                    <Style.Hashtags>
                         <label>해시태그 : </label>
                         <input
                             type="text"
@@ -228,19 +211,19 @@ const Form = () => {
                         />
                         <div className="HashWrapOuter">
                             {hashArr.map((tag, index) => (
-                                <Tag key={index} onClick={() => handleTagClick(tag)}>
+                                <Style.Tag key={index} onClick={() => handleTagClick(tag)}>
                                     #{tag}
-                                </Tag>
+                                </Style.Tag>
                             ))}
                         </div>
-                    </Hashtags>
-                    <Buttons>
+                    </Style.Hashtags>
+                    <Style.Buttons>
                         <button onClick={() => navigate(-1)}>취소</button>
                         <button onClick={handleSubmit}>등록</button>
-                    </Buttons>
-                </FormWrapper>
-            </Text>
-        </Container>
+                    </Style.Buttons>
+                </Style.FormWrapper>
+            </Style.Text>
+        </Style.Container>
     );
 };
 
