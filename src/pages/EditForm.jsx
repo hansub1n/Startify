@@ -2,23 +2,7 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import { getYoutubeKey } from "../utils";
 import supabase from "../supabaseClient";
 import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
-import {
-    Buttons,
-    Container,
-    Desc,
-    FormWrapper,
-    Genre,
-    Hashtags,
-    Name,
-    PlaceholderMessage,
-    PostTitle,
-    Preview,
-    SongTitle,
-    Tag,
-    Text,
-    VideoWrapper,
-    YoutubeLink
-} from "../components/form/style";
+import * as Style from "../components/form/style";
 import { UserContext } from "../context/UserContext";
 
 const EditForm = () => {
@@ -59,7 +43,6 @@ const EditForm = () => {
             if (error) {
                 console.log("error => ", error);
             } else {
-                console.log("data => ", data[0]);
                 const postData = data[0];
                 setPost(postData);
                 setPostTitle(postData.postTitle);
@@ -169,13 +152,13 @@ const EditForm = () => {
     }
 
     return (
-        <Container>
-            <PostTitle placeholder="제목을 입력해주세요." value={postTitle} onChange={handlePostTitleChange} />
-            <Text>
-                <VideoWrapper>
+        <Style.Container>
+            <Style.PostTitle placeholder="제목을 입력해주세요." value={postTitle} onChange={handlePostTitleChange} />
+            <Style.Text>
+                <Style.VideoWrapper>
                     <div>
                         {youtubeLink ? (
-                            <Preview>
+                            <Style.Preview>
                                 <iframe
                                     src={getEmbedLink(youtubeLink)}
                                     frameBorder="0"
@@ -183,37 +166,37 @@ const EditForm = () => {
                                     allowFullScreen
                                     title="YouTube Video Preview"
                                 ></iframe>
-                            </Preview>
+                            </Style.Preview>
                         ) : (
-                            <PlaceholderMessage>유튜브 링크를 넣어주세요.</PlaceholderMessage>
+                            <Style.PlaceholderMessage>유튜브 링크를 넣어주세요.</Style.PlaceholderMessage>
                         )}
                     </div>
-                </VideoWrapper>
-                <FormWrapper>
-                    <SongTitle>
+                </Style.VideoWrapper>
+                <Style.FormWrapper>
+                    <Style.SongTitle>
                         <label>노래 제목 : </label>
                         <input placeholder="노래 제목을 입력해주세요." value={title} onChange={handleTitleChange} />
-                    </SongTitle>
-                    <YoutubeLink>
+                    </Style.SongTitle>
+                    <Style.YoutubeLink>
                         <label>유튜브 링크 : </label>
                         <input
                             placeholder="유튜브 링크를 입력해주세요."
                             value={youtubeLink}
                             onChange={handleYoutubeLinkChange}
                         />
-                    </YoutubeLink>
-                    <Desc>
+                    </Style.YoutubeLink>
+                    <Style.Desc>
                         <textarea
                             placeholder="자유롭게 노래에 대한 의견을 입력해주세요."
                             value={desc}
                             onChange={handleDescChange}
                         />
-                    </Desc>
-                    <Name>
+                    </Style.Desc>
+                    <Style.Name>
                         <label>가수 이름 : </label>
                         <input placeholder="가수 이름을 입력해주세요." value={name} onChange={handleNameChange} />
-                    </Name>
-                    <Genre>
+                    </Style.Name>
+                    <Style.Genre>
                         <label>계절 : </label>
                         <select value={selectedSeason} onChange={handleSeasonChange}>
                             {options.map((option) => (
@@ -222,8 +205,8 @@ const EditForm = () => {
                                 </option>
                             ))}
                         </select>
-                    </Genre>
-                    <Hashtags>
+                    </Style.Genre>
+                    <Style.Hashtags>
                         <label>해시태그 : </label>
                         <input
                             type="text"
@@ -234,19 +217,19 @@ const EditForm = () => {
                         />
                         <div className="HashWrapOuter">
                             {hashArr.map((tag, index) => (
-                                <Tag key={`${index}: ${tag}`} onClick={() => handleTagClick(tag)}>
+                                <Style.Tag key={`${index}: ${tag}`} onClick={() => handleTagClick(tag)}>
                                     #{tag}
-                                </Tag>
+                                </Style.Tag>
                             ))}
                         </div>
-                    </Hashtags>
-                    <Buttons>
+                    </Style.Hashtags>
+                    <Style.Buttons>
                         <button onClick={() => navigate(-1)}>취소</button>
                         <button onClick={handleSubmit}>수정</button>
-                    </Buttons>
-                </FormWrapper>
-            </Text>
-        </Container>
+                    </Style.Buttons>
+                </Style.FormWrapper>
+            </Style.Text>
+        </Style.Container>
     );
 };
 export default EditForm;
